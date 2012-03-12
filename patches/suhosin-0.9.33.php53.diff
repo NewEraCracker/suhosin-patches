@@ -1,0 +1,186 @@
+diff -uNr suhosin-0.9.33/execute.c suhosin-0.9.33.php53/execute.c
+--- suhosin-0.9.33/execute.c	Thu Jan 19 15:49:18 2012
++++ suhosin-0.9.33.php53/execute.c	Mon Mar 12 16:28:23 2012
+@@ -1087,7 +1087,7 @@
+ 	zend_str_tolower(lcname, func_name_len);
+ #else
+ 	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "s", &lcname, &func_name_len) == FAILURE) {
+-		return;
++		return(0);
+ 	}
+ 
+ 	/* Ignore leading "\" */
+@@ -1344,7 +1344,7 @@
+ 
+     suhosin_SHA256Init(&context);
+ 	suhosin_SHA256Update(&context, (void *) seedbuf, sizeof(php_uint32) * 8);
+-	suhosin_SHA256Final(seedbuf, &context);
++	suhosin_SHA256Final((void *)seedbuf, &context);
+ }
+ /* }}} */
+ 
+@@ -1501,7 +1501,7 @@
+ {
+ #ifdef PHP_ATLEAST_5_3
+ 	if (zend_parse_parameters_none() == FAILURE) {
+-		return;
++		return(0);
+ 	}
+ #else
+         int argc = ZEND_NUM_ARGS();
+diff -uNr suhosin-0.9.33/ifilter.c suhosin-0.9.33.php53/ifilter.c
+--- suhosin-0.9.33/ifilter.c	Thu Jan 19 15:49:18 2012
++++ suhosin-0.9.33.php53/ifilter.c	Mon Mar 12 16:28:23 2012
+@@ -146,7 +146,7 @@
+ 	if (zend_hash_find(arr, key, klen, (void **) &tzval) == SUCCESS &&
+ 			Z_TYPE_PP(tzval) == IS_STRING) {
+ 		
+-		s = t = Z_STRVAL_PP(tzval);
++		s = t = (unsigned char *)Z_STRVAL_PP(tzval);
+ 		for (; *t; t++) {
+ 			if (suhosin_is_dangerous_char[*t]) {
+ 				*t = '?';
+@@ -168,7 +168,7 @@
+ 	if (zend_hash_find(arr, key, klen, (void **) &tzval) == SUCCESS &&
+ 			Z_TYPE_PP(tzval) == IS_STRING) {
+ 		
+-		temp = Z_STRVAL_PP(tzval);
++		temp = (unsigned char *)Z_STRVAL_PP(tzval);
+ 		
+ 		t = temp;
+ 		for (t = temp; *t; t++) {
+@@ -195,7 +195,7 @@
+ 		}
+ 		*n = 0;
+ 		
+-		Z_STRVAL_PP(tzval) = newv;
++		Z_STRVAL_PP(tzval) = (char *)newv;
+ 		Z_STRLEN_PP(tzval) = n-newv;
+ 	}
+ }
+diff -uNr suhosin-0.9.33/log.c suhosin-0.9.33.php53/log.c
+--- suhosin-0.9.33/log.c	Thu Jan 19 15:49:18 2012
++++ suhosin-0.9.33.php53/log.c	Mon Mar 12 16:28:23 2012
+@@ -36,6 +36,12 @@
+ #include <sys/socket.h>
+ #endif
+ 
++#ifdef HAVE_SYS_TIME_H
++#include <sys/time.h>
++#elif defined(PHP_WIN32)
++#include "win32/time.h"
++#endif
++
+ #if defined(PHP_WIN32) || defined(__riscos__) || defined(NETWARE)
+ #undef AF_UNIX
+ #endif
+diff -uNr suhosin-0.9.33/php_suhosin.h suhosin-0.9.33.php53/php_suhosin.h
+--- suhosin-0.9.33/php_suhosin.h	Thu Jan 19 15:49:18 2012
++++ suhosin-0.9.33.php53/php_suhosin.h	Mon Mar 12 16:28:23 2012
+@@ -308,7 +308,7 @@
+ char *suhosin_cookie_decryptor(TSRMLS_D);
+ char *suhosin_getenv(char *name, size_t name_len TSRMLS_DC);
+ void suhosin_hook_post_handlers(TSRMLS_D);
+-void suhosin_unhook_post_handlers();
++void suhosin_unhook_post_handlers(TSRMLS_D);
+ void suhosin_hook_register_server_variables();
+ void suhosin_hook_header_handler();
+ void suhosin_unhook_header_handler();
+diff -uNr suhosin-0.9.33/post_handler.c suhosin-0.9.33.php53/post_handler.c
+--- suhosin-0.9.33/post_handler.c	Thu Jan 19 15:49:18 2012
++++ suhosin-0.9.33.php53/post_handler.c	Mon Mar 12 16:28:23 2012
+@@ -148,10 +148,10 @@
+ 
+ 	/* we need to tell suhosin patch that there is a new valid destructor */
+ 	/* therefore we have create HashTable that has this destructor */
+-	zend_hash_init(&tempht, 0, NULL, suhosin_post_handler_modification, 0);
++	zend_hash_init(&tempht, 0, NULL, (dtor_func_t)suhosin_post_handler_modification, 0);
+ 	zend_hash_destroy(&tempht);
+ 	/* And now we can overwrite the destructor for post entries */
+-	SG(known_post_content_types).pDestructor = suhosin_post_handler_modification;
++	SG(known_post_content_types).pDestructor = (dtor_func_t)suhosin_post_handler_modification;
+ 	
+ 	/* we have to stop mbstring from replacing our post handler */
+ 	if (zend_hash_find(EG(ini_directives), "mbstring.encoding_translation", sizeof("mbstring.encoding_translation"), (void **) &ini_entry) == FAILURE) {
+@@ -162,7 +162,7 @@
+ 	ini_entry->on_modify = suhosin_OnUpdate_mbstring_encoding_translation;
+ }
+ 
+-void suhosin_unhook_post_handlers()
++void suhosin_unhook_post_handlers(TSRMLS_D)
+ {
+ 	zend_ini_entry *ini_entry;
+ 
+@@ -186,5 +186,3 @@
+  * vim600: noet sw=4 ts=4 fdm=marker
+  * vim<600: noet sw=4 ts=4
+  */
+-
+-
+diff -uNr suhosin-0.9.33/session.c suhosin-0.9.33.php53/session.c
+--- suhosin-0.9.33/session.c	Thu Jan 19 15:49:18 2012
++++ suhosin-0.9.33.php53/session.c	Mon Mar 12 16:28:23 2012
+@@ -1,19 +1,19 @@
+ /*
+   +----------------------------------------------------------------------+
+-  | Suhosin Version 1                            |
++  | Suhosin Version 1                                                    |
+   +----------------------------------------------------------------------+
+-  | Copyright (c) 2006-2007 The Hardened-PHP Project             |
+-  | Copyright (c) 2007-2012 SektionEins GmbH                 |
++  | Copyright (c) 2006-2007 The Hardened-PHP Project                     |
++  | Copyright (c) 2007-2012 SektionEins GmbH                             |
+   +----------------------------------------------------------------------+
+-  | This source file is subject to version 3.01 of the PHP license,  |
+-  | that is bundled with this package in the file LICENSE, and is    |
+-  | available through the world-wide-web at the following url:       |
+-  | http://www.php.net/license/3_01.txt                  |
++  | This source file is subject to version 3.01 of the PHP license,      |
++  | that is bundled with this package in the file LICENSE, and is        |
++  | available through the world-wide-web at the following url:           |
++  | http://www.php.net/license/3_01.txt                                  |
+   | If you did not receive a copy of the PHP license and are unable to   |
+-  | obtain it through the world-wide-web, please send a note to      |
+-  | license@php.net so we can mail you a copy immediately.       |
++  | obtain it through the world-wide-web, please send a note to          |
++  | license@php.net so we can mail you a copy immediately.               |
+   +----------------------------------------------------------------------+
+-  | Author: Stefan Esser <sesser@sektioneins.de>             |
++  | Author: Stefan Esser <sesser@sektioneins.de>                         |
+   +----------------------------------------------------------------------+
+ */
+ /*
+@@ -426,7 +426,7 @@
+     }
+     
+     /* store ip value */
+-    suhosin_get_ipv4(crypted+4 TSRMLS_CC);
++    suhosin_get_ipv4((char *)crypted+4 TSRMLS_CC);
+     
+     /* store check value */
+     crypted[8] = check & 0xff;
+@@ -544,7 +544,7 @@
+         if (check_ra > 4) {
+             check_ra = 4;
+         }
+-        suhosin_get_ipv4(&buf TSRMLS_CC);
++        suhosin_get_ipv4(&buf[0] TSRMLS_CC);
+         if (memcmp(buf, decrypted+4, check_ra) != 0) {
+             goto error_out;
+         }
+diff -uNr suhosin-0.9.33/suhosin.c suhosin-0.9.33.php53/suhosin.c
+--- suhosin-0.9.33/suhosin.c	Thu Jan 19 15:49:18 2012
++++ suhosin-0.9.33.php53/suhosin.c	Mon Mar 12 16:28:23 2012
+@@ -189,9 +189,11 @@
+ 
+ static void suhosin_shutdown(zend_extension *extension)
+ {
++	TSRMLS_FETCH();
++
+ 	suhosin_unhook_execute();
+ 	suhosin_unhook_header_handler();
+-	suhosin_unhook_post_handlers();
++	suhosin_unhook_post_handlers(TSRMLS_C);
+     
+     if (ze != NULL) {
+ 	    ze->startup = orig_module_startup;
