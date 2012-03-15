@@ -27,7 +27,7 @@ diff -uNr suhosin-0.9.33/execute.c suhosin-0.9.33.php53/execute.c
 -	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "s", &lcname, &func_name_len) == FAILURE) {
 -		return;
 +	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "s", &name, &name_len) == FAILURE) {
-+		return(0);
++		return (1);
  	}
 +#endif
 +	lcname = zend_str_tolower_dup(name, name_len);
@@ -92,7 +92,7 @@ diff -uNr suhosin-0.9.33/execute.c suhosin-0.9.33.php53/execute.c
  #ifdef PHP_ATLEAST_5_3
  	if (zend_parse_parameters_none() == FAILURE) {
 -		return;
-+		return(0);
++		return (1);
  	}
  #else
          int argc = ZEND_NUM_ARGS();
