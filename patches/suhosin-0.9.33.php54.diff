@@ -152,7 +152,7 @@ diff -uNr suhosin-0.9.33/execute.c suhosin-0.9.33.php54/execute.c
      { "mail", ih_mail, NULL, NULL, NULL },
      { "symlink", ih_symlink, NULL, NULL, NULL },
 +
-+#if 0 /* TODO - This was disabled to avoid issues with tests */
++#if PHP_VERSION_ID < 50400 /* TODO - This was disabled to avoid issues with tests */
      { "phpinfo", ih_phpinfo, NULL, NULL, NULL },
 -	
 +#endif
@@ -166,7 +166,7 @@ diff -uNr suhosin-0.9.33/execute.c suhosin-0.9.33.php54/execute.c
      { "fbsql_pconnect", ih_fixusername, (void *)2, NULL, NULL },
 -    
 +
-+#if 0 /* TODO - This was disabled to avoid issues with tests */
++#if PHP_VERSION_ID < 50400 /* TODO - This was disabled to avoid issues with tests */
      { "function_exists", ih_function_exists, NULL, NULL, NULL },
 -	
 +#endif
