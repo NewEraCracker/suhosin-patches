@@ -1,6 +1,6 @@
 diff -uNr suhosin-0.9.33/config.m4 suhosin-0.9.33.php52/config.m4
 --- suhosin-0.9.33/config.m4	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php52/config.m4	Thu Mar 15 13:07:42 2012
++++ suhosin-0.9.33.php52/config.m4	Fri Apr 13 16:34:28 2012
 @@ -5,5 +5,5 @@
  [  --enable-suhosin        Enable suhosin support])
  
@@ -10,7 +10,7 @@ diff -uNr suhosin-0.9.33/config.m4 suhosin-0.9.33.php52/config.m4
  fi
 diff -uNr suhosin-0.9.33/config.w32 suhosin-0.9.33.php52/config.w32
 --- suhosin-0.9.33/config.w32	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php52/config.w32	Thu Mar 15 13:07:42 2012
++++ suhosin-0.9.33.php52/config.w32	Fri Apr 13 16:34:28 2012
 @@ -4,5 +4,8 @@
  ARG_ENABLE("suhosin", "whether to enable suhosin support", "yes");
  
@@ -23,7 +23,7 @@ diff -uNr suhosin-0.9.33/config.w32 suhosin-0.9.33.php52/config.w32
  }
 diff -uNr suhosin-0.9.33/crypt.c suhosin-0.9.33.php52/crypt.c
 --- suhosin-0.9.33/crypt.c	Thu Jan  1 00:00:00 1970
-+++ suhosin-0.9.33.php52/crypt.c	Thu Mar 15 13:07:42 2012
++++ suhosin-0.9.33.php52/crypt.c	Fri Apr 13 16:34:28 2012
 @@ -0,0 +1,214 @@
 +/*
 +  +----------------------------------------------------------------------+
@@ -241,7 +241,7 @@ diff -uNr suhosin-0.9.33/crypt.c suhosin-0.9.33.php52/crypt.c
 +
 diff -uNr suhosin-0.9.33/crypt_blowfish.c suhosin-0.9.33.php52/crypt_blowfish.c
 --- suhosin-0.9.33/crypt_blowfish.c	Thu Jan  1 00:00:00 1970
-+++ suhosin-0.9.33.php52/crypt_blowfish.c	Thu Mar 15 13:07:42 2012
++++ suhosin-0.9.33.php52/crypt_blowfish.c	Fri Apr 13 16:34:28 2012
 @@ -0,0 +1,751 @@
 +/*
 +  $Id: crypt_blowfish.c,v 1.1.1.1 2007-11-28 01:15:35 sesser Exp $ 
@@ -996,7 +996,7 @@ diff -uNr suhosin-0.9.33/crypt_blowfish.c suhosin-0.9.33.php52/crypt_blowfish.c
 +}
 diff -uNr suhosin-0.9.33/crypt_md5.c suhosin-0.9.33.php52/crypt_md5.c
 --- suhosin-0.9.33/crypt_md5.c	Thu Jan  1 00:00:00 1970
-+++ suhosin-0.9.33.php52/crypt_md5.c	Thu Mar 15 13:07:42 2012
++++ suhosin-0.9.33.php52/crypt_md5.c	Fri Apr 13 16:34:28 2012
 @@ -0,0 +1,163 @@
 +/*
 +   +----------------------------------------------------------------------+
@@ -1163,7 +1163,7 @@ diff -uNr suhosin-0.9.33/crypt_md5.c suhosin-0.9.33.php52/crypt_md5.c
 +
 diff -uNr suhosin-0.9.33/crypt_md5.h suhosin-0.9.33.php52/crypt_md5.h
 --- suhosin-0.9.33/crypt_md5.h	Thu Jan  1 00:00:00 1970
-+++ suhosin-0.9.33.php52/crypt_md5.h	Thu Mar 15 13:07:42 2012
++++ suhosin-0.9.33.php52/crypt_md5.h	Fri Apr 13 16:34:28 2012
 @@ -0,0 +1,37 @@
 +/*
 +   +----------------------------------------------------------------------+
@@ -1205,7 +1205,7 @@ diff -uNr suhosin-0.9.33/crypt_md5.h suhosin-0.9.33.php52/crypt_md5.h
 \ No newline at end of file
 diff -uNr suhosin-0.9.33/crypt_win32.c suhosin-0.9.33.php52/crypt_win32.c
 --- suhosin-0.9.33/crypt_win32.c	Thu Jan  1 00:00:00 1970
-+++ suhosin-0.9.33.php52/crypt_win32.c	Thu Mar 15 13:07:42 2012
++++ suhosin-0.9.33.php52/crypt_win32.c	Fri Apr 13 16:34:28 2012
 @@ -0,0 +1,355 @@
 +/*
 +   +----------------------------------------------------------------------+
@@ -1564,7 +1564,7 @@ diff -uNr suhosin-0.9.33/crypt_win32.c suhosin-0.9.33.php52/crypt_win32.c
 +}
 diff -uNr suhosin-0.9.33/crypt_win32.h suhosin-0.9.33.php52/crypt_win32.h
 --- suhosin-0.9.33/crypt_win32.h	Thu Jan  1 00:00:00 1970
-+++ suhosin-0.9.33.php52/crypt_win32.h	Thu Mar 15 13:07:42 2012
++++ suhosin-0.9.33.php52/crypt_win32.h	Fri Apr 13 16:34:28 2012
 @@ -0,0 +1,60 @@
 +/*
 +   +----------------------------------------------------------------------+
@@ -1626,10 +1626,22 @@ diff -uNr suhosin-0.9.33/crypt_win32.h suhosin-0.9.33.php52/crypt_win32.h
 +#endif
 +
 +#endif /* _ENCRYPT_H_ */
+diff -uNr suhosin-0.9.33/ex_imp.c suhosin-0.9.33.php52/ex_imp.c
+--- suhosin-0.9.33/ex_imp.c	Thu Jan 19 15:49:18 2012
++++ suhosin-0.9.33.php52/ex_imp.c	Fri Apr 13 16:46:36 2012
+@@ -727,7 +727,7 @@
+ 
+ /* {{{ suhosin_ex_imp_functions[]
+  */
+-function_entry suhosin_ex_imp_functions[] = {
++zend_function_entry suhosin_ex_imp_functions[] = {
+ 	PHP_NAMED_FE(extract, PHP_FN(suhosin_extract), suhosin_arginfo_extract)
+ 	PHP_NAMED_FE(import_request_variables, PHP_FN(suhosin_import_request_variables), suhosin_arginfo_import_request_variables)
+ 	{NULL, NULL, NULL}
 diff -uNr suhosin-0.9.33/execute.c suhosin-0.9.33.php52/execute.c
 --- suhosin-0.9.33/execute.c	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php52/execute.c	Thu Mar 15 13:07:42 2012
-@@ -1072,34 +1072,35 @@
++++ suhosin-0.9.33.php52/execute.c	Fri Apr 13 16:37:16 2012
+@@ -1072,35 +1072,34 @@
  #ifndef PHP_ATLEAST_5_3
  	zval **function_name;
  #endif
@@ -1661,10 +1673,11 @@ diff -uNr suhosin-0.9.33/execute.c suhosin-0.9.33.php52/execute.c
 +	lcname = zend_str_tolower_dup(name, name_len);
  
  	/* Ignore leading "\" */
-+	name = lcname;
- 	if (lcname[0] == '\\') {
+-	if (lcname[0] == '\\') {
 -		lcname = &lcname[1];
 -		func_name_len--;
++	name = lcname;
++	if (name_len > 0 && lcname[0] == '\\') {
 +		name = &lcname[1];
 +		name_len--;
  	}
@@ -1673,12 +1686,12 @@ diff -uNr suhosin-0.9.33/execute.c suhosin-0.9.33.php52/execute.c
  
 -	retval = (zend_hash_find(EG(function_table), lcname, func_name_len+1, (void **)&func) == SUCCESS);
 -	
+-	efree(lcname);
 +	retval = (zend_hash_find(EG(function_table), name, name_len+1, (void **)&func) == SUCCESS);
-+
- 	efree(lcname);
  
  	/*
-@@ -1114,22 +1115,22 @@
+ 	 * A bit of a hack, but not a bad one: we see if the handler of the function
+@@ -1114,26 +1113,28 @@
  	/* Now check if function is forbidden by Suhosin */
  	if (SUHOSIN_G(in_code_type) == SUHOSIN_EVAL) {
  		if (SUHOSIN_G(eval_whitelist) != NULL) {
@@ -1706,6 +1719,12 @@ diff -uNr suhosin-0.9.33/execute.c suhosin-0.9.33.php52/execute.c
  		    retval = 0;
  		}
  	}
+ 
++	efree(lcname);
++
+ 	RETVAL_BOOL(retval);
+ 	return (1);
+ }
 @@ -1344,7 +1345,7 @@
  
      suhosin_SHA256Init(&context);
@@ -1726,7 +1745,7 @@ diff -uNr suhosin-0.9.33/execute.c suhosin-0.9.33.php52/execute.c
          int argc = ZEND_NUM_ARGS();
 diff -uNr suhosin-0.9.33/ifilter.c suhosin-0.9.33.php52/ifilter.c
 --- suhosin-0.9.33/ifilter.c	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php52/ifilter.c	Thu Mar 15 13:07:42 2012
++++ suhosin-0.9.33.php52/ifilter.c	Fri Apr 13 16:34:28 2012
 @@ -146,7 +146,7 @@
  	if (zend_hash_find(arr, key, klen, (void **) &tzval) == SUCCESS &&
  			Z_TYPE_PP(tzval) == IS_STRING) {
@@ -1756,7 +1775,7 @@ diff -uNr suhosin-0.9.33/ifilter.c suhosin-0.9.33.php52/ifilter.c
  }
 diff -uNr suhosin-0.9.33/log.c suhosin-0.9.33.php52/log.c
 --- suhosin-0.9.33/log.c	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php52/log.c	Thu Mar 15 13:07:42 2012
++++ suhosin-0.9.33.php52/log.c	Fri Apr 13 16:34:28 2012
 @@ -36,6 +36,12 @@
  #include <sys/socket.h>
  #endif
@@ -1772,7 +1791,7 @@ diff -uNr suhosin-0.9.33/log.c suhosin-0.9.33.php52/log.c
  #endif
 diff -uNr suhosin-0.9.33/php_suhosin.h suhosin-0.9.33.php52/php_suhosin.h
 --- suhosin-0.9.33/php_suhosin.h	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php52/php_suhosin.h	Thu Mar 15 13:07:42 2012
++++ suhosin-0.9.33.php52/php_suhosin.h	Fri Apr 13 16:34:28 2012
 @@ -308,12 +308,13 @@
  char *suhosin_cookie_decryptor(TSRMLS_D);
  char *suhosin_getenv(char *name, size_t name_len TSRMLS_DC);
@@ -1790,7 +1809,7 @@ diff -uNr suhosin-0.9.33/php_suhosin.h suhosin-0.9.33.php52/php_suhosin.h
  void suhosin_hook_treat_data();
 diff -uNr suhosin-0.9.33/post_handler.c suhosin-0.9.33.php52/post_handler.c
 --- suhosin-0.9.33/post_handler.c	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php52/post_handler.c	Thu Mar 15 13:07:42 2012
++++ suhosin-0.9.33.php52/post_handler.c	Fri Apr 13 16:34:28 2012
 @@ -148,10 +148,10 @@
  
  	/* we need to tell suhosin patch that there is a new valid destructor */
@@ -1821,7 +1840,7 @@ diff -uNr suhosin-0.9.33/post_handler.c suhosin-0.9.33.php52/post_handler.c
 -
 diff -uNr suhosin-0.9.33/session.c suhosin-0.9.33.php52/session.c
 --- suhosin-0.9.33/session.c	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php52/session.c	Thu Mar 15 13:07:42 2012
++++ suhosin-0.9.33.php52/session.c	Fri Apr 13 16:34:28 2012
 @@ -1,19 +1,19 @@
  /*
    +----------------------------------------------------------------------+
@@ -1870,9 +1889,21 @@ diff -uNr suhosin-0.9.33/session.c suhosin-0.9.33.php52/session.c
          if (memcmp(buf, decrypted+4, check_ra) != 0) {
              goto error_out;
          }
+diff -uNr suhosin-0.9.33/sha256.c suhosin-0.9.33.php52/sha256.c
+--- suhosin-0.9.33/sha256.c	Thu Jan 19 15:49:18 2012
++++ suhosin-0.9.33.php52/sha256.c	Fri Apr 13 16:46:43 2012
+@@ -392,7 +392,7 @@
+ 
+ /* {{{ suhosin_sha256_functions[]
+  */
+-static function_entry suhosin_sha256_functions[] = {
++static zend_function_entry suhosin_sha256_functions[] = {
+ 	PHP_NAMED_FE(sha256, PHP_FN(suhosin_sha256), NULL)
+ 	PHP_NAMED_FE(sha256_file, PHP_FN(suhosin_sha256_file), NULL)
+ 	{NULL, NULL, NULL}
 diff -uNr suhosin-0.9.33/suhosin.c suhosin-0.9.33.php52/suhosin.c
 --- suhosin-0.9.33/suhosin.c	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php52/suhosin.c	Thu Mar 15 13:07:42 2012
++++ suhosin-0.9.33.php52/suhosin.c	Fri Apr 13 16:34:28 2012
 @@ -189,9 +189,11 @@
  
  static void suhosin_shutdown(zend_extension *extension)

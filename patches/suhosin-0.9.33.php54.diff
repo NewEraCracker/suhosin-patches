@@ -1,6 +1,6 @@
 diff -uNr suhosin-0.9.33/ex_imp.c suhosin-0.9.33.php54/ex_imp.c
 --- suhosin-0.9.33/ex_imp.c	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php54/ex_imp.c	Fri Mar 16 13:26:42 2012
++++ suhosin-0.9.33.php54/ex_imp.c	Fri Apr 13 16:34:47 2012
 @@ -727,7 +727,7 @@
  
  /* {{{ suhosin_ex_imp_functions[]
@@ -12,7 +12,7 @@ diff -uNr suhosin-0.9.33/ex_imp.c suhosin-0.9.33.php54/ex_imp.c
  	{NULL, NULL, NULL}
 diff -uNr suhosin-0.9.33/execute.c suhosin-0.9.33.php54/execute.c
 --- suhosin-0.9.33/execute.c	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php54/execute.c	Fri Mar 16 13:26:42 2012
++++ suhosin-0.9.33.php54/execute.c	Fri Apr 13 16:37:16 2012
 @@ -35,6 +35,7 @@
  #include "zend_compile.h"
  #include "zend_llist.h"
@@ -52,7 +52,7 @@ diff -uNr suhosin-0.9.33/execute.c suhosin-0.9.33.php54/execute.c
  
  	RETVAL_TRUE;
  	return (1);
-@@ -1072,34 +1082,35 @@
+@@ -1072,35 +1082,34 @@
  #ifndef PHP_ATLEAST_5_3
  	zval **function_name;
  #endif
@@ -84,10 +84,11 @@ diff -uNr suhosin-0.9.33/execute.c suhosin-0.9.33.php54/execute.c
 +	lcname = zend_str_tolower_dup(name, name_len);
  
  	/* Ignore leading "\" */
-+	name = lcname;
- 	if (lcname[0] == '\\') {
+-	if (lcname[0] == '\\') {
 -		lcname = &lcname[1];
 -		func_name_len--;
++	name = lcname;
++	if (name_len > 0 && lcname[0] == '\\') {
 +		name = &lcname[1];
 +		name_len--;
  	}
@@ -96,12 +97,12 @@ diff -uNr suhosin-0.9.33/execute.c suhosin-0.9.33.php54/execute.c
  
 -	retval = (zend_hash_find(EG(function_table), lcname, func_name_len+1, (void **)&func) == SUCCESS);
 -	
+-	efree(lcname);
 +	retval = (zend_hash_find(EG(function_table), name, name_len+1, (void **)&func) == SUCCESS);
-+
- 	efree(lcname);
  
  	/*
-@@ -1114,22 +1125,22 @@
+ 	 * A bit of a hack, but not a bad one: we see if the handler of the function
+@@ -1114,26 +1123,28 @@
  	/* Now check if function is forbidden by Suhosin */
  	if (SUHOSIN_G(in_code_type) == SUHOSIN_EVAL) {
  		if (SUHOSIN_G(eval_whitelist) != NULL) {
@@ -129,6 +130,12 @@ diff -uNr suhosin-0.9.33/execute.c suhosin-0.9.33.php54/execute.c
  		    retval = 0;
  		}
  	}
+ 
++	efree(lcname);
++
+ 	RETVAL_BOOL(retval);
+ 	return (1);
+ }
 @@ -1344,7 +1355,7 @@
  
      suhosin_SHA256Init(&context);
@@ -190,7 +197,7 @@ diff -uNr suhosin-0.9.33/execute.c suhosin-0.9.33.php54/execute.c
  #endif
 diff -uNr suhosin-0.9.33/ifilter.c suhosin-0.9.33.php54/ifilter.c
 --- suhosin-0.9.33/ifilter.c	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php54/ifilter.c	Fri Mar 16 13:26:42 2012
++++ suhosin-0.9.33.php54/ifilter.c	Fri Apr 13 16:34:47 2012
 @@ -146,7 +146,7 @@
  	if (zend_hash_find(arr, key, klen, (void **) &tzval) == SUCCESS &&
  			Z_TYPE_PP(tzval) == IS_STRING) {
@@ -220,7 +227,7 @@ diff -uNr suhosin-0.9.33/ifilter.c suhosin-0.9.33.php54/ifilter.c
  }
 diff -uNr suhosin-0.9.33/log.c suhosin-0.9.33.php54/log.c
 --- suhosin-0.9.33/log.c	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php54/log.c	Fri Mar 16 13:26:42 2012
++++ suhosin-0.9.33.php54/log.c	Fri Apr 13 16:34:47 2012
 @@ -31,11 +31,18 @@
  #include "SAPI.h"
  #include "ext/standard/datetime.h"
@@ -283,7 +290,7 @@ diff -uNr suhosin-0.9.33/log.c suhosin-0.9.33.php54/log.c
  #ifdef ZEND_ENGINE_2
 diff -uNr suhosin-0.9.33/php_suhosin.h suhosin-0.9.33.php54/php_suhosin.h
 --- suhosin-0.9.33/php_suhosin.h	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php54/php_suhosin.h	Fri Mar 16 13:26:42 2012
++++ suhosin-0.9.33.php54/php_suhosin.h	Fri Apr 13 16:34:47 2012
 @@ -308,7 +308,7 @@
  char *suhosin_cookie_decryptor(TSRMLS_D);
  char *suhosin_getenv(char *name, size_t name_len TSRMLS_DC);
@@ -295,7 +302,7 @@ diff -uNr suhosin-0.9.33/php_suhosin.h suhosin-0.9.33.php54/php_suhosin.h
  void suhosin_unhook_header_handler();
 diff -uNr suhosin-0.9.33/post_handler.c suhosin-0.9.33.php54/post_handler.c
 --- suhosin-0.9.33/post_handler.c	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php54/post_handler.c	Fri Mar 16 13:26:42 2012
++++ suhosin-0.9.33.php54/post_handler.c	Fri Apr 13 16:34:47 2012
 @@ -148,10 +148,10 @@
  
  	/* we need to tell suhosin patch that there is a new valid destructor */
@@ -326,7 +333,7 @@ diff -uNr suhosin-0.9.33/post_handler.c suhosin-0.9.33.php54/post_handler.c
 -
 diff -uNr suhosin-0.9.33/rfc1867.c suhosin-0.9.33.php54/rfc1867.c
 --- suhosin-0.9.33/rfc1867.c	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php54/rfc1867.c	Fri Mar 16 13:26:42 2012
++++ suhosin-0.9.33.php54/rfc1867.c	Fri Apr 13 16:34:47 2012
 @@ -35,6 +35,7 @@
  #include "suhosin_rfc1867.h"
  #include "php_ini.h"
@@ -376,7 +383,7 @@ diff -uNr suhosin-0.9.33/rfc1867.c suhosin-0.9.33.php54/rfc1867.c
  				tmp = strrchr(s, '\'');
 diff -uNr suhosin-0.9.33/session.c suhosin-0.9.33.php54/session.c
 --- suhosin-0.9.33/session.c	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php54/session.c	Fri Mar 16 13:26:42 2012
++++ suhosin-0.9.33.php54/session.c	Fri Apr 13 16:41:07 2012
 @@ -1,19 +1,19 @@
  /*
    +----------------------------------------------------------------------+
@@ -415,7 +422,114 @@ diff -uNr suhosin-0.9.33/session.c suhosin-0.9.33.php54/session.c
  
  #include <fcntl.h>
  
-@@ -294,6 +295,7 @@
+@@ -233,9 +234,94 @@
+     zend_bool invalid_session_id;   /* allows the driver to report about an invalid session id and request id regeneration */
+ } php_ps_globals_53;
+ 
++#if PHP_VERSION_ID >= 50400
++typedef struct _php_session_rfc1867_progress_54 {
++
++	size_t    sname_len;
++	zval      sid;
++	smart_str key;
++
++	long      update_step;
++	long      next_update;
++	double    next_update_time;
++	zend_bool cancel_upload;
++	zend_bool apply_trans_sid;
++	size_t    content_length;
++
++	zval      *data;                 /* the array exported to session data */
++	zval      *post_bytes_processed; /* data["bytes_processed"] */
++	zval      *files;                /* data["files"] array */
++	zval      *current_file;         /* array of currently uploading file */
++	zval      *current_file_bytes_processed;
++} php_session_rfc1867_progress_54;
++
++typedef struct _php_ps_globals_54 {
++    char *save_path;
++    char *session_name;
++    char *id;
++    char *extern_referer_chk;
++    char *entropy_file;
++    char *cache_limiter;
++    long entropy_length;
++    long cookie_lifetime;
++    char *cookie_path;
++    char *cookie_domain;
++    zend_bool  cookie_secure;
++    zend_bool  cookie_httponly;
++    ps_module *mod;
++    ps_module *default_mod;
++    void *mod_data;
++    php_session_status session_status;
++    long gc_probability;
++    long gc_divisor;
++    long gc_maxlifetime;
++    int module_number;
++    long cache_expire;
++    union {
++        zval *names[6];
++        struct {
++            zval *ps_open;
++            zval *ps_close;
++            zval *ps_read;
++            zval *ps_write;
++            zval *ps_destroy;
++            zval *ps_gc;
++        } name;
++    } mod_user_names;
++    int mod_user_implemented;
++    int mod_user_is_open;
++    const struct ps_serializer_struct *serializer;
++    zval *http_session_vars;
++    zend_bool auto_start;
++    zend_bool use_cookies;
++    zend_bool use_only_cookies;
++    zend_bool use_trans_sid;    /* contains the INI value of whether to use trans-sid */
++    zend_bool apply_trans_sid;  /* whether or not to enable trans-sid for the current request */
++
++    long hash_func;
++#if defined(HAVE_HASH_EXT) && !defined(COMPILE_DL_HASH)
++    php_hash_ops *hash_ops;
++#endif
++    long hash_bits_per_character;
++    int send_cookie;
++    int define_sid;
++    zend_bool invalid_session_id;   /* allows the driver to report about an invalid session id and request id regeneration */
++
++    php_session_rfc1867_progress_54 *rfc1867_progress;
++    zend_bool rfc1867_enabled; /* session.upload_progress.enabled */
++    zend_bool rfc1867_cleanup; /* session.upload_progress.cleanup */
++    smart_str rfc1867_prefix;  /* session.upload_progress.prefix */
++    smart_str rfc1867_name;    /* session.upload_progress.name */
++    long rfc1867_freq;         /* session.upload_progress.freq */
++    double rfc1867_min_freq;   /* session.upload_progress.min_freq */
++} php_ps_globals_54;
++#endif
++
+ #ifdef ZTS
+ static ts_rsrc_id session_globals_id = 0;
+-# if (PHP_MAJOR_VERSION == 5 && PHP_MINOR_VERSION >= 3)
++# if (PHP_MAJOR_VERSION == 5 && PHP_MINOR_VERSION >= 4)
++#  define SESSION_G(v) TSRMG(session_globals_id, php_ps_globals_54 *, v)
++# elif (PHP_MAJOR_VERSION == 5 && PHP_MINOR_VERSION >= 3)
+ #  define SESSION_G(v) TSRMG(session_globals_id, php_ps_globals_53 *, v)
+ # elif (PHP_MAJOR_VERSION == 5 && PHP_MINOR_VERSION >= 2)
+ #  define SESSION_G(v) TSRMG(session_globals_id, php_ps_globals_52 *, v)
+@@ -247,7 +333,9 @@
+     UNSUPPORTED PHP VERSION
+ # endif
+ #else
+-# if (PHP_MAJOR_VERSION == 5 && PHP_MINOR_VERSION >= 3)
++# if (PHP_MAJOR_VERSION == 5 && PHP_MINOR_VERSION >= 4)
++static php_ps_globals_54 *session_globals = NULL;
++# elif (PHP_MAJOR_VERSION == 5 && PHP_MINOR_VERSION >= 3)
+ static php_ps_globals_53 *session_globals = NULL;
+ # elif (PHP_MAJOR_VERSION == 5 && PHP_MINOR_VERSION >= 2)
+ static php_ps_globals_52 *session_globals = NULL;
+@@ -294,6 +382,7 @@
      if (SESSION_G(http_session_vars) && SESSION_G(http_session_vars)->type == IS_ARRAY) {
          ret = zend_hash_find(Z_ARRVAL_P(SESSION_G(http_session_vars)), name, namelen + 1, (void **) state_var);
  
@@ -423,7 +537,7 @@ diff -uNr suhosin-0.9.33/session.c suhosin-0.9.33.php54/session.c
          /* If register_globals is enabled, and
           * if there is an entry for the slot in $_SESSION, and
           * if that entry is still set to NULL, and
-@@ -307,6 +309,7 @@
+@@ -307,6 +396,7 @@
                  *state_var = tmp;
              }
          }
@@ -431,7 +545,7 @@ diff -uNr suhosin-0.9.33/session.c suhosin-0.9.33.php54/session.c
      }
      return ret;
  }
-@@ -426,7 +429,7 @@
+@@ -426,7 +516,7 @@
      }
      
      /* store ip value */
@@ -440,7 +554,7 @@ diff -uNr suhosin-0.9.33/session.c suhosin-0.9.33.php54/session.c
      
      /* store check value */
      crypted[8] = check & 0xff;
-@@ -544,7 +547,7 @@
+@@ -544,7 +634,7 @@
          if (check_ra > 4) {
              check_ra = 4;
          }
@@ -451,7 +565,7 @@ diff -uNr suhosin-0.9.33/session.c suhosin-0.9.33.php54/session.c
          }
 diff -uNr suhosin-0.9.33/sha256.c suhosin-0.9.33.php54/sha256.c
 --- suhosin-0.9.33/sha256.c	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php54/sha256.c	Fri Mar 16 13:26:42 2012
++++ suhosin-0.9.33.php54/sha256.c	Fri Apr 13 16:34:47 2012
 @@ -86,9 +86,11 @@
  		return;
  	}
@@ -475,7 +589,7 @@ diff -uNr suhosin-0.9.33/sha256.c suhosin-0.9.33.php54/sha256.c
  	{NULL, NULL, NULL}
 diff -uNr suhosin-0.9.33/suhosin.c suhosin-0.9.33.php54/suhosin.c
 --- suhosin-0.9.33/suhosin.c	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php54/suhosin.c	Fri Mar 16 13:26:42 2012
++++ suhosin-0.9.33.php54/suhosin.c	Fri Apr 13 16:34:47 2012
 @@ -189,9 +189,11 @@
  
  static void suhosin_shutdown(zend_extension *extension)
@@ -540,7 +654,7 @@ diff -uNr suhosin-0.9.33/suhosin.c suhosin-0.9.33.php54/suhosin.c
  	suhosin_register_cookie_variable(var, &new_entry, track_vars_array TSRMLS_CC);
 diff -uNr suhosin-0.9.33/treat_data.c suhosin-0.9.33.php54/treat_data.c
 --- suhosin-0.9.33/treat_data.c	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php54/treat_data.c	Fri Mar 16 13:26:42 2012
++++ suhosin-0.9.33.php54/treat_data.c	Fri Apr 13 16:39:29 2012
 @@ -194,7 +194,12 @@
  
  void suhosin_hook_treat_data()
@@ -548,7 +662,7 @@ diff -uNr suhosin-0.9.33/treat_data.c suhosin-0.9.33.php54/treat_data.c
 +#if PHP_VERSION_ID < 50400
  	sapi_register_treat_data(suhosin_treat_data);
 +#else /* TODO - This needs TSRMLS_DC passed to the function and TSRMLS_FETCH() removed */
-+    TSRMLS_FETCH();
++	TSRMLS_FETCH();
 +	sapi_register_treat_data(suhosin_treat_data TSRMLS_CC);
 +#endif
  #ifdef ZEND_ENGINE_2
