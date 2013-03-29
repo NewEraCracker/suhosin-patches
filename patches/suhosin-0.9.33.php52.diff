@@ -1,6 +1,6 @@
 diff -uNr suhosin-0.9.33/config.m4 suhosin-0.9.33.php52/config.m4
 --- suhosin-0.9.33/config.m4	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php52/config.m4	Mon Jul 30 18:33:28 2012
++++ suhosin-0.9.33.php52/config.m4	Fri Mar 29 15:16:19 2013
 @@ -5,5 +5,5 @@
  [  --enable-suhosin        Enable suhosin support])
  
@@ -10,7 +10,7 @@ diff -uNr suhosin-0.9.33/config.m4 suhosin-0.9.33.php52/config.m4
  fi
 diff -uNr suhosin-0.9.33/config.w32 suhosin-0.9.33.php52/config.w32
 --- suhosin-0.9.33/config.w32	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php52/config.w32	Mon Jul 30 18:33:28 2012
++++ suhosin-0.9.33.php52/config.w32	Fri Mar 29 15:16:19 2013
 @@ -4,5 +4,8 @@
  ARG_ENABLE("suhosin", "whether to enable suhosin support", "yes");
  
@@ -23,7 +23,7 @@ diff -uNr suhosin-0.9.33/config.w32 suhosin-0.9.33.php52/config.w32
  }
 diff -uNr suhosin-0.9.33/crypt.c suhosin-0.9.33.php52/crypt.c
 --- suhosin-0.9.33/crypt.c	Thu Jan  1 00:00:00 1970
-+++ suhosin-0.9.33.php52/crypt.c	Mon Jul 30 18:33:28 2012
++++ suhosin-0.9.33.php52/crypt.c	Fri Mar 29 15:16:19 2013
 @@ -0,0 +1,214 @@
 +/*
 +  +----------------------------------------------------------------------+
@@ -241,7 +241,7 @@ diff -uNr suhosin-0.9.33/crypt.c suhosin-0.9.33.php52/crypt.c
 +
 diff -uNr suhosin-0.9.33/crypt_blowfish.c suhosin-0.9.33.php52/crypt_blowfish.c
 --- suhosin-0.9.33/crypt_blowfish.c	Thu Jan  1 00:00:00 1970
-+++ suhosin-0.9.33.php52/crypt_blowfish.c	Mon Jul 30 18:33:28 2012
++++ suhosin-0.9.33.php52/crypt_blowfish.c	Fri Mar 29 15:16:19 2013
 @@ -0,0 +1,751 @@
 +/*
 +  $Id: crypt_blowfish.c,v 1.1.1.1 2007-11-28 01:15:35 sesser Exp $ 
@@ -996,7 +996,7 @@ diff -uNr suhosin-0.9.33/crypt_blowfish.c suhosin-0.9.33.php52/crypt_blowfish.c
 +}
 diff -uNr suhosin-0.9.33/crypt_md5.c suhosin-0.9.33.php52/crypt_md5.c
 --- suhosin-0.9.33/crypt_md5.c	Thu Jan  1 00:00:00 1970
-+++ suhosin-0.9.33.php52/crypt_md5.c	Mon Jul 30 18:33:28 2012
++++ suhosin-0.9.33.php52/crypt_md5.c	Fri Mar 29 15:16:19 2013
 @@ -0,0 +1,163 @@
 +/*
 +   +----------------------------------------------------------------------+
@@ -1163,7 +1163,7 @@ diff -uNr suhosin-0.9.33/crypt_md5.c suhosin-0.9.33.php52/crypt_md5.c
 +
 diff -uNr suhosin-0.9.33/crypt_md5.h suhosin-0.9.33.php52/crypt_md5.h
 --- suhosin-0.9.33/crypt_md5.h	Thu Jan  1 00:00:00 1970
-+++ suhosin-0.9.33.php52/crypt_md5.h	Mon Jul 30 18:33:28 2012
++++ suhosin-0.9.33.php52/crypt_md5.h	Fri Mar 29 15:16:19 2013
 @@ -0,0 +1,37 @@
 +/*
 +   +----------------------------------------------------------------------+
@@ -1205,7 +1205,7 @@ diff -uNr suhosin-0.9.33/crypt_md5.h suhosin-0.9.33.php52/crypt_md5.h
 \ No newline at end of file
 diff -uNr suhosin-0.9.33/crypt_win32.c suhosin-0.9.33.php52/crypt_win32.c
 --- suhosin-0.9.33/crypt_win32.c	Thu Jan  1 00:00:00 1970
-+++ suhosin-0.9.33.php52/crypt_win32.c	Mon Jul 30 18:33:28 2012
++++ suhosin-0.9.33.php52/crypt_win32.c	Fri Mar 29 15:16:19 2013
 @@ -0,0 +1,355 @@
 +/*
 +   +----------------------------------------------------------------------+
@@ -1564,7 +1564,7 @@ diff -uNr suhosin-0.9.33/crypt_win32.c suhosin-0.9.33.php52/crypt_win32.c
 +}
 diff -uNr suhosin-0.9.33/crypt_win32.h suhosin-0.9.33.php52/crypt_win32.h
 --- suhosin-0.9.33/crypt_win32.h	Thu Jan  1 00:00:00 1970
-+++ suhosin-0.9.33.php52/crypt_win32.h	Mon Jul 30 18:33:28 2012
++++ suhosin-0.9.33.php52/crypt_win32.h	Fri Mar 29 15:16:19 2013
 @@ -0,0 +1,60 @@
 +/*
 +   +----------------------------------------------------------------------+
@@ -1628,7 +1628,7 @@ diff -uNr suhosin-0.9.33/crypt_win32.h suhosin-0.9.33.php52/crypt_win32.h
 +#endif /* _ENCRYPT_H_ */
 diff -uNr suhosin-0.9.33/ex_imp.c suhosin-0.9.33.php52/ex_imp.c
 --- suhosin-0.9.33/ex_imp.c	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php52/ex_imp.c	Mon Jul 30 18:33:28 2012
++++ suhosin-0.9.33.php52/ex_imp.c	Fri Mar 29 15:16:19 2013
 @@ -727,7 +727,7 @@
  
  /* {{{ suhosin_ex_imp_functions[]
@@ -1640,7 +1640,7 @@ diff -uNr suhosin-0.9.33/ex_imp.c suhosin-0.9.33.php52/ex_imp.c
  	{NULL, NULL, NULL}
 diff -uNr suhosin-0.9.33/execute.c suhosin-0.9.33.php52/execute.c
 --- suhosin-0.9.33/execute.c	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php52/execute.c	Mon Jul 30 18:37:28 2012
++++ suhosin-0.9.33.php52/execute.c	Fri Mar 29 15:16:19 2013
 @@ -152,7 +152,7 @@
  			t = h = (h == NULL) ? h2 : ( (h2 == NULL) ? h : ( (h < h2) ? h : h2 ) );
  			if (h == NULL) break;
@@ -1669,8 +1669,7 @@ diff -uNr suhosin-0.9.33/execute.c suhosin-0.9.33.php52/execute.c
  	char *lcname;
  	zend_bool retval;
 -	int func_name_len;
--	
-+
+ 	
  #ifndef PHP_ATLEAST_5_3
  	if (ZEND_NUM_ARGS()!=1 || zend_get_parameters_ex(1, &function_name)==FAILURE) {
  		ZEND_WRONG_PARAM_COUNT_WITH_RETVAL(1);
@@ -1724,8 +1723,7 @@ diff -uNr suhosin-0.9.33/execute.c suhosin-0.9.33.php52/execute.c
  			}
  		}
  	}
--	
-+
+ 	
  	if (SUHOSIN_G(func_whitelist) != NULL) {
 -		if (!zend_hash_exists(SUHOSIN_G(func_whitelist), lcname, func_name_len+1)) {
 +		if (!zend_hash_exists(SUHOSIN_G(func_whitelist), name, name_len+1)) {
@@ -1763,7 +1761,7 @@ diff -uNr suhosin-0.9.33/execute.c suhosin-0.9.33.php52/execute.c
          int argc = ZEND_NUM_ARGS();
 diff -uNr suhosin-0.9.33/ifilter.c suhosin-0.9.33.php52/ifilter.c
 --- suhosin-0.9.33/ifilter.c	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php52/ifilter.c	Mon Jul 30 18:33:28 2012
++++ suhosin-0.9.33.php52/ifilter.c	Fri Mar 29 15:16:20 2013
 @@ -146,7 +146,7 @@
  	if (zend_hash_find(arr, key, klen, (void **) &tzval) == SUCCESS &&
  			Z_TYPE_PP(tzval) == IS_STRING) {
@@ -1793,7 +1791,7 @@ diff -uNr suhosin-0.9.33/ifilter.c suhosin-0.9.33.php52/ifilter.c
  }
 diff -uNr suhosin-0.9.33/log.c suhosin-0.9.33.php52/log.c
 --- suhosin-0.9.33/log.c	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php52/log.c	Mon Jul 30 18:33:28 2012
++++ suhosin-0.9.33.php52/log.c	Fri Mar 29 15:16:20 2013
 @@ -36,6 +36,12 @@
  #include <sys/socket.h>
  #endif
@@ -1809,7 +1807,7 @@ diff -uNr suhosin-0.9.33/log.c suhosin-0.9.33.php52/log.c
  #endif
 diff -uNr suhosin-0.9.33/php_suhosin.h suhosin-0.9.33.php52/php_suhosin.h
 --- suhosin-0.9.33/php_suhosin.h	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php52/php_suhosin.h	Mon Jul 30 18:33:28 2012
++++ suhosin-0.9.33.php52/php_suhosin.h	Fri Mar 29 15:16:20 2013
 @@ -308,12 +308,13 @@
  char *suhosin_cookie_decryptor(TSRMLS_D);
  char *suhosin_getenv(char *name, size_t name_len TSRMLS_DC);
@@ -1827,7 +1825,7 @@ diff -uNr suhosin-0.9.33/php_suhosin.h suhosin-0.9.33.php52/php_suhosin.h
  void suhosin_hook_treat_data();
 diff -uNr suhosin-0.9.33/post_handler.c suhosin-0.9.33.php52/post_handler.c
 --- suhosin-0.9.33/post_handler.c	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php52/post_handler.c	Mon Jul 30 18:33:28 2012
++++ suhosin-0.9.33.php52/post_handler.c	Fri Mar 29 15:16:20 2013
 @@ -148,10 +148,10 @@
  
  	/* we need to tell suhosin patch that there is a new valid destructor */
@@ -1858,37 +1856,7 @@ diff -uNr suhosin-0.9.33/post_handler.c suhosin-0.9.33.php52/post_handler.c
 -
 diff -uNr suhosin-0.9.33/session.c suhosin-0.9.33.php52/session.c
 --- suhosin-0.9.33/session.c	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php52/session.c	Mon Jul 30 18:33:28 2012
-@@ -1,19 +1,19 @@
- /*
-   +----------------------------------------------------------------------+
--  | Suhosin Version 1                            |
-+  | Suhosin Version 1                                                    |
-   +----------------------------------------------------------------------+
--  | Copyright (c) 2006-2007 The Hardened-PHP Project             |
--  | Copyright (c) 2007-2012 SektionEins GmbH                 |
-+  | Copyright (c) 2006-2007 The Hardened-PHP Project                     |
-+  | Copyright (c) 2007-2012 SektionEins GmbH                             |
-   +----------------------------------------------------------------------+
--  | This source file is subject to version 3.01 of the PHP license,  |
--  | that is bundled with this package in the file LICENSE, and is    |
--  | available through the world-wide-web at the following url:       |
--  | http://www.php.net/license/3_01.txt                  |
-+  | This source file is subject to version 3.01 of the PHP license,      |
-+  | that is bundled with this package in the file LICENSE, and is        |
-+  | available through the world-wide-web at the following url:           |
-+  | http://www.php.net/license/3_01.txt                                  |
-   | If you did not receive a copy of the PHP license and are unable to   |
--  | obtain it through the world-wide-web, please send a note to      |
--  | license@php.net so we can mail you a copy immediately.       |
-+  | obtain it through the world-wide-web, please send a note to          |
-+  | license@php.net so we can mail you a copy immediately.               |
-   +----------------------------------------------------------------------+
--  | Author: Stefan Esser <sesser@sektioneins.de>             |
-+  | Author: Stefan Esser <sesser@sektioneins.de>                         |
-   +----------------------------------------------------------------------+
- */
- /*
++++ suhosin-0.9.33.php52/session.c	Fri Mar 29 15:16:20 2013
 @@ -426,7 +426,7 @@
      }
      
@@ -1907,9 +1875,26 @@ diff -uNr suhosin-0.9.33/session.c suhosin-0.9.33.php52/session.c
          if (memcmp(buf, decrypted+4, check_ra) != 0) {
              goto error_out;
          }
+@@ -869,7 +869,7 @@
+ 
+     /* increase session identifier entropy */
+     if (SESSION_G(entropy_length) == 0 || SESSION_G(entropy_file) == NULL) {
+-        
++#ifndef PHP_WIN32
+         /* ensure that /dev/urandom exists */
+         int fd = VCWD_OPEN("/dev/urandom", O_RDONLY);
+         if (fd >= 0) {
+@@ -877,6 +877,7 @@
+             SESSION_G(entropy_length) = 16;
+             SESSION_G(entropy_file) = pestrdup("/dev/urandom", 1);
+         }
++#endif
+     }
+ }
+ 
 diff -uNr suhosin-0.9.33/sha256.c suhosin-0.9.33.php52/sha256.c
 --- suhosin-0.9.33/sha256.c	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php52/sha256.c	Mon Jul 30 18:33:28 2012
++++ suhosin-0.9.33.php52/sha256.c	Fri Mar 29 15:16:20 2013
 @@ -392,7 +392,7 @@
  
  /* {{{ suhosin_sha256_functions[]
@@ -1921,7 +1906,7 @@ diff -uNr suhosin-0.9.33/sha256.c suhosin-0.9.33.php52/sha256.c
  	{NULL, NULL, NULL}
 diff -uNr suhosin-0.9.33/suhosin.c suhosin-0.9.33.php52/suhosin.c
 --- suhosin-0.9.33/suhosin.c	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php52/suhosin.c	Mon Jul 30 18:33:28 2012
++++ suhosin-0.9.33.php52/suhosin.c	Fri Mar 29 15:16:20 2013
 @@ -189,9 +189,11 @@
  
  static void suhosin_shutdown(zend_extension *extension)

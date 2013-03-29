@@ -1,6 +1,6 @@
 diff -uNr suhosin-0.9.33/ex_imp.c suhosin-0.9.33.php53/ex_imp.c
 --- suhosin-0.9.33/ex_imp.c	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php53/ex_imp.c	Mon Jul 30 18:33:35 2012
++++ suhosin-0.9.33.php53/ex_imp.c	Fri Mar 29 15:16:21 2013
 @@ -727,7 +727,7 @@
  
  /* {{{ suhosin_ex_imp_functions[]
@@ -12,7 +12,7 @@ diff -uNr suhosin-0.9.33/ex_imp.c suhosin-0.9.33.php53/ex_imp.c
  	{NULL, NULL, NULL}
 diff -uNr suhosin-0.9.33/execute.c suhosin-0.9.33.php53/execute.c
 --- suhosin-0.9.33/execute.c	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php53/execute.c	Mon Jul 30 18:37:13 2012
++++ suhosin-0.9.33.php53/execute.c	Fri Mar 29 15:16:21 2013
 @@ -152,7 +152,7 @@
  			t = h = (h == NULL) ? h2 : ( (h2 == NULL) ? h : ( (h < h2) ? h : h2 ) );
  			if (h == NULL) break;
@@ -41,8 +41,7 @@ diff -uNr suhosin-0.9.33/execute.c suhosin-0.9.33.php53/execute.c
  	char *lcname;
  	zend_bool retval;
 -	int func_name_len;
--	
-+
+ 	
  #ifndef PHP_ATLEAST_5_3
  	if (ZEND_NUM_ARGS()!=1 || zend_get_parameters_ex(1, &function_name)==FAILURE) {
  		ZEND_WRONG_PARAM_COUNT_WITH_RETVAL(1);
@@ -96,8 +95,7 @@ diff -uNr suhosin-0.9.33/execute.c suhosin-0.9.33.php53/execute.c
  			}
  		}
  	}
--	
-+
+ 	
  	if (SUHOSIN_G(func_whitelist) != NULL) {
 -		if (!zend_hash_exists(SUHOSIN_G(func_whitelist), lcname, func_name_len+1)) {
 +		if (!zend_hash_exists(SUHOSIN_G(func_whitelist), name, name_len+1)) {
@@ -135,7 +133,7 @@ diff -uNr suhosin-0.9.33/execute.c suhosin-0.9.33.php53/execute.c
          int argc = ZEND_NUM_ARGS();
 diff -uNr suhosin-0.9.33/ifilter.c suhosin-0.9.33.php53/ifilter.c
 --- suhosin-0.9.33/ifilter.c	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php53/ifilter.c	Mon Jul 30 18:33:35 2012
++++ suhosin-0.9.33.php53/ifilter.c	Fri Mar 29 15:16:21 2013
 @@ -146,7 +146,7 @@
  	if (zend_hash_find(arr, key, klen, (void **) &tzval) == SUCCESS &&
  			Z_TYPE_PP(tzval) == IS_STRING) {
@@ -165,7 +163,7 @@ diff -uNr suhosin-0.9.33/ifilter.c suhosin-0.9.33.php53/ifilter.c
  }
 diff -uNr suhosin-0.9.33/log.c suhosin-0.9.33.php53/log.c
 --- suhosin-0.9.33/log.c	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php53/log.c	Mon Jul 30 18:33:35 2012
++++ suhosin-0.9.33.php53/log.c	Fri Mar 29 15:16:21 2013
 @@ -36,6 +36,12 @@
  #include <sys/socket.h>
  #endif
@@ -181,7 +179,7 @@ diff -uNr suhosin-0.9.33/log.c suhosin-0.9.33.php53/log.c
  #endif
 diff -uNr suhosin-0.9.33/php_suhosin.h suhosin-0.9.33.php53/php_suhosin.h
 --- suhosin-0.9.33/php_suhosin.h	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php53/php_suhosin.h	Mon Jul 30 18:33:35 2012
++++ suhosin-0.9.33.php53/php_suhosin.h	Fri Mar 29 15:16:22 2013
 @@ -308,7 +308,7 @@
  char *suhosin_cookie_decryptor(TSRMLS_D);
  char *suhosin_getenv(char *name, size_t name_len TSRMLS_DC);
@@ -193,7 +191,7 @@ diff -uNr suhosin-0.9.33/php_suhosin.h suhosin-0.9.33.php53/php_suhosin.h
  void suhosin_unhook_header_handler();
 diff -uNr suhosin-0.9.33/post_handler.c suhosin-0.9.33.php53/post_handler.c
 --- suhosin-0.9.33/post_handler.c	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php53/post_handler.c	Mon Jul 30 18:33:35 2012
++++ suhosin-0.9.33.php53/post_handler.c	Fri Mar 29 15:16:22 2013
 @@ -148,10 +148,10 @@
  
  	/* we need to tell suhosin patch that there is a new valid destructor */
@@ -224,37 +222,7 @@ diff -uNr suhosin-0.9.33/post_handler.c suhosin-0.9.33.php53/post_handler.c
 -
 diff -uNr suhosin-0.9.33/session.c suhosin-0.9.33.php53/session.c
 --- suhosin-0.9.33/session.c	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php53/session.c	Mon Jul 30 18:33:35 2012
-@@ -1,19 +1,19 @@
- /*
-   +----------------------------------------------------------------------+
--  | Suhosin Version 1                            |
-+  | Suhosin Version 1                                                    |
-   +----------------------------------------------------------------------+
--  | Copyright (c) 2006-2007 The Hardened-PHP Project             |
--  | Copyright (c) 2007-2012 SektionEins GmbH                 |
-+  | Copyright (c) 2006-2007 The Hardened-PHP Project                     |
-+  | Copyright (c) 2007-2012 SektionEins GmbH                             |
-   +----------------------------------------------------------------------+
--  | This source file is subject to version 3.01 of the PHP license,  |
--  | that is bundled with this package in the file LICENSE, and is    |
--  | available through the world-wide-web at the following url:       |
--  | http://www.php.net/license/3_01.txt                  |
-+  | This source file is subject to version 3.01 of the PHP license,      |
-+  | that is bundled with this package in the file LICENSE, and is        |
-+  | available through the world-wide-web at the following url:           |
-+  | http://www.php.net/license/3_01.txt                                  |
-   | If you did not receive a copy of the PHP license and are unable to   |
--  | obtain it through the world-wide-web, please send a note to      |
--  | license@php.net so we can mail you a copy immediately.       |
-+  | obtain it through the world-wide-web, please send a note to          |
-+  | license@php.net so we can mail you a copy immediately.               |
-   +----------------------------------------------------------------------+
--  | Author: Stefan Esser <sesser@sektioneins.de>             |
-+  | Author: Stefan Esser <sesser@sektioneins.de>                         |
-   +----------------------------------------------------------------------+
- */
- /*
++++ suhosin-0.9.33.php53/session.c	Fri Mar 29 15:16:22 2013
 @@ -426,7 +426,7 @@
      }
      
@@ -273,9 +241,26 @@ diff -uNr suhosin-0.9.33/session.c suhosin-0.9.33.php53/session.c
          if (memcmp(buf, decrypted+4, check_ra) != 0) {
              goto error_out;
          }
+@@ -869,7 +869,7 @@
+ 
+     /* increase session identifier entropy */
+     if (SESSION_G(entropy_length) == 0 || SESSION_G(entropy_file) == NULL) {
+-        
++#ifndef PHP_WIN32
+         /* ensure that /dev/urandom exists */
+         int fd = VCWD_OPEN("/dev/urandom", O_RDONLY);
+         if (fd >= 0) {
+@@ -877,6 +877,7 @@
+             SESSION_G(entropy_length) = 16;
+             SESSION_G(entropy_file) = pestrdup("/dev/urandom", 1);
+         }
++#endif
+     }
+ }
+ 
 diff -uNr suhosin-0.9.33/sha256.c suhosin-0.9.33.php53/sha256.c
 --- suhosin-0.9.33/sha256.c	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php53/sha256.c	Mon Jul 30 18:33:35 2012
++++ suhosin-0.9.33.php53/sha256.c	Fri Mar 29 15:16:22 2013
 @@ -392,7 +392,7 @@
  
  /* {{{ suhosin_sha256_functions[]
@@ -287,7 +272,7 @@ diff -uNr suhosin-0.9.33/sha256.c suhosin-0.9.33.php53/sha256.c
  	{NULL, NULL, NULL}
 diff -uNr suhosin-0.9.33/suhosin.c suhosin-0.9.33.php53/suhosin.c
 --- suhosin-0.9.33/suhosin.c	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php53/suhosin.c	Mon Jul 30 18:33:35 2012
++++ suhosin-0.9.33.php53/suhosin.c	Fri Mar 29 15:16:22 2013
 @@ -189,9 +189,11 @@
  
  static void suhosin_shutdown(zend_extension *extension)
