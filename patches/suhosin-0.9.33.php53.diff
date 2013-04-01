@@ -1,6 +1,6 @@
 diff -uNr suhosin-0.9.33/ex_imp.c suhosin-0.9.33.php53/ex_imp.c
 --- suhosin-0.9.33/ex_imp.c	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php53/ex_imp.c	Fri Mar 29 15:16:21 2013
++++ suhosin-0.9.33.php53/ex_imp.c	Mon Apr  1 21:42:32 2013
 @@ -727,7 +727,7 @@
  
  /* {{{ suhosin_ex_imp_functions[]
@@ -12,7 +12,7 @@ diff -uNr suhosin-0.9.33/ex_imp.c suhosin-0.9.33.php53/ex_imp.c
  	{NULL, NULL, NULL}
 diff -uNr suhosin-0.9.33/execute.c suhosin-0.9.33.php53/execute.c
 --- suhosin-0.9.33/execute.c	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php53/execute.c	Fri Mar 29 15:16:21 2013
++++ suhosin-0.9.33.php53/execute.c	Mon Apr  1 21:42:32 2013
 @@ -152,7 +152,7 @@
  			t = h = (h == NULL) ? h2 : ( (h2 == NULL) ? h : ( (h < h2) ? h : h2 ) );
  			if (h == NULL) break;
@@ -31,7 +31,30 @@ diff -uNr suhosin-0.9.33/execute.c suhosin-0.9.33.php53/execute.c
  				t--;
  			}
  
-@@ -1072,35 +1072,34 @@
+@@ -626,12 +626,20 @@
+ {
+ 	zval **regex,
+ 	     **replace,
+-	     **subject,
+-	     **limit;
++	     **subject;
+ 
++#ifndef PHP_ATLEAST_5_3
++	zval **limit;
+ 	if (ZEND_NUM_ARGS() < 3 || zend_get_parameters_ex(3, &regex, &replace, &subject, &limit) == FAILURE) {
+ 		return (0);
+ 	}
++#else
++	long limit = -1;
++	zval **zcount = NULL;
++	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "ZZZ|lZ", &regex, &replace, &subject, &limit, &zcount) == FAILURE) {
++		return (1);
++	}
++#endif
+ 		
+ 	if (Z_TYPE_PP(regex) == IS_ARRAY) {
+ 		zval	**regex_entry;
+@@ -1072,35 +1080,34 @@
  #ifndef PHP_ATLEAST_5_3
  	zval **function_name;
  #endif
@@ -80,7 +103,7 @@ diff -uNr suhosin-0.9.33/execute.c suhosin-0.9.33.php53/execute.c
  
  	/*
  	 * A bit of a hack, but not a bad one: we see if the handler of the function
-@@ -1114,26 +1113,28 @@
+@@ -1114,26 +1121,28 @@
  	/* Now check if function is forbidden by Suhosin */
  	if (SUHOSIN_G(in_code_type) == SUHOSIN_EVAL) {
  		if (SUHOSIN_G(eval_whitelist) != NULL) {
@@ -113,7 +136,7 @@ diff -uNr suhosin-0.9.33/execute.c suhosin-0.9.33.php53/execute.c
  	RETVAL_BOOL(retval);
  	return (1);
  }
-@@ -1344,7 +1345,7 @@
+@@ -1344,7 +1353,7 @@
  
      suhosin_SHA256Init(&context);
  	suhosin_SHA256Update(&context, (void *) seedbuf, sizeof(php_uint32) * 8);
@@ -122,7 +145,7 @@ diff -uNr suhosin-0.9.33/execute.c suhosin-0.9.33.php53/execute.c
  }
  /* }}} */
  
-@@ -1501,7 +1502,7 @@
+@@ -1501,7 +1510,7 @@
  {
  #ifdef PHP_ATLEAST_5_3
  	if (zend_parse_parameters_none() == FAILURE) {
@@ -133,7 +156,7 @@ diff -uNr suhosin-0.9.33/execute.c suhosin-0.9.33.php53/execute.c
          int argc = ZEND_NUM_ARGS();
 diff -uNr suhosin-0.9.33/ifilter.c suhosin-0.9.33.php53/ifilter.c
 --- suhosin-0.9.33/ifilter.c	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php53/ifilter.c	Fri Mar 29 15:16:21 2013
++++ suhosin-0.9.33.php53/ifilter.c	Mon Apr  1 21:42:32 2013
 @@ -146,7 +146,7 @@
  	if (zend_hash_find(arr, key, klen, (void **) &tzval) == SUCCESS &&
  			Z_TYPE_PP(tzval) == IS_STRING) {
@@ -163,7 +186,7 @@ diff -uNr suhosin-0.9.33/ifilter.c suhosin-0.9.33.php53/ifilter.c
  }
 diff -uNr suhosin-0.9.33/log.c suhosin-0.9.33.php53/log.c
 --- suhosin-0.9.33/log.c	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php53/log.c	Fri Mar 29 15:16:21 2013
++++ suhosin-0.9.33.php53/log.c	Mon Apr  1 21:42:32 2013
 @@ -36,6 +36,12 @@
  #include <sys/socket.h>
  #endif
@@ -179,7 +202,7 @@ diff -uNr suhosin-0.9.33/log.c suhosin-0.9.33.php53/log.c
  #endif
 diff -uNr suhosin-0.9.33/php_suhosin.h suhosin-0.9.33.php53/php_suhosin.h
 --- suhosin-0.9.33/php_suhosin.h	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php53/php_suhosin.h	Fri Mar 29 15:16:22 2013
++++ suhosin-0.9.33.php53/php_suhosin.h	Mon Apr  1 21:42:32 2013
 @@ -308,7 +308,7 @@
  char *suhosin_cookie_decryptor(TSRMLS_D);
  char *suhosin_getenv(char *name, size_t name_len TSRMLS_DC);
@@ -191,7 +214,7 @@ diff -uNr suhosin-0.9.33/php_suhosin.h suhosin-0.9.33.php53/php_suhosin.h
  void suhosin_unhook_header_handler();
 diff -uNr suhosin-0.9.33/post_handler.c suhosin-0.9.33.php53/post_handler.c
 --- suhosin-0.9.33/post_handler.c	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php53/post_handler.c	Fri Mar 29 15:16:22 2013
++++ suhosin-0.9.33.php53/post_handler.c	Mon Apr  1 21:42:32 2013
 @@ -148,10 +148,10 @@
  
  	/* we need to tell suhosin patch that there is a new valid destructor */
@@ -222,7 +245,7 @@ diff -uNr suhosin-0.9.33/post_handler.c suhosin-0.9.33.php53/post_handler.c
 -
 diff -uNr suhosin-0.9.33/session.c suhosin-0.9.33.php53/session.c
 --- suhosin-0.9.33/session.c	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php53/session.c	Fri Mar 29 15:16:22 2013
++++ suhosin-0.9.33.php53/session.c	Mon Apr  1 21:42:32 2013
 @@ -426,7 +426,7 @@
      }
      
@@ -260,7 +283,7 @@ diff -uNr suhosin-0.9.33/session.c suhosin-0.9.33.php53/session.c
  
 diff -uNr suhosin-0.9.33/sha256.c suhosin-0.9.33.php53/sha256.c
 --- suhosin-0.9.33/sha256.c	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php53/sha256.c	Fri Mar 29 15:16:22 2013
++++ suhosin-0.9.33.php53/sha256.c	Mon Apr  1 21:42:32 2013
 @@ -392,7 +392,7 @@
  
  /* {{{ suhosin_sha256_functions[]
@@ -272,7 +295,7 @@ diff -uNr suhosin-0.9.33/sha256.c suhosin-0.9.33.php53/sha256.c
  	{NULL, NULL, NULL}
 diff -uNr suhosin-0.9.33/suhosin.c suhosin-0.9.33.php53/suhosin.c
 --- suhosin-0.9.33/suhosin.c	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php53/suhosin.c	Fri Mar 29 15:16:22 2013
++++ suhosin-0.9.33.php53/suhosin.c	Mon Apr  1 21:42:32 2013
 @@ -189,9 +189,11 @@
  
  static void suhosin_shutdown(zend_extension *extension)
