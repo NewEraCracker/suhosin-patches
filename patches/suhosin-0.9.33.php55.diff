@@ -1,6 +1,6 @@
 diff -uNr suhosin-0.9.33/ex_imp.c suhosin-0.9.33.php55/ex_imp.c
 --- suhosin-0.9.33/ex_imp.c	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php55/ex_imp.c	Mon Apr  1 21:42:37 2013
++++ suhosin-0.9.33.php55/ex_imp.c	Sat Apr  6 16:14:59 2013
 @@ -727,7 +727,7 @@
  
  /* {{{ suhosin_ex_imp_functions[]
@@ -12,7 +12,7 @@ diff -uNr suhosin-0.9.33/ex_imp.c suhosin-0.9.33.php55/ex_imp.c
  	{NULL, NULL, NULL}
 diff -uNr suhosin-0.9.33/execute.c suhosin-0.9.33.php55/execute.c
 --- suhosin-0.9.33/execute.c	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php55/execute.c	Mon Apr  1 21:42:37 2013
++++ suhosin-0.9.33.php55/execute.c	Sat Apr  6 16:14:59 2013
 @@ -35,21 +35,27 @@
  #include "zend_compile.h"
  #include "zend_llist.h"
@@ -22,7 +22,7 @@ diff -uNr suhosin-0.9.33/execute.c suhosin-0.9.33.php55/execute.c
  #include "sha256.h"
  
 -
-+#if PHP_VERSION_ID < 50500
++#if PHP_MAJOR_VERSION < 5 || (PHP_MAJOR_VERSION == 5 && PHP_MINOR_VERSION < 5)
 +#define IH_EXECUTE_INTERNAL_PARAMS zend_execute_data *execute_data_ptr, int return_value_used TSRMLS_DC
 +#define IH_EXECUTE_INTERNAL_PARAM_PASSTHRU execute_data_ptr, return_value_used TSRMLS_CC
  static void (*old_execute)(zend_op_array *op_array TSRMLS_DC);
@@ -72,7 +72,7 @@ diff -uNr suhosin-0.9.33/execute.c suhosin-0.9.33.php55/execute.c
 -/* {{{ void suhosin_execute_ex(zend_op_array *op_array TSRMLS_DC)
 +/* {{{ void suhosin_execute_ex
   *    This function provides a hook for execution */
-+#if PHP_VERSION_ID < 50500
++#if PHP_MAJOR_VERSION < 5 || (PHP_MAJOR_VERSION == 5 && PHP_MINOR_VERSION < 5)
  static void suhosin_execute_ex(zend_op_array *op_array, int zo, long dummy TSRMLS_DC)
  {
 +#else
@@ -87,7 +87,7 @@ diff -uNr suhosin-0.9.33/execute.c suhosin-0.9.33.php55/execute.c
  	}
  
  continue_execution:
-+#if PHP_VERSION_ID < 50500
++#if PHP_MAJOR_VERSION < 5 || (PHP_MAJOR_VERSION == 5 && PHP_MINOR_VERSION < 5)
  	if (zo) {
  		old_execute_ZO (op_array, dummy TSRMLS_CC);
  	} else {
@@ -102,19 +102,35 @@ diff -uNr suhosin-0.9.33/execute.c suhosin-0.9.33.php55/execute.c
  }
  /* }}} */
  
-+#if PHP_VERSION_ID < 50500
++#if PHP_MAJOR_VERSION < 5 || (PHP_MAJOR_VERSION == 5 && PHP_MINOR_VERSION < 5)
  /* {{{ void suhosin_execute(zend_op_array *op_array TSRMLS_DC)
   *    This function provides a hook for execution */
  static void suhosin_execute(zend_op_array *op_array TSRMLS_DC)
-@@ -604,6 +621,7 @@
+@@ -604,11 +621,22 @@
  	suhosin_execute_ex(op_array, 1, dummy TSRMLS_CC);
  }	
  /* }}} */
 +#endif
  
- 
+-
++#if PHP_MAJOR_VERSION > 5 || (PHP_MAJOR_VERSION == 5 && PHP_MINOR_VERSION >= 4)
++#define IH_HANDLER_PARAMS_REST int ht, zval *return_value, zval **return_value_ptr, zval *this_ptr, int return_value_used TSRMLS_DC
++#define IH_HANDLER_PARAMS internal_function_handler *ih, IH_HANDLER_PARAMS_REST
++#define IH_HANDLER_PARAM_PASSTHRU ih, ht, *return_value_ptr, \
++		(execute_data_ptr->function_state.function->common.fn_flags & ZEND_ACC_RETURN_REFERENCE)?return_value_ptr:NULL, \
++		 execute_data_ptr->object, return_value_used TSRMLS_CC
++#if PHP_MAJOR_VERSION > 5 || (PHP_MAJOR_VERSION == 5 && PHP_MINOR_VERSION >= 5)
++#define IH_HANDLER_PARAM_FCI_PASSTHRU ih, fci->param_count, *fci->retval_ptr_ptr, fci->retval_ptr_ptr, fci->object_ptr, 1 TSRMLS_CC
++#endif
++#else
  #define IH_HANDLER_PARAMS_REST zend_execute_data *execute_data_ptr, int return_value_used, int ht, zval *return_value TSRMLS_DC
-@@ -626,12 +644,20 @@
+ #define IH_HANDLER_PARAMS internal_function_handler *ih, IH_HANDLER_PARAMS_REST
+ #define IH_HANDLER_PARAM_PASSTHRU ih, execute_data_ptr, return_value_used, ht, return_value TSRMLS_CC
++#endif
+ 
+ HashTable ihandler_table;
+ 
+@@ -626,12 +654,20 @@
  {
  	zval **regex,
  	     **replace,
@@ -137,15 +153,15 @@ diff -uNr suhosin-0.9.33/execute.c suhosin-0.9.33.php55/execute.c
  		
  	if (Z_TYPE_PP(regex) == IS_ARRAY) {
  		zval	**regex_entry;
-@@ -1022,6 +1048,7 @@
+@@ -1022,6 +1058,7 @@
  	return (0);
  }
  
-+#if PHP_VERSION_ID < 50400
++#if PHP_MAJOR_VERSION < 5 || (PHP_MAJOR_VERSION == 5 && PHP_MINOR_VERSION < 4)
  static int suhosin_php_body_write(const char *str, uint str_length TSRMLS_DC)
  {
  #define P_META_ROBOTS "<meta name=\"ROBOTS\" content=\"NOINDEX,NOFOLLOW,NOARCHIVE\" />"
-@@ -1065,6 +1092,7 @@
+@@ -1065,6 +1102,7 @@
  	RETVAL_TRUE;
  	return (1);
  }
@@ -153,7 +169,7 @@ diff -uNr suhosin-0.9.33/execute.c suhosin-0.9.33.php55/execute.c
  
  
  static int ih_function_exists(IH_HANDLER_PARAMS)
-@@ -1072,35 +1100,34 @@
+@@ -1072,35 +1110,34 @@
  #ifndef PHP_ATLEAST_5_3
  	zval **function_name;
  #endif
@@ -202,7 +218,7 @@ diff -uNr suhosin-0.9.33/execute.c suhosin-0.9.33.php55/execute.c
  
  	/*
  	 * A bit of a hack, but not a bad one: we see if the handler of the function
-@@ -1114,26 +1141,28 @@
+@@ -1114,26 +1151,28 @@
  	/* Now check if function is forbidden by Suhosin */
  	if (SUHOSIN_G(in_code_type) == SUHOSIN_EVAL) {
  		if (SUHOSIN_G(eval_whitelist) != NULL) {
@@ -235,7 +251,7 @@ diff -uNr suhosin-0.9.33/execute.c suhosin-0.9.33.php55/execute.c
  	RETVAL_BOOL(retval);
  	return (1);
  }
-@@ -1344,7 +1373,7 @@
+@@ -1344,7 +1383,7 @@
  
      suhosin_SHA256Init(&context);
  	suhosin_SHA256Update(&context, (void *) seedbuf, sizeof(php_uint32) * 8);
@@ -244,7 +260,7 @@ diff -uNr suhosin-0.9.33/execute.c suhosin-0.9.33.php55/execute.c
  }
  /* }}} */
  
-@@ -1501,7 +1530,7 @@
+@@ -1501,7 +1540,7 @@
  {
  #ifdef PHP_ATLEAST_5_3
  	if (zend_parse_parameters_none() == FAILURE) {
@@ -253,18 +269,18 @@ diff -uNr suhosin-0.9.33/execute.c suhosin-0.9.33.php55/execute.c
  	}
  #else
          int argc = ZEND_NUM_ARGS();
-@@ -1518,7 +1547,10 @@
+@@ -1518,7 +1557,10 @@
      { "preg_replace", ih_preg_replace, NULL, NULL, NULL },
      { "mail", ih_mail, NULL, NULL, NULL },
      { "symlink", ih_symlink, NULL, NULL, NULL },
-+	
-+#if PHP_VERSION_ID < 50400
++
++#if PHP_MAJOR_VERSION < 5 || (PHP_MAJOR_VERSION == 5 && PHP_MINOR_VERSION < 4)
      { "phpinfo", ih_phpinfo, NULL, NULL, NULL },
 +#endif
  	
  	{ "srand", ih_srand, NULL, NULL, NULL },
  	{ "mt_srand", ih_mt_srand, NULL, NULL, NULL },
-@@ -1575,9 +1607,9 @@
+@@ -1575,13 +1617,19 @@
  #define FUNCTION_WARNING() zend_error(E_WARNING, "%s() has been disabled for security reasons", get_active_function_name(TSRMLS_C));
  #define FUNCTION_SIMULATE_WARNING() zend_error(E_WARNING, "SIMULATION - %s() has been disabled for security reasons", get_active_function_name(TSRMLS_C));
  
@@ -276,7 +292,17 @@ diff -uNr suhosin-0.9.33/execute.c suhosin-0.9.33.php55/execute.c
  {
  	char *lcname;
  	int function_name_strlen, free_lcname = 0;
-@@ -1605,13 +1637,6 @@
++
++#if PHP_MAJOR_VERSION > 5 || (PHP_MAJOR_VERSION == 5 && PHP_MINOR_VERSION >= 4)
++	zval **return_value_ptr;
++#else
+ 	zval *return_value;
++#endif
++
+ 	zend_class_entry *ce = NULL;
+ 	int ht;
+ 	internal_function_handler *ih;
+@@ -1605,13 +1653,6 @@
  		zend_str_tolower(lcname, function_name_strlen);
  	}
  	
@@ -290,37 +316,25 @@ diff -uNr suhosin-0.9.33/execute.c suhosin-0.9.33.php55/execute.c
  	SDEBUG("function: %s", lcname);
  
  	if (SUHOSIN_G(in_code_type) == SUHOSIN_EVAL) {
-@@ -1657,20 +1682,42 @@
- 		}
- 	}
- 	
-+#ifdef ZEND_ENGINE_2  
-+#if PHP_VERSION_ID >= 50500
-+	return_value = (*EX_TMP_VAR(execute_data_ptr, execute_data_ptr->opline->result.var)).var.ptr;
-+#elif PHP_VERSION_ID >= 50400
-+	return_value = (*(temp_variable *)((char *) execute_data_ptr->Ts + execute_data_ptr->opline->result.var)).var.ptr;
-+#else
-+	return_value = (*(temp_variable *)((char *) execute_data_ptr->Ts + execute_data_ptr->opline->result.u.var)).var.ptr;
-+#endif
-+#else
-+	return_value = execute_data_ptr->Ts[execute_data_ptr->opline->result.u.var].var.ptr;
-+#endif
-+
-+	ht = execute_data_ptr->opline->extended_value;
-+
- 	if (zend_hash_find(&ihandler_table, lcname, function_name_strlen+1, (void **)&ih) == SUCCESS) {
- 	
- 		int retval = 0;
+@@ -1663,14 +1704,30 @@
  		void *handler = ((zend_internal_function *) execute_data_ptr->function_state.function)->handler;
  		
  		if (handler != ZEND_FN(display_disabled_function)) {
-+#if PHP_VERSION_ID < 50500
- 		    retval = ih->handler(IH_HANDLER_PARAM_PASSTHRU);
-+#else
++#if PHP_MAJOR_VERSION > 5 || (PHP_MAJOR_VERSION == 5 && PHP_MINOR_VERSION >= 5)
 +			if(fci != NULL) {
-+				/* TODO */
++				retval = ih->handler(IH_HANDLER_PARAM_FCI_PASSTHRU);
 +			} else {
-+				/* TODO */
++				return_value_ptr = &EX_TMP_VAR(execute_data_ptr, execute_data_ptr->opline->result.var)->var.ptr;
++#elif (PHP_MAJOR_VERSION == 5 && PHP_MINOR_VERSION == 4)
++				return_value_ptr = &(*(temp_variable *)((char *) execute_data_ptr->Ts + execute_data_ptr->opline->result.var)).var.ptr;
++#elif (PHP_MAJOR_VERSION == 5)
++				return_value = (*(temp_variable *)((char *) execute_data_ptr->Ts + execute_data_ptr->opline->result.u.var)).var.ptr;
++#else
++				return_value = execute_data_ptr->Ts[execute_data_ptr->opline->result.u.var].var.ptr;
++#endif
++				ht = execute_data_ptr->opline->extended_value;
+ 		    retval = ih->handler(IH_HANDLER_PARAM_PASSTHRU);
++#if PHP_MAJOR_VERSION > 5 || (PHP_MAJOR_VERSION == 5 && PHP_MINOR_VERSION >= 5)
 +			}
 +#endif
  		}
@@ -335,15 +349,15 @@ diff -uNr suhosin-0.9.33/execute.c suhosin-0.9.33.php55/execute.c
  	}
  	if (free_lcname == 1) {
  		efree(lcname);
-@@ -1686,6 +1733,7 @@
+@@ -1686,6 +1743,7 @@
  /* }}} */
  
  
-+#if PHP_VERSION_ID < 50500
++#if PHP_MAJOR_VERSION < 5 || (PHP_MAJOR_VERSION == 5 && PHP_MINOR_VERSION < 5)
  /* {{{ int function_lookup(zend_extension *extension)
   */
  static int function_lookup(zend_extension *extension)
-@@ -1703,6 +1751,7 @@
+@@ -1703,6 +1761,7 @@
  	return 0;
  }
  /* }}} */
@@ -351,15 +365,15 @@ diff -uNr suhosin-0.9.33/execute.c suhosin-0.9.33.php55/execute.c
  
  
  /* {{{ void suhosin_hook_execute()
-@@ -1711,6 +1760,7 @@
+@@ -1711,6 +1770,7 @@
  {
  	internal_function_handler *ih;
  	
-+#if PHP_VERSION_ID < 50500	
++#if PHP_MAJOR_VERSION < 5 || (PHP_MAJOR_VERSION == 5 && PHP_MINOR_VERSION < 5)
  	old_execute = zend_execute;
  	zend_execute = suhosin_execute;
  	
-@@ -1727,6 +1777,10 @@
+@@ -1727,6 +1787,10 @@
  	if (zo_set_oe_ex != NULL) {
  		old_execute_ZO = zo_set_oe_ex(suhosin_execute_ZO);
  	}
@@ -370,11 +384,11 @@ diff -uNr suhosin-0.9.33/execute.c suhosin-0.9.33.php55/execute.c
  	
  	old_execute_internal = zend_execute_internal;
  	if (old_execute_internal == NULL) {
-@@ -1761,11 +1815,15 @@
+@@ -1761,11 +1825,15 @@
   */
  void suhosin_unhook_execute()
  {
-+#if PHP_VERSION_ID < 50500
++#if PHP_MAJOR_VERSION < 5 || (PHP_MAJOR_VERSION == 5 && PHP_MINOR_VERSION < 5)
  	if (zo_set_oe_ex) {
  		zo_set_oe_ex(old_execute_ZO);
  	}
@@ -388,7 +402,7 @@ diff -uNr suhosin-0.9.33/execute.c suhosin-0.9.33.php55/execute.c
  
 diff -uNr suhosin-0.9.33/ifilter.c suhosin-0.9.33.php55/ifilter.c
 --- suhosin-0.9.33/ifilter.c	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php55/ifilter.c	Mon Apr  1 21:42:37 2013
++++ suhosin-0.9.33.php55/ifilter.c	Sat Apr  6 16:14:59 2013
 @@ -146,7 +146,7 @@
  	if (zend_hash_find(arr, key, klen, (void **) &tzval) == SUCCESS &&
  			Z_TYPE_PP(tzval) == IS_STRING) {
@@ -418,7 +432,7 @@ diff -uNr suhosin-0.9.33/ifilter.c suhosin-0.9.33.php55/ifilter.c
  }
 diff -uNr suhosin-0.9.33/log.c suhosin-0.9.33.php55/log.c
 --- suhosin-0.9.33/log.c	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php55/log.c	Mon Apr  1 21:42:38 2013
++++ suhosin-0.9.33.php55/log.c	Sat Apr  6 16:14:59 2013
 @@ -31,11 +31,18 @@
  #include "SAPI.h"
  #include "ext/standard/datetime.h"
@@ -481,8 +495,16 @@ diff -uNr suhosin-0.9.33/log.c suhosin-0.9.33.php55/log.c
  #ifdef ZEND_ENGINE_2
 diff -uNr suhosin-0.9.33/php_suhosin.h suhosin-0.9.33.php55/php_suhosin.h
 --- suhosin-0.9.33/php_suhosin.h	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php55/php_suhosin.h	Mon Apr  1 21:42:38 2013
-@@ -308,7 +308,7 @@
++++ suhosin-0.9.33.php55/php_suhosin.h	Sat Apr  6 16:14:59 2013
+@@ -186,6 +186,7 @@
+ 	int (*old_php_body_write)(const char *str, unsigned int str_length TSRMLS_DC);
+ 
+ /*	session */
++	void	*old_s_module;
+ 	void	*s_module;
+ 	int 	(*old_s_read)(void **mod_data, const char *key, char **val, int *vallen TSRMLS_DC);
+ 	int	(*old_s_write)(void **mod_data, const char *key, const char *val, const int vallen TSRMLS_DC);
+@@ -308,7 +309,7 @@
  char *suhosin_cookie_decryptor(TSRMLS_D);
  char *suhosin_getenv(char *name, size_t name_len TSRMLS_DC);
  void suhosin_hook_post_handlers(TSRMLS_D);
@@ -493,7 +515,7 @@ diff -uNr suhosin-0.9.33/php_suhosin.h suhosin-0.9.33.php55/php_suhosin.h
  void suhosin_unhook_header_handler();
 diff -uNr suhosin-0.9.33/post_handler.c suhosin-0.9.33.php55/post_handler.c
 --- suhosin-0.9.33/post_handler.c	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php55/post_handler.c	Mon Apr  1 21:42:38 2013
++++ suhosin-0.9.33.php55/post_handler.c	Sat Apr  6 16:14:59 2013
 @@ -148,10 +148,10 @@
  
  	/* we need to tell suhosin patch that there is a new valid destructor */
@@ -524,7 +546,7 @@ diff -uNr suhosin-0.9.33/post_handler.c suhosin-0.9.33.php55/post_handler.c
 -
 diff -uNr suhosin-0.9.33/rfc1867.c suhosin-0.9.33.php55/rfc1867.c
 --- suhosin-0.9.33/rfc1867.c	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php55/rfc1867.c	Mon Apr  1 21:42:38 2013
++++ suhosin-0.9.33.php55/rfc1867.c	Sat Apr  6 16:14:59 2013
 @@ -35,6 +35,7 @@
  #include "suhosin_rfc1867.h"
  #include "php_ini.h"
@@ -574,7 +596,7 @@ diff -uNr suhosin-0.9.33/rfc1867.c suhosin-0.9.33.php55/rfc1867.c
  				tmp = strrchr(s, '\'');
 diff -uNr suhosin-0.9.33/session.c suhosin-0.9.33.php55/session.c
 --- suhosin-0.9.33/session.c	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php55/session.c	Mon Apr  1 21:42:38 2013
++++ suhosin-0.9.33.php55/session.c	Sat Apr  6 16:14:59 2013
 @@ -33,6 +33,7 @@
  #include "ext/standard/php_smart_str.h"
  #include "ext/standard/php_var.h"
@@ -766,7 +788,34 @@ diff -uNr suhosin-0.9.33/session.c suhosin-0.9.33.php55/session.c
          return FAILURE;
      }
      
-@@ -869,7 +974,7 @@
+@@ -763,15 +868,25 @@
+     SUHOSIN_G(old_s_destroy) = mod->s_destroy;
+     mod->s_destroy = suhosin_hook_s_destroy;
+     
++    SUHOSIN_G(old_s_module) = old_mod;
+     SESSION_G(mod) = mod;
+ }
+ 
++static void suhosin_unhook_session_module(TSRMLS_D)
++{
++    ps_module *old_mod = SUHOSIN_G(old_s_module);
++
++    if (old_mod != NULL) {
++		SESSION_G(mod) = old_mod;
++    }
++}
++
+ static PHP_INI_MH(suhosin_OnUpdateSaveHandler)
+ {
+     int r;
+ 
++    suhosin_unhook_session_module(TSRMLS_C);
+     r = old_OnUpdateSaveHandler(entry, new_value, new_value_length, mh_arg1, mh_arg2, mh_arg3, stage TSRMLS_CC);
+-    
+     suhosin_hook_session_module(TSRMLS_C);
+     
+     return r;
+@@ -869,7 +984,7 @@
  
      /* increase session identifier entropy */
      if (SESSION_G(entropy_length) == 0 || SESSION_G(entropy_file) == NULL) {
@@ -775,7 +824,7 @@ diff -uNr suhosin-0.9.33/session.c suhosin-0.9.33.php55/session.c
          /* ensure that /dev/urandom exists */
          int fd = VCWD_OPEN("/dev/urandom", O_RDONLY);
          if (fd >= 0) {
-@@ -877,6 +982,7 @@
+@@ -877,6 +992,7 @@
              SESSION_G(entropy_length) = 16;
              SESSION_G(entropy_file) = pestrdup("/dev/urandom", 1);
          }
@@ -785,7 +834,7 @@ diff -uNr suhosin-0.9.33/session.c suhosin-0.9.33.php55/session.c
  
 diff -uNr suhosin-0.9.33/sha256.c suhosin-0.9.33.php55/sha256.c
 --- suhosin-0.9.33/sha256.c	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php55/sha256.c	Mon Apr  1 21:42:38 2013
++++ suhosin-0.9.33.php55/sha256.c	Sat Apr  6 16:14:59 2013
 @@ -86,9 +86,11 @@
  		return;
  	}
@@ -809,7 +858,7 @@ diff -uNr suhosin-0.9.33/sha256.c suhosin-0.9.33.php55/sha256.c
  	{NULL, NULL, NULL}
 diff -uNr suhosin-0.9.33/suhosin.c suhosin-0.9.33.php55/suhosin.c
 --- suhosin-0.9.33/suhosin.c	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php55/suhosin.c	Mon Apr  1 21:42:38 2013
++++ suhosin-0.9.33.php55/suhosin.c	Sat Apr  6 16:14:59 2013
 @@ -32,8 +32,12 @@
  #include "zend_llist.h"
  #include "zend_operators.h"
@@ -915,7 +964,7 @@ diff -uNr suhosin-0.9.33/suhosin.c suhosin-0.9.33.php55/suhosin.c
  	if (sapi_module.phpinfo_as_text) {
 diff -uNr suhosin-0.9.33/treat_data.c suhosin-0.9.33.php55/treat_data.c
 --- suhosin-0.9.33/treat_data.c	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php55/treat_data.c	Mon Apr  1 21:42:40 2013
++++ suhosin-0.9.33.php55/treat_data.c	Sat Apr  6 16:14:59 2013
 @@ -194,7 +194,12 @@
  
  void suhosin_hook_treat_data()
