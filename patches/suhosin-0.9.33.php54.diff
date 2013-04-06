@@ -1,4 +1,4 @@
-diff -uNr -b suhosin-0.9.33/ex_imp.c suhosin-0.9.33.php54/ex_imp.c
+diff -uNr suhosin-0.9.33/ex_imp.c suhosin-0.9.33.php54/ex_imp.c
 --- suhosin-0.9.33/ex_imp.c	Thu Jan 19 15:49:18 2012
 +++ suhosin-0.9.33.php54/ex_imp.c	Sat Apr  6 19:06:59 2013
 @@ -727,7 +727,7 @@
@@ -10,7 +10,7 @@ diff -uNr -b suhosin-0.9.33/ex_imp.c suhosin-0.9.33.php54/ex_imp.c
  	PHP_NAMED_FE(extract, PHP_FN(suhosin_extract), suhosin_arginfo_extract)
  	PHP_NAMED_FE(import_request_variables, PHP_FN(suhosin_import_request_variables), suhosin_arginfo_import_request_variables)
  	{NULL, NULL, NULL}
-diff -uNr -b suhosin-0.9.33/execute.c suhosin-0.9.33.php54/execute.c
+diff -uNr suhosin-0.9.33/execute.c suhosin-0.9.33.php54/execute.c
 --- suhosin-0.9.33/execute.c	Thu Jan 19 15:49:18 2012
 +++ suhosin-0.9.33.php54/execute.c	Sat Apr  6 19:06:59 2013
 @@ -35,6 +35,7 @@
@@ -251,7 +251,7 @@ diff -uNr -b suhosin-0.9.33/execute.c suhosin-0.9.33.php54/execute.c
  		    retval = ih->handler(IH_HANDLER_PARAM_PASSTHRU);
  		}
  		
-diff -uNr -b suhosin-0.9.33/ifilter.c suhosin-0.9.33.php54/ifilter.c
+diff -uNr suhosin-0.9.33/ifilter.c suhosin-0.9.33.php54/ifilter.c
 --- suhosin-0.9.33/ifilter.c	Thu Jan 19 15:49:18 2012
 +++ suhosin-0.9.33.php54/ifilter.c	Sat Apr  6 19:06:59 2013
 @@ -146,7 +146,7 @@
@@ -281,7 +281,7 @@ diff -uNr -b suhosin-0.9.33/ifilter.c suhosin-0.9.33.php54/ifilter.c
  		Z_STRLEN_PP(tzval) = n-newv;
  	}
  }
-diff -uNr -b suhosin-0.9.33/log.c suhosin-0.9.33.php54/log.c
+diff -uNr suhosin-0.9.33/log.c suhosin-0.9.33.php54/log.c
 --- suhosin-0.9.33/log.c	Thu Jan 19 15:49:18 2012
 +++ suhosin-0.9.33.php54/log.c	Sat Apr  6 19:06:59 2013
 @@ -31,11 +31,18 @@
@@ -344,7 +344,7 @@ diff -uNr -b suhosin-0.9.33/log.c suhosin-0.9.33.php54/log.c
  				PG(open_basedir) = orig_basedir;
  				
  #ifdef ZEND_ENGINE_2
-diff -uNr -b suhosin-0.9.33/php_suhosin.h suhosin-0.9.33.php54/php_suhosin.h
+diff -uNr suhosin-0.9.33/php_suhosin.h suhosin-0.9.33.php54/php_suhosin.h
 --- suhosin-0.9.33/php_suhosin.h	Thu Jan 19 15:49:18 2012
 +++ suhosin-0.9.33.php54/php_suhosin.h	Sat Apr  6 19:06:59 2013
 @@ -186,6 +186,7 @@
@@ -364,7 +364,7 @@ diff -uNr -b suhosin-0.9.33/php_suhosin.h suhosin-0.9.33.php54/php_suhosin.h
  void suhosin_hook_register_server_variables();
  void suhosin_hook_header_handler();
  void suhosin_unhook_header_handler();
-diff -uNr -b suhosin-0.9.33/post_handler.c suhosin-0.9.33.php54/post_handler.c
+diff -uNr suhosin-0.9.33/post_handler.c suhosin-0.9.33.php54/post_handler.c
 --- suhosin-0.9.33/post_handler.c	Thu Jan 19 15:49:18 2012
 +++ suhosin-0.9.33.php54/post_handler.c	Sat Apr  6 19:06:59 2013
 @@ -148,10 +148,10 @@
@@ -395,7 +395,7 @@ diff -uNr -b suhosin-0.9.33/post_handler.c suhosin-0.9.33.php54/post_handler.c
   */
 -
 -
-diff -uNr -b suhosin-0.9.33/rfc1867.c suhosin-0.9.33.php54/rfc1867.c
+diff -uNr suhosin-0.9.33/rfc1867.c suhosin-0.9.33.php54/rfc1867.c
 --- suhosin-0.9.33/rfc1867.c	Thu Jan 19 15:49:18 2012
 +++ suhosin-0.9.33.php54/rfc1867.c	Sat Apr  6 19:06:59 2013
 @@ -35,6 +35,7 @@
@@ -445,7 +445,7 @@ diff -uNr -b suhosin-0.9.33/rfc1867.c suhosin-0.9.33.php54/rfc1867.c
  			if (PG(magic_quotes_gpc)) {
  				s = s ? s : filename;
  				tmp = strrchr(s, '\'');
-diff -uNr -b suhosin-0.9.33/session.c suhosin-0.9.33.php54/session.c
+diff -uNr suhosin-0.9.33/session.c suhosin-0.9.33.php54/session.c
 --- suhosin-0.9.33/session.c	Thu Jan 19 15:49:18 2012
 +++ suhosin-0.9.33.php54/session.c	Sat Apr  6 19:07:00 2013
 @@ -33,6 +33,7 @@
@@ -683,7 +683,7 @@ diff -uNr -b suhosin-0.9.33/session.c suhosin-0.9.33.php54/session.c
      }
  }
  
-diff -uNr -b suhosin-0.9.33/sha256.c suhosin-0.9.33.php54/sha256.c
+diff -uNr suhosin-0.9.33/sha256.c suhosin-0.9.33.php54/sha256.c
 --- suhosin-0.9.33/sha256.c	Thu Jan 19 15:49:18 2012
 +++ suhosin-0.9.33.php54/sha256.c	Sat Apr  6 19:07:00 2013
 @@ -86,9 +86,11 @@
@@ -707,7 +707,7 @@ diff -uNr -b suhosin-0.9.33/sha256.c suhosin-0.9.33.php54/sha256.c
  	PHP_NAMED_FE(sha256, PHP_FN(suhosin_sha256), NULL)
  	PHP_NAMED_FE(sha256_file, PHP_FN(suhosin_sha256_file), NULL)
  	{NULL, NULL, NULL}
-diff -uNr -b suhosin-0.9.33/suhosin.c suhosin-0.9.33.php54/suhosin.c
+diff -uNr suhosin-0.9.33/suhosin.c suhosin-0.9.33.php54/suhosin.c
 --- suhosin-0.9.33/suhosin.c	Thu Jan 19 15:49:18 2012
 +++ suhosin-0.9.33.php54/suhosin.c	Sat Apr  6 19:07:00 2013
 @@ -189,9 +189,11 @@
@@ -772,7 +772,7 @@ diff -uNr -b suhosin-0.9.33/suhosin.c suhosin-0.9.33.php54/suhosin.c
  	Z_TYPE(new_entry) = IS_STRING;
  
  	suhosin_register_cookie_variable(var, &new_entry, track_vars_array TSRMLS_CC);
-diff -uNr -b suhosin-0.9.33/treat_data.c suhosin-0.9.33.php54/treat_data.c
+diff -uNr suhosin-0.9.33/treat_data.c suhosin-0.9.33.php54/treat_data.c
 --- suhosin-0.9.33/treat_data.c	Thu Jan 19 15:49:18 2012
 +++ suhosin-0.9.33.php54/treat_data.c	Sat Apr  6 19:07:01 2013
 @@ -194,7 +194,12 @@
