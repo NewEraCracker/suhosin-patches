@@ -1,4 +1,4 @@
-diff -uNr -b suhosin-0.9.33/ex_imp.c suhosin-0.9.33.php53/ex_imp.c
+diff -uNr suhosin-0.9.33/ex_imp.c suhosin-0.9.33.php53/ex_imp.c
 --- suhosin-0.9.33/ex_imp.c	Thu Jan 19 15:49:18 2012
 +++ suhosin-0.9.33.php53/ex_imp.c	Wed Aug  7 16:41:20 2013
 @@ -727,7 +727,7 @@
@@ -10,7 +10,7 @@ diff -uNr -b suhosin-0.9.33/ex_imp.c suhosin-0.9.33.php53/ex_imp.c
  	PHP_NAMED_FE(extract, PHP_FN(suhosin_extract), suhosin_arginfo_extract)
  	PHP_NAMED_FE(import_request_variables, PHP_FN(suhosin_import_request_variables), suhosin_arginfo_import_request_variables)
  	{NULL, NULL, NULL}
-diff -uNr -b suhosin-0.9.33/execute.c suhosin-0.9.33.php53/execute.c
+diff -uNr suhosin-0.9.33/execute.c suhosin-0.9.33.php53/execute.c
 --- suhosin-0.9.33/execute.c	Thu Jan 19 15:49:18 2012
 +++ suhosin-0.9.33.php53/execute.c	Wed Aug  7 16:41:20 2013
 @@ -152,7 +152,7 @@
@@ -154,7 +154,7 @@ diff -uNr -b suhosin-0.9.33/execute.c suhosin-0.9.33.php53/execute.c
  	}
  #else
          int argc = ZEND_NUM_ARGS();
-diff -uNr -b suhosin-0.9.33/ifilter.c suhosin-0.9.33.php53/ifilter.c
+diff -uNr suhosin-0.9.33/ifilter.c suhosin-0.9.33.php53/ifilter.c
 --- suhosin-0.9.33/ifilter.c	Thu Jan 19 15:49:18 2012
 +++ suhosin-0.9.33.php53/ifilter.c	Wed Aug  7 16:41:20 2013
 @@ -146,7 +146,7 @@
@@ -184,7 +184,7 @@ diff -uNr -b suhosin-0.9.33/ifilter.c suhosin-0.9.33.php53/ifilter.c
  		Z_STRLEN_PP(tzval) = n-newv;
  	}
  }
-diff -uNr -b suhosin-0.9.33/log.c suhosin-0.9.33.php53/log.c
+diff -uNr suhosin-0.9.33/log.c suhosin-0.9.33.php53/log.c
 --- suhosin-0.9.33/log.c	Thu Jan 19 15:49:18 2012
 +++ suhosin-0.9.33.php53/log.c	Wed Aug  7 16:41:20 2013
 @@ -36,6 +36,12 @@
@@ -200,7 +200,7 @@ diff -uNr -b suhosin-0.9.33/log.c suhosin-0.9.33.php53/log.c
  #if defined(PHP_WIN32) || defined(__riscos__) || defined(NETWARE)
  #undef AF_UNIX
  #endif
-diff -uNr -b suhosin-0.9.33/php_suhosin.h suhosin-0.9.33.php53/php_suhosin.h
+diff -uNr suhosin-0.9.33/php_suhosin.h suhosin-0.9.33.php53/php_suhosin.h
 --- suhosin-0.9.33/php_suhosin.h	Thu Jan 19 15:49:18 2012
 +++ suhosin-0.9.33.php53/php_suhosin.h	Wed Aug  7 16:41:20 2013
 @@ -308,7 +308,7 @@
@@ -212,7 +212,7 @@ diff -uNr -b suhosin-0.9.33/php_suhosin.h suhosin-0.9.33.php53/php_suhosin.h
  void suhosin_hook_register_server_variables();
  void suhosin_hook_header_handler();
  void suhosin_unhook_header_handler();
-diff -uNr -b suhosin-0.9.33/post_handler.c suhosin-0.9.33.php53/post_handler.c
+diff -uNr suhosin-0.9.33/post_handler.c suhosin-0.9.33.php53/post_handler.c
 --- suhosin-0.9.33/post_handler.c	Thu Jan 19 15:49:18 2012
 +++ suhosin-0.9.33.php53/post_handler.c	Wed Aug  7 16:41:20 2013
 @@ -148,10 +148,10 @@
@@ -243,7 +243,7 @@ diff -uNr -b suhosin-0.9.33/post_handler.c suhosin-0.9.33.php53/post_handler.c
   */
 -
 -
-diff -uNr -b suhosin-0.9.33/rfc1867.c suhosin-0.9.33.php53/rfc1867.c
+diff -uNr suhosin-0.9.33/rfc1867.c suhosin-0.9.33.php53/rfc1867.c
 --- suhosin-0.9.33/rfc1867.c	Thu Jan 19 15:49:18 2012
 +++ suhosin-0.9.33.php53/rfc1867.c	Wed Aug  7 16:42:13 2013
 @@ -1032,6 +1032,10 @@
@@ -293,7 +293,7 @@ diff -uNr -b suhosin-0.9.33/rfc1867.c suhosin-0.9.33.php53/rfc1867.c
  				register_http_post_files_variable(lbuf, s+1, http_post_files, 0 TSRMLS_CC);
  			} else {
  				register_http_post_files_variable(lbuf, filename, http_post_files, 0 TSRMLS_CC);
-diff -uNr -b suhosin-0.9.33/session.c suhosin-0.9.33.php53/session.c
+diff -uNr suhosin-0.9.33/session.c suhosin-0.9.33.php53/session.c
 --- suhosin-0.9.33/session.c	Thu Jan 19 15:49:18 2012
 +++ suhosin-0.9.33.php53/session.c	Wed Aug  7 16:41:20 2013
 @@ -426,7 +426,7 @@
@@ -331,7 +331,7 @@ diff -uNr -b suhosin-0.9.33/session.c suhosin-0.9.33.php53/session.c
      }
  }
  
-diff -uNr -b suhosin-0.9.33/sha256.c suhosin-0.9.33.php53/sha256.c
+diff -uNr suhosin-0.9.33/sha256.c suhosin-0.9.33.php53/sha256.c
 --- suhosin-0.9.33/sha256.c	Thu Jan 19 15:49:18 2012
 +++ suhosin-0.9.33.php53/sha256.c	Wed Aug  7 16:41:20 2013
 @@ -392,7 +392,7 @@
@@ -343,7 +343,7 @@ diff -uNr -b suhosin-0.9.33/sha256.c suhosin-0.9.33.php53/sha256.c
  	PHP_NAMED_FE(sha256, PHP_FN(suhosin_sha256), NULL)
  	PHP_NAMED_FE(sha256_file, PHP_FN(suhosin_sha256_file), NULL)
  	{NULL, NULL, NULL}
-diff -uNr -b suhosin-0.9.33/suhosin.c suhosin-0.9.33.php53/suhosin.c
+diff -uNr suhosin-0.9.33/suhosin.c suhosin-0.9.33.php53/suhosin.c
 --- suhosin-0.9.33/suhosin.c	Thu Jan 19 15:49:18 2012
 +++ suhosin-0.9.33.php53/suhosin.c	Wed Aug  7 16:41:20 2013
 @@ -189,9 +189,11 @@
