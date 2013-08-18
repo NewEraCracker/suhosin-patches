@@ -33,13 +33,22 @@ and just report the bug to this unofficial project.
 
 REQUIREMENTS:
 
-* PHP Version: PHP 5.2 or newer
+* Linux, Windows or any other platform where PHP is supported.
+* PHP 5.2 or a newer version.
+
+(I also noticed that PHP 5.1 is supported by using the patch meant for PHP 5.2)
 
 ===============================================================================
 
 INSTRUCTIONS:
 
-(This section will be filled later, left here as a TODO item)
+After downloading the source code of the Suhosin extension you can apply the
+patch that matches your PHP version in order to make the Suhosin extension
+compatible with your current PHP version.
+
+Then you can install it via adequate install procedure for your platform.
+
+(I will fill this section later with further details if required.)
 
 ===============================================================================
 
