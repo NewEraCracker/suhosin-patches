@@ -1,6 +1,6 @@
 diff -uNr suhosin-0.9.33/ex_imp.c suhosin-0.9.33.php55/ex_imp.c
 --- suhosin-0.9.33/ex_imp.c	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php55/ex_imp.c	Thu Aug  8 17:42:57 2013
++++ suhosin-0.9.33.php55/ex_imp.c	Sun Dec 29 00:00:00 2013
 @@ -727,7 +727,7 @@
  
  /* {{{ suhosin_ex_imp_functions[]
@@ -12,7 +12,7 @@ diff -uNr suhosin-0.9.33/ex_imp.c suhosin-0.9.33.php55/ex_imp.c
  	{NULL, NULL, NULL}
 diff -uNr suhosin-0.9.33/execute.c suhosin-0.9.33.php55/execute.c
 --- suhosin-0.9.33/execute.c	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php55/execute.c	Thu Aug  8 17:42:57 2013
++++ suhosin-0.9.33.php55/execute.c	Sun Dec 29 00:00:00 2013
 @@ -35,21 +35,27 @@
  #include "zend_compile.h"
  #include "zend_llist.h"
@@ -402,7 +402,7 @@ diff -uNr suhosin-0.9.33/execute.c suhosin-0.9.33.php55/execute.c
  
 diff -uNr suhosin-0.9.33/ifilter.c suhosin-0.9.33.php55/ifilter.c
 --- suhosin-0.9.33/ifilter.c	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php55/ifilter.c	Thu Aug  8 17:42:57 2013
++++ suhosin-0.9.33.php55/ifilter.c	Sun Dec 29 00:00:00 2013
 @@ -146,7 +146,7 @@
  	if (zend_hash_find(arr, key, klen, (void **) &tzval) == SUCCESS &&
  			Z_TYPE_PP(tzval) == IS_STRING) {
@@ -432,7 +432,7 @@ diff -uNr suhosin-0.9.33/ifilter.c suhosin-0.9.33.php55/ifilter.c
  }
 diff -uNr suhosin-0.9.33/log.c suhosin-0.9.33.php55/log.c
 --- suhosin-0.9.33/log.c	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php55/log.c	Thu Aug  8 17:42:57 2013
++++ suhosin-0.9.33.php55/log.c	Sun Dec 29 00:00:00 2013
 @@ -31,11 +31,18 @@
  #include "SAPI.h"
  #include "ext/standard/datetime.h"
@@ -495,7 +495,7 @@ diff -uNr suhosin-0.9.33/log.c suhosin-0.9.33.php55/log.c
  #ifdef ZEND_ENGINE_2
 diff -uNr suhosin-0.9.33/php_suhosin.h suhosin-0.9.33.php55/php_suhosin.h
 --- suhosin-0.9.33/php_suhosin.h	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php55/php_suhosin.h	Thu Aug  8 17:42:57 2013
++++ suhosin-0.9.33.php55/php_suhosin.h	Sun Dec 29 00:00:00 2013
 @@ -186,6 +186,7 @@
  	int (*old_php_body_write)(const char *str, unsigned int str_length TSRMLS_DC);
  
@@ -515,7 +515,7 @@ diff -uNr suhosin-0.9.33/php_suhosin.h suhosin-0.9.33.php55/php_suhosin.h
  void suhosin_unhook_header_handler();
 diff -uNr suhosin-0.9.33/post_handler.c suhosin-0.9.33.php55/post_handler.c
 --- suhosin-0.9.33/post_handler.c	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php55/post_handler.c	Thu Aug  8 17:42:57 2013
++++ suhosin-0.9.33.php55/post_handler.c	Sun Dec 29 00:00:00 2013
 @@ -148,10 +148,10 @@
  
  	/* we need to tell suhosin patch that there is a new valid destructor */
@@ -546,7 +546,7 @@ diff -uNr suhosin-0.9.33/post_handler.c suhosin-0.9.33.php55/post_handler.c
 -
 diff -uNr suhosin-0.9.33/rfc1867.c suhosin-0.9.33.php55/rfc1867.c
 --- suhosin-0.9.33/rfc1867.c	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php55/rfc1867.c	Thu Aug  8 17:43:20 2013
++++ suhosin-0.9.33.php55/rfc1867.c	Sun Dec 29 00:00:00 2013
 @@ -35,10 +35,11 @@
  #include "suhosin_rfc1867.h"
  #include "php_ini.h"
@@ -707,7 +707,7 @@ diff -uNr suhosin-0.9.33/rfc1867.c suhosin-0.9.33.php55/rfc1867.c
  				register_http_post_files_variable(lbuf, filename, http_post_files, 0 TSRMLS_CC);
 diff -uNr suhosin-0.9.33/session.c suhosin-0.9.33.php55/session.c
 --- suhosin-0.9.33/session.c	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php55/session.c	Thu Aug  8 17:42:57 2013
++++ suhosin-0.9.33.php55/session.c	Sun Dec 29 00:00:00 2013
 @@ -33,6 +33,7 @@
  #include "ext/standard/php_smart_str.h"
  #include "ext/standard/php_var.h"
@@ -716,7 +716,7 @@ diff -uNr suhosin-0.9.33/session.c suhosin-0.9.33.php55/session.c
  
  #include <fcntl.h>
  
-@@ -233,9 +234,94 @@
+@@ -233,9 +234,160 @@
      zend_bool invalid_session_id;   /* allows the driver to report about an invalid session id and request id regeneration */
  } php_ps_globals_53;
  
@@ -801,29 +801,131 @@ diff -uNr suhosin-0.9.33/session.c suhosin-0.9.33.php55/session.c
 +    long rfc1867_freq;         /* session.upload_progress.freq */
 +    double rfc1867_min_freq;   /* session.upload_progress.min_freq */
 +} php_ps_globals_54;
++
++typedef struct _php_ps_globals_55 {
++	char *save_path;
++	char *session_name;
++	char *id;
++	char *extern_referer_chk;
++	char *entropy_file;
++	char *cache_limiter;
++	long entropy_length;
++	long cookie_lifetime;
++	char *cookie_path;
++	char *cookie_domain;
++	zend_bool  cookie_secure;
++	zend_bool  cookie_httponly;
++	ps_module *mod;
++	ps_module *default_mod;
++	void *mod_data;
++	php_session_status session_status;
++	long gc_probability;
++	long gc_divisor;
++	long gc_maxlifetime;
++	int module_number;
++	long cache_expire;
++	union {
++		zval *names[7];
++		struct {
++			zval *ps_open;
++			zval *ps_close;
++			zval *ps_read;
++			zval *ps_write;
++			zval *ps_destroy;
++			zval *ps_gc;
++			zval *ps_create_sid;
++		} name;
++	} mod_user_names;
++	int mod_user_implemented;
++	int mod_user_is_open;
++	const struct ps_serializer_struct *serializer;
++	zval *http_session_vars;
++	zend_bool auto_start;
++	zend_bool use_cookies;
++	zend_bool use_only_cookies;
++	zend_bool use_trans_sid;	/* contains the INI value of whether to use trans-sid */
++	zend_bool apply_trans_sid;	/* whether or not to enable trans-sid for the current request */
++
++	long hash_func;
++#if defined(HAVE_HASH_EXT) && !defined(COMPILE_DL_HASH)
++	php_hash_ops *hash_ops;
++#endif
++	long hash_bits_per_character;
++	int send_cookie;
++	int define_sid;
++	zend_bool invalid_session_id;	/* allows the driver to report about an invalid session id and request id regeneration */
++
++	php_session_rfc1867_progress_54 *rfc1867_progress;
++	zend_bool rfc1867_enabled; /* session.upload_progress.enabled */
++	zend_bool rfc1867_cleanup; /* session.upload_progress.cleanup */
++	smart_str rfc1867_prefix;  /* session.upload_progress.prefix */
++	smart_str rfc1867_name;    /* session.upload_progress.name */
++	long rfc1867_freq;         /* session.upload_progress.freq */
++	double rfc1867_min_freq;   /* session.upload_progress.min_freq */
++
++	zend_bool use_strict_mode; /* whether or not PHP accepts unknown session ids */
++} php_ps_globals_55;
 +#endif
 +
  #ifdef ZTS
  static ts_rsrc_id session_globals_id = 0;
 -# if (PHP_MAJOR_VERSION == 5 && PHP_MINOR_VERSION >= 3)
-+# if (PHP_MAJOR_VERSION == 5 && PHP_MINOR_VERSION >= 4)
++# if (PHP_MAJOR_VERSION == 5 && PHP_MINOR_VERSION >= 5)
++#  define SESSION_G(v) TSRMG(session_globals_id, php_ps_globals_55 *, v)
++# elif (PHP_MAJOR_VERSION == 5 && PHP_MINOR_VERSION >= 4)
 +#  define SESSION_G(v) TSRMG(session_globals_id, php_ps_globals_54 *, v)
 +# elif (PHP_MAJOR_VERSION == 5 && PHP_MINOR_VERSION >= 3)
  #  define SESSION_G(v) TSRMG(session_globals_id, php_ps_globals_53 *, v)
  # elif (PHP_MAJOR_VERSION == 5 && PHP_MINOR_VERSION >= 2)
  #  define SESSION_G(v) TSRMG(session_globals_id, php_ps_globals_52 *, v)
-@@ -247,7 +333,9 @@
+@@ -247,7 +399,11 @@
      UNSUPPORTED PHP VERSION
  # endif
  #else
 -# if (PHP_MAJOR_VERSION == 5 && PHP_MINOR_VERSION >= 3)
-+# if (PHP_MAJOR_VERSION == 5 && PHP_MINOR_VERSION >= 4)
++# if (PHP_MAJOR_VERSION == 5 && PHP_MINOR_VERSION >= 5)
++static php_ps_globals_55 *session_globals = NULL;
++# elif (PHP_MAJOR_VERSION == 5 && PHP_MINOR_VERSION >= 4)
 +static php_ps_globals_54 *session_globals = NULL;
 +# elif (PHP_MAJOR_VERSION == 5 && PHP_MINOR_VERSION >= 3)
  static php_ps_globals_53 *session_globals = NULL;
  # elif (PHP_MAJOR_VERSION == 5 && PHP_MINOR_VERSION >= 2)
  static php_ps_globals_52 *session_globals = NULL;
-@@ -294,6 +382,7 @@
+@@ -269,6 +425,25 @@
+     ulong num_key;                                              \
+     zval **struc;
+ 
++#if (PHP_MAJOR_VERSION > 5) || (PHP_MAJOR_VERSION == 5 && PHP_MINOR_VERSION >= 5)
++#define PS_ENCODE_LOOP(code) do {									\
++		HashTable *_ht = Z_ARRVAL_P(SESSION_G(http_session_vars));			\
++		int key_type;												\
++																	\
++		for (zend_hash_internal_pointer_reset(_ht);					\
++				(key_type = zend_hash_get_current_key_ex(_ht, &key, &key_length, &num_key, 0, NULL)) != HASH_KEY_NON_EXISTENT; \
++					zend_hash_move_forward(_ht)) {					\
++			if (key_type == HASH_KEY_IS_LONG) {						\
++				php_error_docref(NULL TSRMLS_CC, E_NOTICE, "Skipping numeric key %ld", num_key);	\
++				continue;											\
++			}														\
++			key_length--;											\
++			if (suhosin_get_session_var(key, key_length, &struc TSRMLS_CC) == SUCCESS) {	\
++				code;		 										\
++			} 														\
++		}															\
++	} while(0)
++#else
+ #define PS_ENCODE_LOOP(code) do {                                   \
+         HashTable *_ht = Z_ARRVAL_P(SESSION_G(http_session_vars));          \
+         int key_type;                                               \
+@@ -286,6 +461,7 @@
+             }                                                       \
+         }                                                           \
+     } while(0)
++#endif
+ 
+ static int suhosin_get_session_var(char *name, size_t namelen, zval ***state_var TSRMLS_DC) /* {{{ */
+ {
+@@ -294,6 +470,7 @@
      if (SESSION_G(http_session_vars) && SESSION_G(http_session_vars)->type == IS_ARRAY) {
          ret = zend_hash_find(Z_ARRVAL_P(SESSION_G(http_session_vars)), name, namelen + 1, (void **) state_var);
  
@@ -831,7 +933,7 @@ diff -uNr suhosin-0.9.33/session.c suhosin-0.9.33.php55/session.c
          /* If register_globals is enabled, and
           * if there is an entry for the slot in $_SESSION, and
           * if that entry is still set to NULL, and
-@@ -307,6 +396,7 @@
+@@ -307,6 +484,7 @@
                  *state_var = tmp;
              }
          }
@@ -839,7 +941,7 @@ diff -uNr suhosin-0.9.33/session.c suhosin-0.9.33.php55/session.c
      }
      return ret;
  }
-@@ -426,7 +516,7 @@
+@@ -426,7 +604,7 @@
      }
      
      /* store ip value */
@@ -848,7 +950,7 @@ diff -uNr suhosin-0.9.33/session.c suhosin-0.9.33.php55/session.c
      
      /* store check value */
      crypted[8] = check & 0xff;
-@@ -544,7 +634,7 @@
+@@ -544,7 +722,7 @@
          if (check_ra > 4) {
              check_ra = 4;
          }
@@ -857,7 +959,7 @@ diff -uNr suhosin-0.9.33/session.c suhosin-0.9.33.php55/session.c
          if (memcmp(buf, decrypted+4, check_ra) != 0) {
              goto error_out;
          }
-@@ -639,7 +729,12 @@
+@@ -639,7 +817,12 @@
      }*/
      
      /* protect dumb session handlers */
@@ -871,7 +973,7 @@ diff -uNr suhosin-0.9.33/session.c suhosin-0.9.33.php55/session.c
  regenerate:
          SDEBUG("regenerating key is %s", key);
          KEY = SESSION_G(id) = SESSION_G(mod)->s_create_sid(&SESSION_G(mod_data), NULL TSRMLS_CC);
-@@ -688,7 +783,12 @@
+@@ -688,7 +871,12 @@
      char *v = (char *)val;
  
      /* protect dumb session handlers */
@@ -885,7 +987,7 @@ diff -uNr suhosin-0.9.33/session.c suhosin-0.9.33.php55/session.c
          r = FAILURE;
          goto return_write;
      }
-@@ -731,7 +831,12 @@
+@@ -731,7 +919,12 @@
      int r;
  
      /* protect dumb session handlers */
@@ -899,7 +1001,7 @@ diff -uNr suhosin-0.9.33/session.c suhosin-0.9.33.php55/session.c
          return FAILURE;
      }
      
-@@ -763,15 +868,25 @@
+@@ -763,15 +956,25 @@
      SUHOSIN_G(old_s_destroy) = mod->s_destroy;
      mod->s_destroy = suhosin_hook_s_destroy;
      
@@ -926,7 +1028,7 @@ diff -uNr suhosin-0.9.33/session.c suhosin-0.9.33.php55/session.c
      suhosin_hook_session_module(TSRMLS_C);
      
      return r;
-@@ -869,7 +984,7 @@
+@@ -869,7 +1072,7 @@
  
      /* increase session identifier entropy */
      if (SESSION_G(entropy_length) == 0 || SESSION_G(entropy_file) == NULL) {
@@ -935,7 +1037,7 @@ diff -uNr suhosin-0.9.33/session.c suhosin-0.9.33.php55/session.c
          /* ensure that /dev/urandom exists */
          int fd = VCWD_OPEN("/dev/urandom", O_RDONLY);
          if (fd >= 0) {
-@@ -877,6 +992,7 @@
+@@ -877,6 +1080,7 @@
              SESSION_G(entropy_length) = 16;
              SESSION_G(entropy_file) = pestrdup("/dev/urandom", 1);
          }
@@ -945,7 +1047,7 @@ diff -uNr suhosin-0.9.33/session.c suhosin-0.9.33.php55/session.c
  
 diff -uNr suhosin-0.9.33/sha256.c suhosin-0.9.33.php55/sha256.c
 --- suhosin-0.9.33/sha256.c	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php55/sha256.c	Thu Aug  8 17:42:57 2013
++++ suhosin-0.9.33.php55/sha256.c	Sun Dec 29 00:00:00 2013
 @@ -86,9 +86,11 @@
  		return;
  	}
@@ -969,7 +1071,7 @@ diff -uNr suhosin-0.9.33/sha256.c suhosin-0.9.33.php55/sha256.c
  	{NULL, NULL, NULL}
 diff -uNr suhosin-0.9.33/suhosin.c suhosin-0.9.33.php55/suhosin.c
 --- suhosin-0.9.33/suhosin.c	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php55/suhosin.c	Thu Aug  8 17:42:57 2013
++++ suhosin-0.9.33.php55/suhosin.c	Sun Dec 29 00:00:00 2013
 @@ -32,8 +32,12 @@
  #include "zend_llist.h"
  #include "zend_operators.h"
@@ -1075,7 +1177,7 @@ diff -uNr suhosin-0.9.33/suhosin.c suhosin-0.9.33.php55/suhosin.c
  	if (sapi_module.phpinfo_as_text) {
 diff -uNr suhosin-0.9.33/treat_data.c suhosin-0.9.33.php55/treat_data.c
 --- suhosin-0.9.33/treat_data.c	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php55/treat_data.c	Thu Aug  8 17:42:57 2013
++++ suhosin-0.9.33.php55/treat_data.c	Sun Dec 29 00:00:00 2013
 @@ -194,7 +194,12 @@
  
  void suhosin_hook_treat_data()

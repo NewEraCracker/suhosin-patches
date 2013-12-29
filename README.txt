@@ -34,9 +34,10 @@ and just report the bug to this unofficial project.
 REQUIREMENTS:
 
 * Linux, Windows or any other platform where PHP is supported.
-* PHP 5.2 or a newer version.
+* PHP 5.1 or a newer version.
 
-(I also noticed that PHP 5.1 is supported by using the patch meant for PHP 5.2)
+(PHP 5.1 is supported by using the patch meant for PHP 5.2)
+(If you are using PHP 5.5, only PHP 5.5.4 or higher is supported)
 
 ===============================================================================
 
