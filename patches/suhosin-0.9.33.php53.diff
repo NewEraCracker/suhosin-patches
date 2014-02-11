@@ -1,6 +1,6 @@
 diff -uNr suhosin-0.9.33/ex_imp.c suhosin-0.9.33.php53/ex_imp.c
 --- suhosin-0.9.33/ex_imp.c	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php53/ex_imp.c	Tue Feb 11 21:15:45 2014
++++ suhosin-0.9.33.php53/ex_imp.c	Tue Feb 11 23:15:20 2014
 @@ -3,7 +3,7 @@
    | Suhosin Version 1                                                    |
    +----------------------------------------------------------------------+
@@ -21,7 +21,7 @@ diff -uNr suhosin-0.9.33/ex_imp.c suhosin-0.9.33.php53/ex_imp.c
  	{NULL, NULL, NULL}
 diff -uNr suhosin-0.9.33/execute.c suhosin-0.9.33.php53/execute.c
 --- suhosin-0.9.33/execute.c	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php53/execute.c	Tue Feb 11 21:15:45 2014
++++ suhosin-0.9.33.php53/execute.c	Tue Feb 11 23:15:20 2014
 @@ -3,7 +3,7 @@
    | Suhosin Version 1                                                    |
    +----------------------------------------------------------------------+
@@ -174,7 +174,7 @@ diff -uNr suhosin-0.9.33/execute.c suhosin-0.9.33.php53/execute.c
          int argc = ZEND_NUM_ARGS();
 diff -uNr suhosin-0.9.33/header.c suhosin-0.9.33.php53/header.c
 --- suhosin-0.9.33/header.c	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php53/header.c	Tue Feb 11 21:13:40 2014
++++ suhosin-0.9.33.php53/header.c	Tue Feb 11 23:15:20 2014
 @@ -3,7 +3,7 @@
    | Suhosin Version 1                                                    |
    +----------------------------------------------------------------------+
@@ -186,7 +186,7 @@ diff -uNr suhosin-0.9.33/header.c suhosin-0.9.33.php53/header.c
    | that is bundled with this package in the file LICENSE, and is        |
 diff -uNr suhosin-0.9.33/ifilter.c suhosin-0.9.33.php53/ifilter.c
 --- suhosin-0.9.33/ifilter.c	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php53/ifilter.c	Tue Feb 11 21:15:45 2014
++++ suhosin-0.9.33.php53/ifilter.c	Tue Feb 11 23:15:20 2014
 @@ -3,7 +3,7 @@
    | Suhosin Version 1                                                    |
    +----------------------------------------------------------------------+
@@ -225,7 +225,7 @@ diff -uNr suhosin-0.9.33/ifilter.c suhosin-0.9.33.php53/ifilter.c
  }
 diff -uNr suhosin-0.9.33/log.c suhosin-0.9.33.php53/log.c
 --- suhosin-0.9.33/log.c	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php53/log.c	Tue Feb 11 21:15:45 2014
++++ suhosin-0.9.33.php53/log.c	Tue Feb 11 23:15:20 2014
 @@ -3,7 +3,7 @@
    | Suhosin Version 1                                                    |
    +----------------------------------------------------------------------+
@@ -235,22 +235,22 @@ diff -uNr suhosin-0.9.33/log.c suhosin-0.9.33.php53/log.c
    +----------------------------------------------------------------------+
    | This source file is subject to version 3.01 of the PHP license,      |
    | that is bundled with this package in the file LICENSE, and is        |
-@@ -34,6 +34,12 @@
- 
- #ifdef HAVE_SYS_SOCKET_H
+@@ -36,6 +36,12 @@
  #include <sys/socket.h>
-+#endif
-+
+ #endif
+ 
 +#ifdef HAVE_SYS_TIME_H
 +#include <sys/time.h>
 +#elif defined(PHP_WIN32)
 +#include "win32/time.h"
- #endif
- 
++#endif
++
  #if defined(PHP_WIN32) || defined(__riscos__) || defined(NETWARE)
+ #undef AF_UNIX
+ #endif
 diff -uNr suhosin-0.9.33/mbregex.h suhosin-0.9.33.php53/mbregex.h
 --- suhosin-0.9.33/mbregex.h	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php53/mbregex.h	Tue Feb 11 21:13:40 2014
++++ suhosin-0.9.33.php53/mbregex.h	Tue Feb 11 23:15:20 2014
 @@ -3,7 +3,7 @@
    | Suhosin Version 1                                                    |
    +----------------------------------------------------------------------+
@@ -262,7 +262,7 @@ diff -uNr suhosin-0.9.33/mbregex.h suhosin-0.9.33.php53/mbregex.h
    | that is bundled with this package in the file LICENSE, and is        |
 diff -uNr suhosin-0.9.33/memory_limit.c suhosin-0.9.33.php53/memory_limit.c
 --- suhosin-0.9.33/memory_limit.c	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php53/memory_limit.c	Tue Feb 11 21:15:45 2014
++++ suhosin-0.9.33.php53/memory_limit.c	Tue Feb 11 23:15:20 2014
 @@ -3,7 +3,7 @@
    | Suhosin Version 1                                                    |
    +----------------------------------------------------------------------+
@@ -304,7 +304,7 @@ diff -uNr suhosin-0.9.33/memory_limit.c suhosin-0.9.33.php53/memory_limit.c
  					return FAILURE;
 diff -uNr suhosin-0.9.33/php_suhosin.h suhosin-0.9.33.php53/php_suhosin.h
 --- suhosin-0.9.33/php_suhosin.h	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php53/php_suhosin.h	Tue Feb 11 21:15:45 2014
++++ suhosin-0.9.33.php53/php_suhosin.h	Tue Feb 11 23:15:20 2014
 @@ -3,7 +3,7 @@
    | Suhosin Version 1                                                    |
    +----------------------------------------------------------------------+
@@ -325,7 +325,7 @@ diff -uNr suhosin-0.9.33/php_suhosin.h suhosin-0.9.33.php53/php_suhosin.h
  void suhosin_unhook_header_handler();
 diff -uNr suhosin-0.9.33/post_handler.c suhosin-0.9.33.php53/post_handler.c
 --- suhosin-0.9.33/post_handler.c	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php53/post_handler.c	Tue Feb 11 21:15:45 2014
++++ suhosin-0.9.33.php53/post_handler.c	Tue Feb 11 23:15:20 2014
 @@ -3,7 +3,7 @@
    | Suhosin Version 1                                                    |
    +----------------------------------------------------------------------+
@@ -340,7 +340,7 @@ diff -uNr suhosin-0.9.33/post_handler.c suhosin-0.9.33.php53/post_handler.c
      char *var, *val, *e, *s, *p;
      zval *array_ptr = (zval *) arg;
 -
-+#if PHP_VERSION_ID >= 50311	
++#if PHP_VERSION_ID >= 50311
 +	long count = 0;
 +#endif
      if (SG(request_info).post_data==NULL) {
@@ -351,7 +351,7 @@ diff -uNr suhosin-0.9.33/post_handler.c suhosin-0.9.33.php53/post_handler.c
          if ((val = memchr(s, '=', (p - s)))) { /* have a value */
              unsigned int val_len, new_val_len;
 +
-+#if PHP_VERSION_ID >= 50311	
++#if PHP_VERSION_ID >= 50311
 +			if (++count > PG(max_input_vars)) {
 +				php_error_docref(NULL TSRMLS_CC, E_WARNING, "Input variables exceeded %ld. To increase the limit change max_input_vars in php.ini.", PG(max_input_vars));
 +				return;
@@ -382,15 +382,9 @@ diff -uNr suhosin-0.9.33/post_handler.c suhosin-0.9.33.php53/post_handler.c
  {
  	zend_ini_entry *ini_entry;
  
-@@ -186,5 +195,3 @@
-  * vim600: noet sw=4 ts=4 fdm=marker
-  * vim<600: noet sw=4 ts=4
-  */
--
--
 diff -uNr suhosin-0.9.33/rfc1867.c suhosin-0.9.33.php53/rfc1867.c
 --- suhosin-0.9.33/rfc1867.c	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php53/rfc1867.c	Tue Feb 11 21:15:45 2014
++++ suhosin-0.9.33.php53/rfc1867.c	Tue Feb 11 23:15:20 2014
 @@ -825,7 +825,7 @@
  		}
  	} else {
@@ -449,7 +443,7 @@ diff -uNr suhosin-0.9.33/rfc1867.c suhosin-0.9.33.php53/rfc1867.c
  				register_http_post_files_variable(lbuf, filename, http_post_files, 0 TSRMLS_CC);
 diff -uNr suhosin-0.9.33/session.c suhosin-0.9.33.php53/session.c
 --- suhosin-0.9.33/session.c	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php53/session.c	Tue Feb 11 21:15:45 2014
++++ suhosin-0.9.33.php53/session.c	Tue Feb 11 23:15:20 2014
 @@ -3,7 +3,7 @@
    | Suhosin Version 1                            |
    +----------------------------------------------------------------------+
@@ -496,7 +490,7 @@ diff -uNr suhosin-0.9.33/session.c suhosin-0.9.33.php53/session.c
  
 diff -uNr suhosin-0.9.33/sha256.c suhosin-0.9.33.php53/sha256.c
 --- suhosin-0.9.33/sha256.c	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php53/sha256.c	Tue Feb 11 21:15:45 2014
++++ suhosin-0.9.33.php53/sha256.c	Tue Feb 11 23:15:20 2014
 @@ -3,7 +3,7 @@
    | Suhosin Version 1                                                    |
    +----------------------------------------------------------------------+
@@ -517,7 +511,7 @@ diff -uNr suhosin-0.9.33/sha256.c suhosin-0.9.33.php53/sha256.c
  	{NULL, NULL, NULL}
 diff -uNr suhosin-0.9.33/sha256.h suhosin-0.9.33.php53/sha256.h
 --- suhosin-0.9.33/sha256.h	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php53/sha256.h	Tue Feb 11 21:13:40 2014
++++ suhosin-0.9.33.php53/sha256.h	Tue Feb 11 23:15:20 2014
 @@ -3,7 +3,7 @@
    | Suhosin Version 1                                                    |
    +----------------------------------------------------------------------+
@@ -529,7 +523,7 @@ diff -uNr suhosin-0.9.33/sha256.h suhosin-0.9.33.php53/sha256.h
    | that is bundled with this package in the file LICENSE, and is        |
 diff -uNr suhosin-0.9.33/suhosin.c suhosin-0.9.33.php53/suhosin.c
 --- suhosin-0.9.33/suhosin.c	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php53/suhosin.c	Tue Feb 11 21:15:45 2014
++++ suhosin-0.9.33.php53/suhosin.c	Tue Feb 11 23:15:20 2014
 @@ -3,7 +3,7 @@
    | Suhosin Version 1                                                    |
    +----------------------------------------------------------------------+
@@ -576,7 +570,7 @@ diff -uNr suhosin-0.9.33/suhosin.c suhosin-0.9.33.php53/suhosin.c
  
 diff -uNr suhosin-0.9.33/suhosin_rfc1867.h suhosin-0.9.33.php53/suhosin_rfc1867.h
 --- suhosin-0.9.33/suhosin_rfc1867.h	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php53/suhosin_rfc1867.h	Tue Feb 11 21:13:40 2014
++++ suhosin-0.9.33.php53/suhosin_rfc1867.h	Tue Feb 11 23:15:20 2014
 @@ -3,7 +3,7 @@
    | Suhosin Version 1                                                    |
    +----------------------------------------------------------------------+
@@ -588,7 +582,7 @@ diff -uNr suhosin-0.9.33/suhosin_rfc1867.h suhosin-0.9.33.php53/suhosin_rfc1867.
    | that is bundled with this package in the file LICENSE, and is        |
 diff -uNr suhosin-0.9.33/treat_data.c suhosin-0.9.33.php53/treat_data.c
 --- suhosin-0.9.33/treat_data.c	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php53/treat_data.c	Tue Feb 11 21:13:40 2014
++++ suhosin-0.9.33.php53/treat_data.c	Tue Feb 11 23:15:20 2014
 @@ -3,7 +3,7 @@
    | Suhosin Version 1                                                    |
    +----------------------------------------------------------------------+
@@ -600,7 +594,7 @@ diff -uNr suhosin-0.9.33/treat_data.c suhosin-0.9.33.php53/treat_data.c
    | that is bundled with this package in the file LICENSE, and is        |
 diff -uNr suhosin-0.9.33/ufilter.c suhosin-0.9.33.php53/ufilter.c
 --- suhosin-0.9.33/ufilter.c	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php53/ufilter.c	Tue Feb 11 21:13:40 2014
++++ suhosin-0.9.33.php53/ufilter.c	Tue Feb 11 23:15:20 2014
 @@ -3,7 +3,7 @@
    | Suhosin Version 1                                                    |
    +----------------------------------------------------------------------+
