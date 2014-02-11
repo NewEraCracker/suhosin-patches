@@ -448,7 +448,7 @@ diff -uNr suhosin-0.9.33/execute.c suhosin-0.9.33.php55/execute.c
 +#else
 +		ht = execute_data_ptr->opline->extended_value;
 +#if (PHP_MAJOR_VERSION == 5 && PHP_MINOR_VERSION == 4)
-+		return_value = &(*(temp_variable *)((char *) execute_data_ptr->Ts + execute_data_ptr->opline->result.var)).var.ptr;
++		return_value = (*(temp_variable *)((char *) execute_data_ptr->Ts + execute_data_ptr->opline->result.var)).var.ptr;
 +#elif (PHP_MAJOR_VERSION == 5)
 +		return_value = (*(temp_variable *)((char *) execute_data_ptr->Ts + execute_data_ptr->opline->result.u.var)).var.ptr;
 +#else
