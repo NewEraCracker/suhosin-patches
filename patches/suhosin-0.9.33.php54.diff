@@ -1,6 +1,6 @@
 diff -uNr suhosin-0.9.33/ex_imp.c suhosin-0.9.33.php54/ex_imp.c
 --- suhosin-0.9.33/ex_imp.c	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php54/ex_imp.c	Thu Aug  8 17:42:51 2013
++++ suhosin-0.9.33.php54/ex_imp.c	Tue Feb 11 17:01:07 2014
 @@ -727,7 +727,7 @@
  
  /* {{{ suhosin_ex_imp_functions[]
@@ -12,7 +12,7 @@ diff -uNr suhosin-0.9.33/ex_imp.c suhosin-0.9.33.php54/ex_imp.c
  	{NULL, NULL, NULL}
 diff -uNr suhosin-0.9.33/execute.c suhosin-0.9.33.php54/execute.c
 --- suhosin-0.9.33/execute.c	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php54/execute.c	Thu Aug  8 17:42:51 2013
++++ suhosin-0.9.33.php54/execute.c	Tue Feb 11 17:01:07 2014
 @@ -35,6 +35,7 @@
  #include "zend_compile.h"
  #include "zend_llist.h"
@@ -253,7 +253,7 @@ diff -uNr suhosin-0.9.33/execute.c suhosin-0.9.33.php54/execute.c
  		
 diff -uNr suhosin-0.9.33/ifilter.c suhosin-0.9.33.php54/ifilter.c
 --- suhosin-0.9.33/ifilter.c	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php54/ifilter.c	Thu Aug  8 17:42:51 2013
++++ suhosin-0.9.33.php54/ifilter.c	Tue Feb 11 17:01:07 2014
 @@ -146,7 +146,7 @@
  	if (zend_hash_find(arr, key, klen, (void **) &tzval) == SUCCESS &&
  			Z_TYPE_PP(tzval) == IS_STRING) {
@@ -283,7 +283,7 @@ diff -uNr suhosin-0.9.33/ifilter.c suhosin-0.9.33.php54/ifilter.c
  }
 diff -uNr suhosin-0.9.33/log.c suhosin-0.9.33.php54/log.c
 --- suhosin-0.9.33/log.c	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php54/log.c	Thu Aug  8 17:42:51 2013
++++ suhosin-0.9.33.php54/log.c	Tue Feb 11 17:01:07 2014
 @@ -31,11 +31,18 @@
  #include "SAPI.h"
  #include "ext/standard/datetime.h"
@@ -344,9 +344,42 @@ diff -uNr suhosin-0.9.33/log.c suhosin-0.9.33.php54/log.c
  				PG(open_basedir) = orig_basedir;
  				
  #ifdef ZEND_ENGINE_2
+diff -uNr suhosin-0.9.33/memory_limit.c suhosin-0.9.33.php54/memory_limit.c
+--- suhosin-0.9.33/memory_limit.c	Thu Jan 19 15:49:18 2012
++++ suhosin-0.9.33.php54/memory_limit.c	Tue Feb 11 17:05:16 2014
+@@ -34,8 +34,11 @@
+  */
+ static PHP_INI_MH(suhosin_OnChangeMemoryLimit)
+ {
+-	long hard_memory_limit = 1<<30;
+-	
++#if SIZEOF_LONG==8
++	long hard_memory_limit = 0x7fffffffffffffff;
++#elif SIZEOF_LONG==4
++	long hard_memory_limit = 0x7fffffff;
++#endif /* will produce a compile error or SIZEOF_LONG is not 4 or 8 */
+ 	if (stage == ZEND_INI_STAGE_RUNTIME) {
+ 		if (SUHOSIN_G(memory_limit) > 0) {
+ 			SUHOSIN_G(hard_memory_limit) = SUHOSIN_G(memory_limit);
+@@ -50,13 +53,13 @@
+ 		PG(memory_limit) = zend_atol(new_value, new_value_length);
+ 		if (hard_memory_limit > 0) {
+ 			if (PG(memory_limit) > hard_memory_limit) {
+-				suhosin_log(S_MISC, "script tried to increase memory_limit to %u bytes which is above the allowed value", PG(memory_limit));
++				suhosin_log(S_MISC, "script tried to increase memory_limit to %lu bytes which is above the allowed value", PG(memory_limit));
+ 				if (!SUHOSIN_G(simulation)) {
+ 					PG(memory_limit) = hard_memory_limit;
+ 					return FAILURE;
+ 				}
+ 			} else if (PG(memory_limit) < 0) {
+-				suhosin_log(S_MISC, "script tried to disable memory_limit by setting it to a negative value %d bytes which is not allowed", PG(memory_limit));
++				suhosin_log(S_MISC, "script tried to disable memory_limit by setting it to a negative value %ld bytes which is not allowed", PG(memory_limit));
+ 				if (!SUHOSIN_G(simulation)) {
+ 					PG(memory_limit) = hard_memory_limit;
+ 					return FAILURE;
 diff -uNr suhosin-0.9.33/php_suhosin.h suhosin-0.9.33.php54/php_suhosin.h
 --- suhosin-0.9.33/php_suhosin.h	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php54/php_suhosin.h	Thu Aug  8 17:42:51 2013
++++ suhosin-0.9.33.php54/php_suhosin.h	Tue Feb 11 17:01:07 2014
 @@ -186,6 +186,7 @@
  	int (*old_php_body_write)(const char *str, unsigned int str_length TSRMLS_DC);
  
@@ -366,8 +399,33 @@ diff -uNr suhosin-0.9.33/php_suhosin.h suhosin-0.9.33.php54/php_suhosin.h
  void suhosin_unhook_header_handler();
 diff -uNr suhosin-0.9.33/post_handler.c suhosin-0.9.33.php54/post_handler.c
 --- suhosin-0.9.33/post_handler.c	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php54/post_handler.c	Thu Aug  8 17:42:51 2013
-@@ -148,10 +148,10 @@
++++ suhosin-0.9.33.php54/post_handler.c	Tue Feb 11 17:13:56 2014
+@@ -40,7 +40,9 @@
+ {
+     char *var, *val, *e, *s, *p;
+     zval *array_ptr = (zval *) arg;
+-
++#if PHP_VERSION_ID >= 50311	
++	long count = 0;
++#endif
+     if (SG(request_info).post_data==NULL) {
+         return;
+     }	
+@@ -52,6 +54,13 @@
+ last_value:
+         if ((val = memchr(s, '=', (p - s)))) { /* have a value */
+             unsigned int val_len, new_val_len;
++
++#if PHP_VERSION_ID >= 50311	
++			if (++count > PG(max_input_vars)) {
++				php_error_docref(NULL TSRMLS_CC, E_WARNING, "Input variables exceeded %ld. To increase the limit change max_input_vars in php.ini.", PG(max_input_vars));
++				return;
++			}
++#endif
+             var = s;
+ 
+             php_url_decode(var, (val - s));
+@@ -148,10 +157,10 @@
  
  	/* we need to tell suhosin patch that there is a new valid destructor */
  	/* therefore we have create HashTable that has this destructor */
@@ -380,7 +438,7 @@ diff -uNr suhosin-0.9.33/post_handler.c suhosin-0.9.33.php54/post_handler.c
  	
  	/* we have to stop mbstring from replacing our post handler */
  	if (zend_hash_find(EG(ini_directives), "mbstring.encoding_translation", sizeof("mbstring.encoding_translation"), (void **) &ini_entry) == FAILURE) {
-@@ -162,7 +162,7 @@
+@@ -162,7 +171,7 @@
  	ini_entry->on_modify = suhosin_OnUpdate_mbstring_encoding_translation;
  }
  
@@ -389,7 +447,7 @@ diff -uNr suhosin-0.9.33/post_handler.c suhosin-0.9.33.php54/post_handler.c
  {
  	zend_ini_entry *ini_entry;
  
-@@ -186,5 +186,3 @@
+@@ -186,5 +195,3 @@
   * vim600: noet sw=4 ts=4 fdm=marker
   * vim<600: noet sw=4 ts=4
   */
@@ -397,7 +455,7 @@ diff -uNr suhosin-0.9.33/post_handler.c suhosin-0.9.33.php54/post_handler.c
 -
 diff -uNr suhosin-0.9.33/rfc1867.c suhosin-0.9.33.php54/rfc1867.c
 --- suhosin-0.9.33/rfc1867.c	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php54/rfc1867.c	Thu Aug  8 17:43:20 2013
++++ suhosin-0.9.33.php54/rfc1867.c	Tue Feb 11 17:01:07 2014
 @@ -35,10 +35,11 @@
  #include "suhosin_rfc1867.h"
  #include "php_ini.h"
@@ -558,7 +616,7 @@ diff -uNr suhosin-0.9.33/rfc1867.c suhosin-0.9.33.php54/rfc1867.c
  				register_http_post_files_variable(lbuf, filename, http_post_files, 0 TSRMLS_CC);
 diff -uNr suhosin-0.9.33/session.c suhosin-0.9.33.php54/session.c
 --- suhosin-0.9.33/session.c	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php54/session.c	Thu Aug  8 17:42:51 2013
++++ suhosin-0.9.33.php54/session.c	Tue Feb 11 17:01:07 2014
 @@ -33,6 +33,7 @@
  #include "ext/standard/php_smart_str.h"
  #include "ext/standard/php_var.h"
@@ -796,7 +854,7 @@ diff -uNr suhosin-0.9.33/session.c suhosin-0.9.33.php54/session.c
  
 diff -uNr suhosin-0.9.33/sha256.c suhosin-0.9.33.php54/sha256.c
 --- suhosin-0.9.33/sha256.c	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php54/sha256.c	Thu Aug  8 17:42:51 2013
++++ suhosin-0.9.33.php54/sha256.c	Tue Feb 11 17:01:07 2014
 @@ -86,9 +86,11 @@
  		return;
  	}
@@ -820,7 +878,7 @@ diff -uNr suhosin-0.9.33/sha256.c suhosin-0.9.33.php54/sha256.c
  	{NULL, NULL, NULL}
 diff -uNr suhosin-0.9.33/suhosin.c suhosin-0.9.33.php54/suhosin.c
 --- suhosin-0.9.33/suhosin.c	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php54/suhosin.c	Thu Aug  8 17:42:51 2013
++++ suhosin-0.9.33.php54/suhosin.c	Tue Feb 11 17:01:08 2014
 @@ -189,9 +189,11 @@
  
  static void suhosin_shutdown(zend_extension *extension)
@@ -885,7 +943,7 @@ diff -uNr suhosin-0.9.33/suhosin.c suhosin-0.9.33.php54/suhosin.c
  	suhosin_register_cookie_variable(var, &new_entry, track_vars_array TSRMLS_CC);
 diff -uNr suhosin-0.9.33/treat_data.c suhosin-0.9.33.php54/treat_data.c
 --- suhosin-0.9.33/treat_data.c	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php54/treat_data.c	Thu Aug  8 17:42:51 2013
++++ suhosin-0.9.33.php54/treat_data.c	Tue Feb 11 17:01:08 2014
 @@ -194,7 +194,12 @@
  
  void suhosin_hook_treat_data()
