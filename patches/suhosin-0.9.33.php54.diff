@@ -1,6 +1,6 @@
 diff -uNr suhosin-0.9.33/ex_imp.c suhosin-0.9.33.php54/ex_imp.c
 --- suhosin-0.9.33/ex_imp.c	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php54/ex_imp.c	Tue Feb 11 21:15:52 2014
++++ suhosin-0.9.33.php54/ex_imp.c	Tue Feb 11 22:50:13 2014
 @@ -3,7 +3,7 @@
    | Suhosin Version 1                                                    |
    +----------------------------------------------------------------------+
@@ -21,7 +21,7 @@ diff -uNr suhosin-0.9.33/ex_imp.c suhosin-0.9.33.php54/ex_imp.c
  	{NULL, NULL, NULL}
 diff -uNr suhosin-0.9.33/execute.c suhosin-0.9.33.php54/execute.c
 --- suhosin-0.9.33/execute.c	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php54/execute.c	Tue Feb 11 21:15:52 2014
++++ suhosin-0.9.33.php54/execute.c	Tue Feb 11 22:50:30 2014
 @@ -3,7 +3,7 @@
    | Suhosin Version 1                                                    |
    +----------------------------------------------------------------------+
@@ -271,7 +271,7 @@ diff -uNr suhosin-0.9.33/execute.c suhosin-0.9.33.php54/execute.c
  		
 diff -uNr suhosin-0.9.33/header.c suhosin-0.9.33.php54/header.c
 --- suhosin-0.9.33/header.c	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php54/header.c	Tue Feb 11 21:13:40 2014
++++ suhosin-0.9.33.php54/header.c	Tue Feb 11 22:50:10 2014
 @@ -3,7 +3,7 @@
    | Suhosin Version 1                                                    |
    +----------------------------------------------------------------------+
@@ -283,7 +283,7 @@ diff -uNr suhosin-0.9.33/header.c suhosin-0.9.33.php54/header.c
    | that is bundled with this package in the file LICENSE, and is        |
 diff -uNr suhosin-0.9.33/ifilter.c suhosin-0.9.33.php54/ifilter.c
 --- suhosin-0.9.33/ifilter.c	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php54/ifilter.c	Tue Feb 11 21:15:52 2014
++++ suhosin-0.9.33.php54/ifilter.c	Tue Feb 11 22:50:13 2014
 @@ -3,7 +3,7 @@
    | Suhosin Version 1                                                    |
    +----------------------------------------------------------------------+
@@ -322,7 +322,7 @@ diff -uNr suhosin-0.9.33/ifilter.c suhosin-0.9.33.php54/ifilter.c
  }
 diff -uNr suhosin-0.9.33/log.c suhosin-0.9.33.php54/log.c
 --- suhosin-0.9.33/log.c	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php54/log.c	Tue Feb 11 21:15:52 2014
++++ suhosin-0.9.33.php54/log.c	Tue Feb 11 22:50:30 2014
 @@ -3,7 +3,7 @@
    | Suhosin Version 1                                                    |
    +----------------------------------------------------------------------+
@@ -394,7 +394,7 @@ diff -uNr suhosin-0.9.33/log.c suhosin-0.9.33.php54/log.c
  #ifdef ZEND_ENGINE_2
 diff -uNr suhosin-0.9.33/mbregex.h suhosin-0.9.33.php54/mbregex.h
 --- suhosin-0.9.33/mbregex.h	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php54/mbregex.h	Tue Feb 11 21:13:40 2014
++++ suhosin-0.9.33.php54/mbregex.h	Tue Feb 11 22:29:56 2014
 @@ -3,7 +3,7 @@
    | Suhosin Version 1                                                    |
    +----------------------------------------------------------------------+
@@ -406,7 +406,7 @@ diff -uNr suhosin-0.9.33/mbregex.h suhosin-0.9.33.php54/mbregex.h
    | that is bundled with this package in the file LICENSE, and is        |
 diff -uNr suhosin-0.9.33/memory_limit.c suhosin-0.9.33.php54/memory_limit.c
 --- suhosin-0.9.33/memory_limit.c	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php54/memory_limit.c	Tue Feb 11 21:15:52 2014
++++ suhosin-0.9.33.php54/memory_limit.c	Tue Feb 11 22:50:08 2014
 @@ -3,7 +3,7 @@
    | Suhosin Version 1                                                    |
    +----------------------------------------------------------------------+
@@ -448,7 +448,7 @@ diff -uNr suhosin-0.9.33/memory_limit.c suhosin-0.9.33.php54/memory_limit.c
  					return FAILURE;
 diff -uNr suhosin-0.9.33/php_suhosin.h suhosin-0.9.33.php54/php_suhosin.h
 --- suhosin-0.9.33/php_suhosin.h	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php54/php_suhosin.h	Tue Feb 11 21:15:52 2014
++++ suhosin-0.9.33.php54/php_suhosin.h	Tue Feb 11 22:50:08 2014
 @@ -3,7 +3,7 @@
    | Suhosin Version 1                                                    |
    +----------------------------------------------------------------------+
@@ -477,7 +477,7 @@ diff -uNr suhosin-0.9.33/php_suhosin.h suhosin-0.9.33.php54/php_suhosin.h
  void suhosin_unhook_header_handler();
 diff -uNr suhosin-0.9.33/post_handler.c suhosin-0.9.33.php54/post_handler.c
 --- suhosin-0.9.33/post_handler.c	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php54/post_handler.c	Tue Feb 11 21:15:52 2014
++++ suhosin-0.9.33.php54/post_handler.c	Tue Feb 11 22:50:08 2014
 @@ -3,7 +3,7 @@
    | Suhosin Version 1                                                    |
    +----------------------------------------------------------------------+
@@ -492,7 +492,7 @@ diff -uNr suhosin-0.9.33/post_handler.c suhosin-0.9.33.php54/post_handler.c
      char *var, *val, *e, *s, *p;
      zval *array_ptr = (zval *) arg;
 -
-+#if PHP_VERSION_ID >= 50311	
++#if PHP_VERSION_ID >= 50311
 +	long count = 0;
 +#endif
      if (SG(request_info).post_data==NULL) {
@@ -503,7 +503,7 @@ diff -uNr suhosin-0.9.33/post_handler.c suhosin-0.9.33.php54/post_handler.c
          if ((val = memchr(s, '=', (p - s)))) { /* have a value */
              unsigned int val_len, new_val_len;
 +
-+#if PHP_VERSION_ID >= 50311	
++#if PHP_VERSION_ID >= 50311
 +			if (++count > PG(max_input_vars)) {
 +				php_error_docref(NULL TSRMLS_CC, E_WARNING, "Input variables exceeded %ld. To increase the limit change max_input_vars in php.ini.", PG(max_input_vars));
 +				return;
@@ -512,7 +512,34 @@ diff -uNr suhosin-0.9.33/post_handler.c suhosin-0.9.33.php54/post_handler.c
              var = s;
  
              php_url_decode(var, (val - s));
-@@ -148,10 +157,10 @@
+@@ -82,7 +91,7 @@
+ static void suhosin_post_handler_modification(sapi_post_entry *spe)
+ {
+ 	char *content_type = estrndup(spe->content_type, spe->content_type_len);
+-	suhosin_log(S_VARS, "some extension replaces the POST handler for %s - Suhosin's protection will be incomplete", content_type);
++	suhosin_log(S_VARS, "some extension replaces the POST handler for %s - Suhosin's protection might be incomplete", content_type);
+ 	efree(content_type);
+ }
+ 
+@@ -135,6 +144,12 @@
+ 	HashTable tempht;
+ 	zend_ini_entry *ini_entry;
+ 	
++	old_rfc1867_callback = php_rfc1867_callback;
++
++#if PHP_VERSION_ID >= 50400
++	/* the RFC1867 code is now good enough in PHP to handle our filter just as a registered callback */
++	php_rfc1867_callback = suhosin_rfc1867_filter;
++#else
+ #if PHP_MAJOR_VERSION > 5 || (PHP_MAJOR_VERSION == 5 && PHP_MINOR_VERSION > 0)
+ 	sapi_unregister_post_entry(&suhosin_post_entries[0] TSRMLS_CC);
+ 	sapi_unregister_post_entry(&suhosin_post_entries[1] TSRMLS_CC);
+@@ -144,14 +159,15 @@
+ 	sapi_unregister_post_entry(&suhosin_post_entries[1]);
+ 	sapi_register_post_entries(suhosin_post_entries);
+ #endif
++#endif
+ 	/* we want to get notified if another extension deregisters the suhosin post handlers */
  
  	/* we need to tell suhosin patch that there is a new valid destructor */
  	/* therefore we have create HashTable that has this destructor */
@@ -525,7 +552,7 @@ diff -uNr suhosin-0.9.33/post_handler.c suhosin-0.9.33.php54/post_handler.c
  	
  	/* we have to stop mbstring from replacing our post handler */
  	if (zend_hash_find(EG(ini_directives), "mbstring.encoding_translation", sizeof("mbstring.encoding_translation"), (void **) &ini_entry) == FAILURE) {
-@@ -162,7 +171,7 @@
+@@ -162,10 +178,14 @@
  	ini_entry->on_modify = suhosin_OnUpdate_mbstring_encoding_translation;
  }
  
@@ -534,7 +561,14 @@ diff -uNr suhosin-0.9.33/post_handler.c suhosin-0.9.33.php54/post_handler.c
  {
  	zend_ini_entry *ini_entry;
  
-@@ -186,5 +195,3 @@
++#if PHP_VERSION_ID >= 50400
++	php_rfc1867_callback = old_rfc1867_filter;
++#endif
++
+ 	/* Restore to an empty destructor */
+ 	SG(known_post_content_types).pDestructor = NULL;
+ 
+@@ -186,5 +206,3 @@
   * vim600: noet sw=4 ts=4 fdm=marker
   * vim<600: noet sw=4 ts=4
   */
@@ -542,7 +576,7 @@ diff -uNr suhosin-0.9.33/post_handler.c suhosin-0.9.33.php54/post_handler.c
 -
 diff -uNr suhosin-0.9.33/rfc1867.c suhosin-0.9.33.php54/rfc1867.c
 --- suhosin-0.9.33/rfc1867.c	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php54/rfc1867.c	Tue Feb 11 21:15:52 2014
++++ suhosin-0.9.33.php54/rfc1867.c	Tue Feb 11 22:50:30 2014
 @@ -35,10 +35,11 @@
  #include "suhosin_rfc1867.h"
  #include "php_ini.h"
@@ -703,7 +737,7 @@ diff -uNr suhosin-0.9.33/rfc1867.c suhosin-0.9.33.php54/rfc1867.c
  				register_http_post_files_variable(lbuf, filename, http_post_files, 0 TSRMLS_CC);
 diff -uNr suhosin-0.9.33/session.c suhosin-0.9.33.php54/session.c
 --- suhosin-0.9.33/session.c	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php54/session.c	Tue Feb 11 21:15:52 2014
++++ suhosin-0.9.33.php54/session.c	Tue Feb 11 22:49:14 2014
 @@ -3,7 +3,7 @@
    | Suhosin Version 1                            |
    +----------------------------------------------------------------------+
@@ -950,7 +984,7 @@ diff -uNr suhosin-0.9.33/session.c suhosin-0.9.33.php54/session.c
  
 diff -uNr suhosin-0.9.33/sha256.c suhosin-0.9.33.php54/sha256.c
 --- suhosin-0.9.33/sha256.c	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php54/sha256.c	Tue Feb 11 21:15:52 2014
++++ suhosin-0.9.33.php54/sha256.c	Tue Feb 11 22:50:13 2014
 @@ -3,7 +3,7 @@
    | Suhosin Version 1                                                    |
    +----------------------------------------------------------------------+
@@ -983,7 +1017,7 @@ diff -uNr suhosin-0.9.33/sha256.c suhosin-0.9.33.php54/sha256.c
  	{NULL, NULL, NULL}
 diff -uNr suhosin-0.9.33/sha256.h suhosin-0.9.33.php54/sha256.h
 --- suhosin-0.9.33/sha256.h	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php54/sha256.h	Tue Feb 11 21:13:40 2014
++++ suhosin-0.9.33.php54/sha256.h	Tue Feb 11 22:29:56 2014
 @@ -3,7 +3,7 @@
    | Suhosin Version 1                                                    |
    +----------------------------------------------------------------------+
@@ -995,7 +1029,7 @@ diff -uNr suhosin-0.9.33/sha256.h suhosin-0.9.33.php54/sha256.h
    | that is bundled with this package in the file LICENSE, and is        |
 diff -uNr suhosin-0.9.33/suhosin.c suhosin-0.9.33.php54/suhosin.c
 --- suhosin-0.9.33/suhosin.c	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php54/suhosin.c	Tue Feb 11 21:15:52 2014
++++ suhosin-0.9.33.php54/suhosin.c	Tue Feb 11 22:50:13 2014
 @@ -3,7 +3,7 @@
    | Suhosin Version 1                                                    |
    +----------------------------------------------------------------------+
@@ -1091,7 +1125,7 @@ diff -uNr suhosin-0.9.33/suhosin.c suhosin-0.9.33.php54/suhosin.c
  
 diff -uNr suhosin-0.9.33/suhosin_rfc1867.h suhosin-0.9.33.php54/suhosin_rfc1867.h
 --- suhosin-0.9.33/suhosin_rfc1867.h	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php54/suhosin_rfc1867.h	Tue Feb 11 21:13:40 2014
++++ suhosin-0.9.33.php54/suhosin_rfc1867.h	Tue Feb 11 22:50:08 2014
 @@ -3,7 +3,7 @@
    | Suhosin Version 1                                                    |
    +----------------------------------------------------------------------+
@@ -1101,9 +1135,17 @@ diff -uNr suhosin-0.9.33/suhosin_rfc1867.h suhosin-0.9.33.php54/suhosin_rfc1867.
    +----------------------------------------------------------------------+
    | This source file is subject to version 3.01 of the PHP license,      |
    | that is bundled with this package in the file LICENSE, and is        |
+@@ -79,6 +79,7 @@
+ SAPI_POST_HANDLER_FUNC(suhosin_rfc1867_post_handler);
+ 
+ void destroy_uploaded_files_hash(TSRMLS_D);
++extern PHP_SUHOSIN_API int (*old_rfc1867_callback)(unsigned int event, void *event_data, void **extra TSRMLS_DC);
+ #if !HAVE_RFC1867_CALLBACK
+ extern PHP_SUHOSIN_API int (*php_rfc1867_callback)(unsigned int event, void *event_data, void **extra TSRMLS_DC);
+ #else
 diff -uNr suhosin-0.9.33/treat_data.c suhosin-0.9.33.php54/treat_data.c
 --- suhosin-0.9.33/treat_data.c	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php54/treat_data.c	Tue Feb 11 21:15:52 2014
++++ suhosin-0.9.33.php54/treat_data.c	Tue Feb 11 22:50:18 2014
 @@ -3,7 +3,7 @@
    | Suhosin Version 1                                                    |
    +----------------------------------------------------------------------+
@@ -1128,7 +1170,7 @@ diff -uNr suhosin-0.9.33/treat_data.c suhosin-0.9.33.php54/treat_data.c
  		old_input_filter = sapi_module.input_filter;
 diff -uNr suhosin-0.9.33/ufilter.c suhosin-0.9.33.php54/ufilter.c
 --- suhosin-0.9.33/ufilter.c	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php54/ufilter.c	Tue Feb 11 21:13:40 2014
++++ suhosin-0.9.33.php54/ufilter.c	Tue Feb 11 22:50:13 2014
 @@ -3,7 +3,7 @@
    | Suhosin Version 1                                                    |
    +----------------------------------------------------------------------+
@@ -1138,3 +1180,22 @@ diff -uNr suhosin-0.9.33/ufilter.c suhosin-0.9.33.php54/ufilter.c
    +----------------------------------------------------------------------+
    | This source file is subject to version 3.01 of the PHP license,      |
    | that is bundled with this package in the file LICENSE, and is        |
+@@ -31,6 +31,7 @@
+ #include "php_variables.h"
+ #include "suhosin_rfc1867.h"
+ 
++PHP_SUHOSIN_API int (*old_rfc1867_callback)(unsigned int event, void *event_data, void **extra TSRMLS_DC) = NULL;
+ #if !HAVE_RFC1867_CALLBACK
+ PHP_SUHOSIN_API int (*php_rfc1867_callback)(unsigned int event, void *event_data, void **extra TSRMLS_DC) = NULL;
+ #endif
+@@ -345,8 +346,8 @@
+ 	}
+ continue_with_next:	
+ #if HAVE_RFC1867_CALLBACK
+-	if (php_rfc1867_callback != NULL) {
+-		return php_rfc1867_callback(event, event_data, extra TSRMLS_CC);
++	if (old_rfc1867_callback != NULL) {
++		return old_rfc1867_callback(event, event_data, extra TSRMLS_CC);
+ 	}
+ #endif
+ 	return SUCCESS;
