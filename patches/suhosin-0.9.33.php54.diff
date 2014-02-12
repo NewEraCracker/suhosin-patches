@@ -562,7 +562,7 @@ diff -uNr suhosin-0.9.33/post_handler.c suhosin-0.9.33.php54/post_handler.c
  	zend_ini_entry *ini_entry;
  
 +#if PHP_VERSION_ID >= 50400
-+	php_rfc1867_callback = old_rfc1867_filter;
++	php_rfc1867_callback = old_rfc1867_callback;
 +#endif
 +
  	/* Restore to an empty destructor */
