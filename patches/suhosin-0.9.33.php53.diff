@@ -1,6 +1,6 @@
 diff -uNr suhosin-0.9.33/ex_imp.c suhosin-0.9.33.php53/ex_imp.c
 --- suhosin-0.9.33/ex_imp.c	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php53/ex_imp.c	Wed Feb 12 06:25:34 2014
++++ suhosin-0.9.33.php53/ex_imp.c	Wed Feb 12 06:48:51 2014
 @@ -3,7 +3,7 @@
    | Suhosin Version 1                                                    |
    +----------------------------------------------------------------------+
@@ -21,7 +21,7 @@ diff -uNr suhosin-0.9.33/ex_imp.c suhosin-0.9.33.php53/ex_imp.c
  	{NULL, NULL, NULL}
 diff -uNr suhosin-0.9.33/execute.c suhosin-0.9.33.php53/execute.c
 --- suhosin-0.9.33/execute.c	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php53/execute.c	Wed Feb 12 06:25:34 2014
++++ suhosin-0.9.33.php53/execute.c	Wed Feb 12 06:48:51 2014
 @@ -3,7 +3,7 @@
    | Suhosin Version 1                                                    |
    +----------------------------------------------------------------------+
@@ -174,7 +174,7 @@ diff -uNr suhosin-0.9.33/execute.c suhosin-0.9.33.php53/execute.c
          int argc = ZEND_NUM_ARGS();
 diff -uNr suhosin-0.9.33/header.c suhosin-0.9.33.php53/header.c
 --- suhosin-0.9.33/header.c	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php53/header.c	Wed Feb 12 06:25:34 2014
++++ suhosin-0.9.33.php53/header.c	Wed Feb 12 06:48:51 2014
 @@ -3,7 +3,7 @@
    | Suhosin Version 1                                                    |
    +----------------------------------------------------------------------+
@@ -186,7 +186,7 @@ diff -uNr suhosin-0.9.33/header.c suhosin-0.9.33.php53/header.c
    | that is bundled with this package in the file LICENSE, and is        |
 diff -uNr suhosin-0.9.33/ifilter.c suhosin-0.9.33.php53/ifilter.c
 --- suhosin-0.9.33/ifilter.c	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php53/ifilter.c	Wed Feb 12 06:25:34 2014
++++ suhosin-0.9.33.php53/ifilter.c	Wed Feb 12 06:48:51 2014
 @@ -3,7 +3,7 @@
    | Suhosin Version 1                                                    |
    +----------------------------------------------------------------------+
@@ -225,7 +225,7 @@ diff -uNr suhosin-0.9.33/ifilter.c suhosin-0.9.33.php53/ifilter.c
  }
 diff -uNr suhosin-0.9.33/log.c suhosin-0.9.33.php53/log.c
 --- suhosin-0.9.33/log.c	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php53/log.c	Wed Feb 12 06:25:34 2014
++++ suhosin-0.9.33.php53/log.c	Wed Feb 12 06:48:51 2014
 @@ -3,7 +3,7 @@
    | Suhosin Version 1                                                    |
    +----------------------------------------------------------------------+
@@ -250,7 +250,7 @@ diff -uNr suhosin-0.9.33/log.c suhosin-0.9.33.php53/log.c
  #if defined(PHP_WIN32) || defined(__riscos__) || defined(NETWARE)
 diff -uNr suhosin-0.9.33/mbregex.h suhosin-0.9.33.php53/mbregex.h
 --- suhosin-0.9.33/mbregex.h	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php53/mbregex.h	Wed Feb 12 06:25:34 2014
++++ suhosin-0.9.33.php53/mbregex.h	Wed Feb 12 06:48:51 2014
 @@ -3,7 +3,7 @@
    | Suhosin Version 1                                                    |
    +----------------------------------------------------------------------+
@@ -262,7 +262,7 @@ diff -uNr suhosin-0.9.33/mbregex.h suhosin-0.9.33.php53/mbregex.h
    | that is bundled with this package in the file LICENSE, and is        |
 diff -uNr suhosin-0.9.33/memory_limit.c suhosin-0.9.33.php53/memory_limit.c
 --- suhosin-0.9.33/memory_limit.c	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php53/memory_limit.c	Wed Feb 12 06:25:34 2014
++++ suhosin-0.9.33.php53/memory_limit.c	Wed Feb 12 06:48:51 2014
 @@ -3,7 +3,7 @@
    | Suhosin Version 1                                                    |
    +----------------------------------------------------------------------+
@@ -304,7 +304,7 @@ diff -uNr suhosin-0.9.33/memory_limit.c suhosin-0.9.33.php53/memory_limit.c
  					return FAILURE;
 diff -uNr suhosin-0.9.33/php_suhosin.h suhosin-0.9.33.php53/php_suhosin.h
 --- suhosin-0.9.33/php_suhosin.h	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php53/php_suhosin.h	Wed Feb 12 06:25:34 2014
++++ suhosin-0.9.33.php53/php_suhosin.h	Wed Feb 12 06:48:51 2014
 @@ -3,7 +3,7 @@
    | Suhosin Version 1                                                    |
    +----------------------------------------------------------------------+
@@ -325,7 +325,7 @@ diff -uNr suhosin-0.9.33/php_suhosin.h suhosin-0.9.33.php53/php_suhosin.h
  void suhosin_unhook_header_handler();
 diff -uNr suhosin-0.9.33/post_handler.c suhosin-0.9.33.php53/post_handler.c
 --- suhosin-0.9.33/post_handler.c	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php53/post_handler.c	Wed Feb 12 06:25:34 2014
++++ suhosin-0.9.33.php53/post_handler.c	Wed Feb 12 06:48:51 2014
 @@ -3,7 +3,7 @@
    | Suhosin Version 1                                                    |
    +----------------------------------------------------------------------+
@@ -384,7 +384,7 @@ diff -uNr suhosin-0.9.33/post_handler.c suhosin-0.9.33.php53/post_handler.c
  
 diff -uNr suhosin-0.9.33/rfc1867.c suhosin-0.9.33.php53/rfc1867.c
 --- suhosin-0.9.33/rfc1867.c	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php53/rfc1867.c	Wed Feb 12 06:25:34 2014
++++ suhosin-0.9.33.php53/rfc1867.c	Wed Feb 12 06:53:57 2014
 @@ -2,7 +2,7 @@
     +----------------------------------------------------------------------+
     | PHP Version 5                                                        |
@@ -408,7 +408,11 @@ diff -uNr suhosin-0.9.33/rfc1867.c suhosin-0.9.33.php53/rfc1867.c
  
  /*
   *  This product includes software developed by the Apache Group
-@@ -38,7 +38,7 @@
+@@ -35,10 +35,11 @@
+ #include "suhosin_rfc1867.h"
+ #include "php_ini.h"
+ #include "ext/standard/php_string.h"
++#include "main/php_version.h"
  
  #define DEBUG_FILE_UPLOAD ZEND_DEBUG
  
@@ -417,7 +421,7 @@ diff -uNr suhosin-0.9.33/rfc1867.c suhosin-0.9.33.php53/rfc1867.c
  #include "ext/mbstring/mbstring.h"
  
  static void safe_php_register_variable(char *var, char *strval, zval *track_vars_array, zend_bool override_protection TSRMLS_DC);
-@@ -91,8 +91,7 @@
+@@ -91,8 +92,7 @@
  	int *len_list=*plen_list;
  
  	if (*num_vars>=*num_vars_max){	
@@ -427,7 +431,7 @@ diff -uNr suhosin-0.9.33/rfc1867.c suhosin-0.9.33.php53/rfc1867.c
  		/* in case realloc relocated the buffer */
  		val_list = *pval_list;
  		len_list = *plen_list;
-@@ -206,10 +204,9 @@
+@@ -206,10 +206,9 @@
  			index = NULL;
  		}	
  	}
@@ -439,7 +443,37 @@ diff -uNr suhosin-0.9.33/rfc1867.c suhosin-0.9.33.php53/rfc1867.c
  static void add_protected_variable(char *varname TSRMLS_DC)
  {
  	int dummy=1;
-@@ -289,10 +280,9 @@
+@@ -244,21 +243,29 @@
+ 
+ static void register_http_post_files_variable(char *strvar, char *val, zval *http_post_files, zend_bool override_protection TSRMLS_DC)
+ {
++#if PHP_VERSION_ID < 50400
+ 	int register_globals = PG(register_globals);
+ 
+ 	PG(register_globals) = 0;
++#endif
+ 	safe_php_register_variable(strvar, val, http_post_files, override_protection TSRMLS_CC);
++#if PHP_VERSION_ID < 50400
+ 	PG(register_globals) = register_globals;
++#endif
+ }
+ 
+ 
+ static void register_http_post_files_variable_ex(char *var, zval *val, zval *http_post_files, zend_bool override_protection TSRMLS_DC)
+ {
++#if PHP_VERSION_ID < 50400
+ 	int register_globals = PG(register_globals);
+ 
+ 	PG(register_globals) = 0;
++#endif
+ 	safe_php_register_variable_ex(var, val, http_post_files, override_protection TSRMLS_CC);
++#if PHP_VERSION_ID < 50400
+ 	PG(register_globals) = register_globals;
++#endif
+ }
+ 
+ /*
+@@ -289,10 +296,9 @@
  	char *value;
  } mime_header_entry;
  
@@ -452,7 +486,7 @@ diff -uNr suhosin-0.9.33/rfc1867.c suhosin-0.9.33.php53/rfc1867.c
  */
  static int fill_buffer(multipart_buffer *self TSRMLS_DC)
  {
-@@ -365,17 +353,16 @@
+@@ -365,17 +371,16 @@
  	return self;
  }
  
@@ -479,7 +513,7 @@ diff -uNr suhosin-0.9.33/rfc1867.c suhosin-0.9.33.php53/rfc1867.c
   */
  static char *next_line(multipart_buffer *self)
  {
-@@ -411,8 +398,7 @@
+@@ -411,8 +416,7 @@
  	return line;
  }
  
@@ -489,7 +523,7 @@ diff -uNr suhosin-0.9.33/rfc1867.c suhosin-0.9.33.php53/rfc1867.c
  static char *get_line(multipart_buffer *self TSRMLS_DC)
  {
  	char* ptr = next_line(self);
-@@ -474,7 +457,6 @@
+@@ -474,7 +478,6 @@
  	while( (line = get_line(self TSRMLS_CC)) && strlen(line) > 0 )
  	{
  		/* add header to table */
@@ -497,7 +531,7 @@ diff -uNr suhosin-0.9.33/rfc1867.c suhosin-0.9.33.php53/rfc1867.c
  		char *key = line;
  		char *value = NULL;
  		
-@@ -541,7 +521,6 @@
+@@ -541,7 +544,6 @@
  	char *res;
  
  	while (*pos && *pos != stop) {
@@ -505,7 +539,7 @@ diff -uNr suhosin-0.9.33/rfc1867.c suhosin-0.9.33.php53/rfc1867.c
  		if ((quote = *pos) == '"' || quote == '\'') {
  			++pos;
  			while (*pos && *pos != quote) {
-@@ -555,7 +534,6 @@
+@@ -555,7 +557,6 @@
  				++pos;
  			}
  		} else ++pos;
@@ -513,7 +547,7 @@ diff -uNr suhosin-0.9.33/rfc1867.c suhosin-0.9.33.php53/rfc1867.c
  	}
  	if (*pos == '\0') {
  		res = estrdup(*line);
-@@ -584,7 +561,7 @@
+@@ -584,7 +585,7 @@
  		if (start[i] == '\\' && (start[i + 1] == '\\' || (quote && start[i + 1] == quote))) {
  			*resp++ = start[++i];
  		} else {
@@ -522,7 +556,7 @@ diff -uNr suhosin-0.9.33/rfc1867.c suhosin-0.9.33.php53/rfc1867.c
  			if (php_mb_encoding_translation(TSRMLS_C)) {
  				size_t j = php_mb_gpc_mbchar_bytes(start+i TSRMLS_CC);
  				while (j-- > 0 && i < len) {
-@@ -600,7 +577,7 @@
+@@ -600,7 +601,7 @@
  		}
  	}
  
@@ -531,7 +565,7 @@ diff -uNr suhosin-0.9.33/rfc1867.c suhosin-0.9.33.php53/rfc1867.c
  	return result;
  }
  
-@@ -609,7 +585,7 @@
+@@ -609,7 +610,7 @@
  {
  	char *str = *line, *strend, *res, quote;
  
@@ -540,7 +574,7 @@ diff -uNr suhosin-0.9.33/rfc1867.c suhosin-0.9.33.php53/rfc1867.c
  	if (php_mb_encoding_translation(TSRMLS_C)) {
  		int len=strlen(str);
  		php_mb_gpc_encoding_detector(&str, &len, 1, NULL TSRMLS_CC);
-@@ -666,11 +642,10 @@
+@@ -666,11 +667,10 @@
  	return res;
  }
  
@@ -555,7 +589,7 @@ diff -uNr suhosin-0.9.33/rfc1867.c suhosin-0.9.33.php53/rfc1867.c
  */
  static void *php_ap_memstr(char *haystack, int haystacklen, char *needle, int needlen, int partial)
  {
-@@ -755,7 +728,9 @@
+@@ -755,7 +755,9 @@
  		total_bytes += read_bytes;
  	}
  
@@ -566,7 +600,7 @@ diff -uNr suhosin-0.9.33/rfc1867.c suhosin-0.9.33.php53/rfc1867.c
  	*len = total_bytes;
  
  	return out;
-@@ -773,8 +747,9 @@
+@@ -773,8 +775,9 @@
  	char *temp_filename=NULL, *lbuf=NULL, *abuf=NULL;
  	int boundary_len=0, total_bytes=0, cancel_upload=0, is_arr_upload=0, array_len=0;
  	int max_file_size=0, skip_upload=0, anonindex=0, is_anonymous;
@@ -578,7 +612,7 @@ diff -uNr suhosin-0.9.33/rfc1867.c suhosin-0.9.33.php53/rfc1867.c
  	int str_len = 0, num_vars = 0, num_vars_max = 2*10, *len_list = NULL;
  	char **val_list = NULL;
  #endif
-@@ -783,13 +758,17 @@
+@@ -783,13 +786,17 @@
  	int fd=-1;
  	zend_llist header;
  	void *event_extra_data = NULL;
@@ -597,7 +631,7 @@ diff -uNr suhosin-0.9.33/rfc1867.c suhosin-0.9.33.php53/rfc1867.c
  		sapi_module.sapi_error(E_WARNING, "POST Content-Length of %ld bytes exceeds the limit of %ld bytes", SG(request_info).content_length, SG(post_max_size));
  		return;
  	}
-@@ -825,7 +804,7 @@
+@@ -825,7 +832,7 @@
  		}
  	} else {
  		/* search for the end of the boundary */
@@ -606,7 +640,7 @@ diff -uNr suhosin-0.9.33/rfc1867.c suhosin-0.9.33.php53/rfc1867.c
  	}
  	if (boundary_end) {
  		boundary_end[0] = '\0';
-@@ -850,7 +829,7 @@
+@@ -850,7 +857,7 @@
  	INIT_PZVAL(http_post_files);
  	PG(http_globals)[TRACK_VARS_FILES] = http_post_files;
  
@@ -615,7 +649,7 @@ diff -uNr suhosin-0.9.33/rfc1867.c suhosin-0.9.33.php53/rfc1867.c
  	if (php_mb_encoding_translation(TSRMLS_C)) {
  		val_list = (char **)ecalloc(num_vars_max+2, sizeof(char *));
  		len_list = (int *)ecalloc(num_vars_max+2, sizeof(int));
-@@ -936,11 +915,15 @@
+@@ -936,11 +943,15 @@
  				}
  
  #ifdef ZEND_ENGINE_2
@@ -633,7 +667,7 @@ diff -uNr suhosin-0.9.33/rfc1867.c suhosin-0.9.33.php53/rfc1867.c
  
  						event_formdata.post_bytes_processed = SG(read_post_bytes);
  						event_formdata.name = param;
-@@ -955,10 +938,9 @@
+@@ -955,10 +966,9 @@
  						new_val_len = newlength;
  					}
  					
@@ -646,7 +680,7 @@ diff -uNr suhosin-0.9.33/rfc1867.c suhosin-0.9.33.php53/rfc1867.c
  					} else {
  						safe_php_register_variable(param, value, array_ptr, 0 TSRMLS_CC);
  					}
-@@ -967,6 +949,12 @@
+@@ -967,6 +977,12 @@
  #endif
  #ifdef ZEND_ENGINE_2
  				} else {
@@ -659,7 +693,7 @@ diff -uNr suhosin-0.9.33/rfc1867.c suhosin-0.9.33.php53/rfc1867.c
  					multipart_event_formdata event_formdata;
  
  					event_formdata.post_bytes_processed = SG(read_post_bytes);
-@@ -976,6 +964,7 @@
+@@ -976,6 +992,7 @@
  					event_formdata.newlength = NULL;
                      suhosin_rfc1867_filter(MULTIPART_EVENT_FORMDATA, &event_formdata, &event_extra_data TSRMLS_CC);			    
                  }
@@ -667,7 +701,7 @@ diff -uNr suhosin-0.9.33/rfc1867.c suhosin-0.9.33.php53/rfc1867.c
  #endif				
  				if (!strcasecmp(param, "MAX_FILE_SIZE")) {
  					max_file_size = atol(value);
-@@ -1013,8 +1002,8 @@
+@@ -1013,8 +1030,8 @@
  			
  			/* New Rule: never repair potential malicious user input */
  			if (!skip_upload) {
@@ -677,7 +711,7 @@ diff -uNr suhosin-0.9.33/rfc1867.c suhosin-0.9.33.php53/rfc1867.c
  				
  				while (*tmp) {
  					if (*tmp == '[') {
-@@ -1032,42 +1021,30 @@
+@@ -1032,42 +1049,30 @@
  					}
  					tmp++;				
  				}
@@ -727,7 +761,7 @@ diff -uNr suhosin-0.9.33/rfc1867.c suhosin-0.9.33.php53/rfc1867.c
  			if (skip_upload) {
  				efree(param);
  				efree(filename);
-@@ -1083,7 +1060,28 @@
+@@ -1083,7 +1088,28 @@
  
  			offset = 0;
  			end = 0;
@@ -757,7 +791,7 @@ diff -uNr suhosin-0.9.33/rfc1867.c suhosin-0.9.33.php53/rfc1867.c
  			{
  				{
  					multipart_event_file_data event_file_data;
-@@ -1099,22 +1097,26 @@
+@@ -1099,22 +1125,26 @@
  					}
  				}
  				
@@ -789,7 +823,7 @@ diff -uNr suhosin-0.9.33/rfc1867.c suhosin-0.9.33.php53/rfc1867.c
  #if DEBUG_FILE_UPLOAD
  						sapi_module.sapi_error(E_NOTICE, "Only %d bytes were written, expected to write %d", wlen, blen);
  #endif
-@@ -1122,10 +1124,13 @@
+@@ -1122,10 +1152,13 @@
  					} else {
  						total_bytes += wlen;
  					}
@@ -804,7 +838,7 @@ diff -uNr suhosin-0.9.33/rfc1867.c suhosin-0.9.33.php53/rfc1867.c
  			if (fd!=-1) { /* may not be initialized if file could not be created */
  				close(fd);
  			}
-@@ -1167,8 +1172,7 @@
+@@ -1167,8 +1200,7 @@
  
  			/* is_arr_upload is true when name of file upload field
  			 * ends in [.*]
@@ -814,7 +848,7 @@ diff -uNr suhosin-0.9.33/rfc1867.c suhosin-0.9.33.php53/rfc1867.c
  			is_arr_upload =	(start_arr = strchr(param,'[')) && (param[strlen(param)-1] == ']');
  
  			if (is_arr_upload) {
-@@ -1180,24 +1184,24 @@
+@@ -1180,24 +1212,24 @@
  			}
  			
  			/* Add $foo_name */
@@ -847,7 +881,7 @@ diff -uNr suhosin-0.9.33/rfc1867.c suhosin-0.9.33.php53/rfc1867.c
  				}
  				val_list[num_vars] = filename;
  				len_list[num_vars] = strlen(filename);
-@@ -1218,28 +1222,28 @@
+@@ -1218,28 +1250,28 @@
  			 * it is a valid path separator. However, IE in all it's wisdom always sends
  			 * the full path of the file on the user's filesystem, which means that unless
  			 * the user does basename() they get a bogus file name. Until IE's user base drops 
@@ -886,7 +920,7 @@ diff -uNr suhosin-0.9.33/rfc1867.c suhosin-0.9.33.php53/rfc1867.c
  					safe_php_register_variable(lbuf, s+1, NULL, 0 TSRMLS_CC);
  				} else {
  					safe_php_register_variable(lbuf, filename, NULL, 0 TSRMLS_CC);
-@@ -1248,11 +1252,11 @@
+@@ -1248,11 +1280,11 @@
  
  			/* Add $foo[name] */
  			if (is_arr_upload) {
@@ -901,7 +935,7 @@ diff -uNr suhosin-0.9.33/rfc1867.c suhosin-0.9.33.php53/rfc1867.c
  				register_http_post_files_variable(lbuf, s+1, http_post_files, 0 TSRMLS_CC);
  			} else {
  				register_http_post_files_variable(lbuf, filename, http_post_files, 0 TSRMLS_CC);
-@@ -1273,9 +1277,9 @@
+@@ -1273,9 +1305,9 @@
  
  			/* Add $foo_type */
  			if (is_arr_upload) {
@@ -913,7 +947,7 @@ diff -uNr suhosin-0.9.33/rfc1867.c suhosin-0.9.33.php53/rfc1867.c
  			}
  			if (!is_anonymous) {
  				safe_php_register_variable(lbuf, cd, NULL, 0 TSRMLS_CC);
-@@ -1283,9 +1287,9 @@
+@@ -1283,9 +1315,9 @@
  
  			/* Add $foo[type] */
  			if (is_arr_upload) {
@@ -925,7 +959,7 @@ diff -uNr suhosin-0.9.33/rfc1867.c suhosin-0.9.33.php53/rfc1867.c
  			}
  			register_http_post_files_variable(lbuf, cd, http_post_files, 0 TSRMLS_CC);
  
-@@ -1311,9 +1315,9 @@
+@@ -1311,9 +1343,9 @@
  
  				/* Add $foo[tmp_name] */
  				if (is_arr_upload) {
@@ -937,7 +971,7 @@ diff -uNr suhosin-0.9.33/rfc1867.c suhosin-0.9.33.php53/rfc1867.c
  				}
  				add_protected_variable(lbuf TSRMLS_CC);
  				ZVAL_STRING(&zfilename, temp_filename, 1);
-@@ -1336,17 +1340,17 @@
+@@ -1336,17 +1368,17 @@
  				}	
  	
  				if (is_arr_upload) {
@@ -959,7 +993,7 @@ diff -uNr suhosin-0.9.33/rfc1867.c suhosin-0.9.33.php53/rfc1867.c
  				}
  				if (!is_anonymous) {
  					safe_php_register_variable_ex(lbuf, &file_size, NULL, 0 TSRMLS_CC);
-@@ -1354,9 +1358,9 @@
+@@ -1354,9 +1386,9 @@
  
  				/* Add $foo[size] */
  				if (is_arr_upload) {
@@ -973,7 +1007,7 @@ diff -uNr suhosin-0.9.33/rfc1867.c suhosin-0.9.33.php53/rfc1867.c
  			}
 diff -uNr suhosin-0.9.33/session.c suhosin-0.9.33.php53/session.c
 --- suhosin-0.9.33/session.c	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php53/session.c	Wed Feb 12 06:25:34 2014
++++ suhosin-0.9.33.php53/session.c	Wed Feb 12 06:48:51 2014
 @@ -3,7 +3,7 @@
    | Suhosin Version 1                            |
    +----------------------------------------------------------------------+
@@ -1020,7 +1054,7 @@ diff -uNr suhosin-0.9.33/session.c suhosin-0.9.33.php53/session.c
  
 diff -uNr suhosin-0.9.33/sha256.c suhosin-0.9.33.php53/sha256.c
 --- suhosin-0.9.33/sha256.c	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php53/sha256.c	Wed Feb 12 06:25:34 2014
++++ suhosin-0.9.33.php53/sha256.c	Wed Feb 12 06:48:51 2014
 @@ -3,7 +3,7 @@
    | Suhosin Version 1                                                    |
    +----------------------------------------------------------------------+
@@ -1041,7 +1075,7 @@ diff -uNr suhosin-0.9.33/sha256.c suhosin-0.9.33.php53/sha256.c
  	{NULL, NULL, NULL}
 diff -uNr suhosin-0.9.33/sha256.h suhosin-0.9.33.php53/sha256.h
 --- suhosin-0.9.33/sha256.h	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php53/sha256.h	Wed Feb 12 06:25:34 2014
++++ suhosin-0.9.33.php53/sha256.h	Wed Feb 12 06:48:51 2014
 @@ -3,7 +3,7 @@
    | Suhosin Version 1                                                    |
    +----------------------------------------------------------------------+
@@ -1053,7 +1087,7 @@ diff -uNr suhosin-0.9.33/sha256.h suhosin-0.9.33.php53/sha256.h
    | that is bundled with this package in the file LICENSE, and is        |
 diff -uNr suhosin-0.9.33/suhosin.c suhosin-0.9.33.php53/suhosin.c
 --- suhosin-0.9.33/suhosin.c	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php53/suhosin.c	Wed Feb 12 06:25:34 2014
++++ suhosin-0.9.33.php53/suhosin.c	Wed Feb 12 06:48:51 2014
 @@ -3,7 +3,7 @@
    | Suhosin Version 1                                                    |
    +----------------------------------------------------------------------+
@@ -1100,7 +1134,7 @@ diff -uNr suhosin-0.9.33/suhosin.c suhosin-0.9.33.php53/suhosin.c
  
 diff -uNr suhosin-0.9.33/suhosin_rfc1867.h suhosin-0.9.33.php53/suhosin_rfc1867.h
 --- suhosin-0.9.33/suhosin_rfc1867.h	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php53/suhosin_rfc1867.h	Wed Feb 12 06:25:34 2014
++++ suhosin-0.9.33.php53/suhosin_rfc1867.h	Wed Feb 12 06:48:51 2014
 @@ -3,7 +3,7 @@
    | Suhosin Version 1                                                    |
    +----------------------------------------------------------------------+
@@ -1112,7 +1146,7 @@ diff -uNr suhosin-0.9.33/suhosin_rfc1867.h suhosin-0.9.33.php53/suhosin_rfc1867.
    | that is bundled with this package in the file LICENSE, and is        |
 diff -uNr suhosin-0.9.33/treat_data.c suhosin-0.9.33.php53/treat_data.c
 --- suhosin-0.9.33/treat_data.c	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php53/treat_data.c	Wed Feb 12 06:25:35 2014
++++ suhosin-0.9.33.php53/treat_data.c	Wed Feb 12 06:48:51 2014
 @@ -3,7 +3,7 @@
    | Suhosin Version 1                                                    |
    +----------------------------------------------------------------------+
@@ -1124,7 +1158,7 @@ diff -uNr suhosin-0.9.33/treat_data.c suhosin-0.9.33.php53/treat_data.c
    | that is bundled with this package in the file LICENSE, and is        |
 diff -uNr suhosin-0.9.33/ufilter.c suhosin-0.9.33.php53/ufilter.c
 --- suhosin-0.9.33/ufilter.c	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php53/ufilter.c	Wed Feb 12 06:25:35 2014
++++ suhosin-0.9.33.php53/ufilter.c	Wed Feb 12 06:48:51 2014
 @@ -3,7 +3,7 @@
    | Suhosin Version 1                                                    |
    +----------------------------------------------------------------------+

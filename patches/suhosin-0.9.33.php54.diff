@@ -1,6 +1,6 @@
 diff -uNr suhosin-0.9.33/ex_imp.c suhosin-0.9.33.php54/ex_imp.c
 --- suhosin-0.9.33/ex_imp.c	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php54/ex_imp.c	Tue Feb 11 23:15:20 2014
++++ suhosin-0.9.33.php54/ex_imp.c	Wed Feb 12 06:48:56 2014
 @@ -3,7 +3,7 @@
    | Suhosin Version 1                                                    |
    +----------------------------------------------------------------------+
@@ -21,7 +21,7 @@ diff -uNr suhosin-0.9.33/ex_imp.c suhosin-0.9.33.php54/ex_imp.c
  	{NULL, NULL, NULL}
 diff -uNr suhosin-0.9.33/execute.c suhosin-0.9.33.php54/execute.c
 --- suhosin-0.9.33/execute.c	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php54/execute.c	Tue Feb 11 23:15:20 2014
++++ suhosin-0.9.33.php54/execute.c	Wed Feb 12 06:48:56 2014
 @@ -3,7 +3,7 @@
    | Suhosin Version 1                                                    |
    +----------------------------------------------------------------------+
@@ -271,7 +271,7 @@ diff -uNr suhosin-0.9.33/execute.c suhosin-0.9.33.php54/execute.c
  		
 diff -uNr suhosin-0.9.33/header.c suhosin-0.9.33.php54/header.c
 --- suhosin-0.9.33/header.c	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php54/header.c	Tue Feb 11 23:15:20 2014
++++ suhosin-0.9.33.php54/header.c	Wed Feb 12 06:48:56 2014
 @@ -3,7 +3,7 @@
    | Suhosin Version 1                                                    |
    +----------------------------------------------------------------------+
@@ -283,7 +283,7 @@ diff -uNr suhosin-0.9.33/header.c suhosin-0.9.33.php54/header.c
    | that is bundled with this package in the file LICENSE, and is        |
 diff -uNr suhosin-0.9.33/ifilter.c suhosin-0.9.33.php54/ifilter.c
 --- suhosin-0.9.33/ifilter.c	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php54/ifilter.c	Tue Feb 11 23:15:20 2014
++++ suhosin-0.9.33.php54/ifilter.c	Wed Feb 12 06:48:56 2014
 @@ -3,7 +3,7 @@
    | Suhosin Version 1                                                    |
    +----------------------------------------------------------------------+
@@ -322,7 +322,7 @@ diff -uNr suhosin-0.9.33/ifilter.c suhosin-0.9.33.php54/ifilter.c
  }
 diff -uNr suhosin-0.9.33/log.c suhosin-0.9.33.php54/log.c
 --- suhosin-0.9.33/log.c	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php54/log.c	Tue Feb 11 23:15:20 2014
++++ suhosin-0.9.33.php54/log.c	Wed Feb 12 06:48:56 2014
 @@ -3,7 +3,7 @@
    | Suhosin Version 1                                                    |
    +----------------------------------------------------------------------+
@@ -394,7 +394,7 @@ diff -uNr suhosin-0.9.33/log.c suhosin-0.9.33.php54/log.c
  #ifdef ZEND_ENGINE_2
 diff -uNr suhosin-0.9.33/mbregex.h suhosin-0.9.33.php54/mbregex.h
 --- suhosin-0.9.33/mbregex.h	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php54/mbregex.h	Tue Feb 11 23:15:20 2014
++++ suhosin-0.9.33.php54/mbregex.h	Wed Feb 12 06:48:56 2014
 @@ -3,7 +3,7 @@
    | Suhosin Version 1                                                    |
    +----------------------------------------------------------------------+
@@ -406,7 +406,7 @@ diff -uNr suhosin-0.9.33/mbregex.h suhosin-0.9.33.php54/mbregex.h
    | that is bundled with this package in the file LICENSE, and is        |
 diff -uNr suhosin-0.9.33/memory_limit.c suhosin-0.9.33.php54/memory_limit.c
 --- suhosin-0.9.33/memory_limit.c	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php54/memory_limit.c	Tue Feb 11 23:15:20 2014
++++ suhosin-0.9.33.php54/memory_limit.c	Wed Feb 12 06:48:57 2014
 @@ -3,7 +3,7 @@
    | Suhosin Version 1                                                    |
    +----------------------------------------------------------------------+
@@ -448,7 +448,7 @@ diff -uNr suhosin-0.9.33/memory_limit.c suhosin-0.9.33.php54/memory_limit.c
  					return FAILURE;
 diff -uNr suhosin-0.9.33/php_suhosin.h suhosin-0.9.33.php54/php_suhosin.h
 --- suhosin-0.9.33/php_suhosin.h	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php54/php_suhosin.h	Tue Feb 11 23:15:20 2014
++++ suhosin-0.9.33.php54/php_suhosin.h	Wed Feb 12 06:48:57 2014
 @@ -3,7 +3,7 @@
    | Suhosin Version 1                                                    |
    +----------------------------------------------------------------------+
@@ -477,7 +477,7 @@ diff -uNr suhosin-0.9.33/php_suhosin.h suhosin-0.9.33.php54/php_suhosin.h
  void suhosin_unhook_header_handler();
 diff -uNr suhosin-0.9.33/post_handler.c suhosin-0.9.33.php54/post_handler.c
 --- suhosin-0.9.33/post_handler.c	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php54/post_handler.c	Tue Feb 11 23:15:20 2014
++++ suhosin-0.9.33.php54/post_handler.c	Wed Feb 12 06:48:57 2014
 @@ -3,7 +3,7 @@
    | Suhosin Version 1                                                    |
    +----------------------------------------------------------------------+
@@ -552,7 +552,7 @@ diff -uNr suhosin-0.9.33/post_handler.c suhosin-0.9.33.php54/post_handler.c
  	
  	/* we have to stop mbstring from replacing our post handler */
  	if (zend_hash_find(EG(ini_directives), "mbstring.encoding_translation", sizeof("mbstring.encoding_translation"), (void **) &ini_entry) == FAILURE) {
-@@ -162,10 +178,14 @@
+@@ -162,9 +178,13 @@
  	ini_entry->on_modify = suhosin_OnUpdate_mbstring_encoding_translation;
  }
  
@@ -560,17 +560,39 @@ diff -uNr suhosin-0.9.33/post_handler.c suhosin-0.9.33.php54/post_handler.c
 +void suhosin_unhook_post_handlers(TSRMLS_D)
  {
  	zend_ini_entry *ini_entry;
- 
++
 +#if PHP_VERSION_ID >= 50400
 +	php_rfc1867_callback = old_rfc1867_callback;
 +#endif
-+
+ 
  	/* Restore to an empty destructor */
  	SG(known_post_content_types).pDestructor = NULL;
- 
 diff -uNr suhosin-0.9.33/rfc1867.c suhosin-0.9.33.php54/rfc1867.c
 --- suhosin-0.9.33/rfc1867.c	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php54/rfc1867.c	Tue Feb 11 23:15:20 2014
++++ suhosin-0.9.33.php54/rfc1867.c	Wed Feb 12 06:53:57 2014
+@@ -2,7 +2,7 @@
+    +----------------------------------------------------------------------+
+    | PHP Version 5                                                        |
+    +----------------------------------------------------------------------+
+-   | Copyright (c) 1997-2006 The PHP Group                                |
++   | Copyright (c) 1997-2013 The PHP Group                                |
+    +----------------------------------------------------------------------+
+    | This source file is subject to version 3.01 of the PHP license,      |
+    | that is bundled with this package in the file LICENSE, and is        |
+@@ -13,11 +13,11 @@
+    | license@php.net so we can mail you a copy immediately.               |
+    +----------------------------------------------------------------------+
+    | Authors: Rasmus Lerdorf <rasmus@php.net>                             |
+-   |          Jani Taskinen <sniper@php.net>                              |
++   |          Jani Taskinen <jani@php.net>                                |
+    +----------------------------------------------------------------------+
+  */
+ 
+-/* $Id: rfc1867.c,v 1.1.1.1 2007-11-28 01:15:35 sesser Exp $ */
++/* $Id$ */
+ 
+ /*
+  *  This product includes software developed by the Apache Group
 @@ -35,10 +35,11 @@
  #include "suhosin_rfc1867.h"
  #include "php_ini.h"
@@ -584,7 +606,29 @@ diff -uNr suhosin-0.9.33/rfc1867.c suhosin-0.9.33.php54/rfc1867.c
  #include "ext/mbstring/mbstring.h"
  
  static void safe_php_register_variable(char *var, char *strval, zval *track_vars_array, zend_bool override_protection TSRMLS_DC);
-@@ -244,21 +245,29 @@
+@@ -91,8 +92,7 @@
+ 	int *len_list=*plen_list;
+ 
+ 	if (*num_vars>=*num_vars_max){	
+-		php_mb_gpc_realloc_buffer(pval_list, plen_list, num_vars_max, 
+-								  16 TSRMLS_CC);
++		php_mb_gpc_realloc_buffer(pval_list, plen_list, num_vars_max, 16 TSRMLS_CC);
+ 		/* in case realloc relocated the buffer */
+ 		val_list = *pval_list;
+ 		len_list = *plen_list;
+@@ -206,10 +206,9 @@
+ 			index = NULL;
+ 		}	
+ 	}
+-	*s++='\0';
++	*s = '\0';
+ }
+ 
+-
+ static void add_protected_variable(char *varname TSRMLS_DC)
+ {
+ 	int dummy=1;
+@@ -244,21 +243,29 @@
  
  static void register_http_post_files_variable(char *strvar, char *val, zval *http_post_files, zend_bool override_protection TSRMLS_DC)
  {
@@ -614,7 +658,81 @@ diff -uNr suhosin-0.9.33/rfc1867.c suhosin-0.9.33.php54/rfc1867.c
  }
  
  /*
-@@ -584,7 +593,7 @@
+@@ -289,10 +296,9 @@
+ 	char *value;
+ } mime_header_entry;
+ 
+-
+ /*
+-  fill up the buffer with client data.
+-  returns number of bytes added to buffer.
++ * Fill up the buffer with client data.
++ * Returns number of bytes added to buffer.
+ */
+ static int fill_buffer(multipart_buffer *self TSRMLS_DC)
+ {
+@@ -365,17 +371,16 @@
+ 	return self;
+ }
+ 
+-
+ /*
+-  gets the next CRLF terminated line from the input buffer.
+-  if it doesn't find a CRLF, and the buffer isn't completely full, returns
+-  NULL; otherwise, returns the beginning of the null-terminated line,
+-  minus the CRLF.
+-
+-  note that we really just look for LF terminated lines. this works
+-  around a bug in internet explorer for the macintosh which sends mime
+-  boundaries that are only LF terminated when you use an image submit
+-  button in a multipart/form-data form.
++ * Gets the next CRLF terminated line from the input buffer.
++ * If it doesn't find a CRLF, and the buffer isn't completely full, returns
++ * NULL; otherwise, returns the beginning of the null-terminated line,
++ * minus the CRLF.
++ *
++ * Note that we really just look for LF terminated lines. This works
++ * around a bug in internet explorer for the macintosh which sends mime
++ * boundaries that are only LF terminated when you use an image submit
++ * button in a multipart/form-data form.
+  */
+ static char *next_line(multipart_buffer *self)
+ {
+@@ -411,8 +416,7 @@
+ 	return line;
+ }
+ 
+-
+-/* returns the next CRLF terminated line from the client */
++/* Returns the next CRLF terminated line from the client */
+ static char *get_line(multipart_buffer *self TSRMLS_DC)
+ {
+ 	char* ptr = next_line(self);
+@@ -474,7 +478,6 @@
+ 	while( (line = get_line(self TSRMLS_CC)) && strlen(line) > 0 )
+ 	{
+ 		/* add header to table */
+-		
+ 		char *key = line;
+ 		char *value = NULL;
+ 		
+@@ -541,7 +544,6 @@
+ 	char *res;
+ 
+ 	while (*pos && *pos != stop) {
+-		
+ 		if ((quote = *pos) == '"' || quote == '\'') {
+ 			++pos;
+ 			while (*pos && *pos != quote) {
+@@ -555,7 +557,6 @@
+ 				++pos;
+ 			}
+ 		} else ++pos;
+-		
+ 	}
+ 	if (*pos == '\0') {
+ 		res = estrdup(*line);
+@@ -584,7 +585,7 @@
  		if (start[i] == '\\' && (start[i + 1] == '\\' || (quote && start[i + 1] == quote))) {
  			*resp++ = start[++i];
  		} else {
@@ -623,7 +741,16 @@ diff -uNr suhosin-0.9.33/rfc1867.c suhosin-0.9.33.php54/rfc1867.c
  			if (php_mb_encoding_translation(TSRMLS_C)) {
  				size_t j = php_mb_gpc_mbchar_bytes(start+i TSRMLS_CC);
  				while (j-- > 0 && i < len) {
-@@ -609,7 +618,7 @@
+@@ -600,7 +601,7 @@
+ 		}
+ 	}
+ 
+-	*resp++ = '\0';
++	*resp = '\0';
+ 	return result;
+ }
+ 
+@@ -609,7 +610,7 @@
  {
  	char *str = *line, *strend, *res, quote;
  
@@ -632,16 +759,64 @@ diff -uNr suhosin-0.9.33/rfc1867.c suhosin-0.9.33.php54/rfc1867.c
  	if (php_mb_encoding_translation(TSRMLS_C)) {
  		int len=strlen(str);
  		php_mb_gpc_encoding_detector(&str, &len, 1, NULL TSRMLS_CC);
-@@ -774,7 +783,7 @@
+@@ -666,11 +667,10 @@
+ 	return res;
+ }
+ 
+-
+ /*
+-  search for a string in a fixed-length byte string.
+-  if partial is true, partial matches are allowed at the end of the buffer.
+-  returns NULL if not found, or a pointer to the start of the first match.
++ * Search for a string in a fixed-length byte string.
++ * If partial is true, partial matches are allowed at the end of the buffer.
++ * Returns NULL if not found, or a pointer to the start of the first match.
+ */
+ static void *php_ap_memstr(char *haystack, int haystacklen, char *needle, int needlen, int partial)
+ {
+@@ -755,7 +755,9 @@
+ 		total_bytes += read_bytes;
+ 	}
+ 
+-	if (out) out[total_bytes] = '\0';
++	if (out) {
++		out[total_bytes] = '\0';
++	}
+ 	*len = total_bytes;
+ 
+ 	return out;
+@@ -773,8 +775,9 @@
+ 	char *temp_filename=NULL, *lbuf=NULL, *abuf=NULL;
  	int boundary_len=0, total_bytes=0, cancel_upload=0, is_arr_upload=0, array_len=0;
  	int max_file_size=0, skip_upload=0, anonindex=0, is_anonymous;
- 	zval *http_post_files=NULL; HashTable *uploaded_files=NULL;
+-	zval *http_post_files=NULL; HashTable *uploaded_files=NULL;
 -#if HAVE_MBSTRING && !defined(COMPILE_DL_MBSTRING)
++	zval *http_post_files = NULL;
++	HashTable *uploaded_files = NULL;
 +#if HAVE_MBSTRING && !defined(COMPILE_DL_MBSTRING) && (PHP_VERSION_ID < 50400)
  	int str_len = 0, num_vars = 0, num_vars_max = 2*10, *len_list = NULL;
  	char **val_list = NULL;
  #endif
-@@ -825,7 +834,7 @@
+@@ -783,13 +786,17 @@
+ 	int fd=-1;
+ 	zend_llist header;
+ 	void *event_extra_data = NULL;
++	int llen = 0;
+ #if PHP_VERSION_ID >= 50302 || (PHP_VERSION_ID >= 50212 && PHP_VERSION_ID < 50300)
+ 	int upload_cnt = INI_INT("max_file_uploads");
+ #endif
++#if PHP_VERSION_ID >= 50311
++	long count = 0;
++#endif
+ 	
+ 	SDEBUG("suhosin_rfc1867_handler");
+ 
+-	if (SG(request_info).content_length > SG(post_max_size)) {
++	if (SG(post_max_size) > 0 && SG(request_info).content_length > SG(post_max_size)) {
+ 		sapi_module.sapi_error(E_WARNING, "POST Content-Length of %ld bytes exceeds the limit of %ld bytes", SG(request_info).content_length, SG(post_max_size));
+ 		return;
+ 	}
+@@ -825,7 +832,7 @@
  		}
  	} else {
  		/* search for the end of the boundary */
@@ -650,7 +825,7 @@ diff -uNr suhosin-0.9.33/rfc1867.c suhosin-0.9.33.php54/rfc1867.c
  	}
  	if (boundary_end) {
  		boundary_end[0] = '\0';
-@@ -850,7 +859,7 @@
+@@ -850,7 +857,7 @@
  	INIT_PZVAL(http_post_files);
  	PG(http_globals)[TRACK_VARS_FILES] = http_post_files;
  
@@ -659,16 +834,69 @@ diff -uNr suhosin-0.9.33/rfc1867.c suhosin-0.9.33.php54/rfc1867.c
  	if (php_mb_encoding_translation(TSRMLS_C)) {
  		val_list = (char **)ecalloc(num_vars_max+2, sizeof(char *));
  		len_list = (int *)ecalloc(num_vars_max+2, sizeof(int));
-@@ -955,7 +964,7 @@
+@@ -936,11 +943,15 @@
+ 				}
+ 
+ #ifdef ZEND_ENGINE_2
+-				if (sapi_module.input_filter(PARSE_POST, param, &value, new_val_len, &new_val_len TSRMLS_CC)) {
++#if PHP_VERSION_ID >= 50311
++				if (++count <= PG(max_input_vars) && sapi_module.input_filter(PARSE_POST, param, &value, value_len, &new_val_len TSRMLS_CC)) {
++#else
++				if (sapi_module.input_filter(PARSE_POST, param, &value, value_len, &new_val_len TSRMLS_CC)) {
++#endif
+ #endif				
+ 					{
+ 						multipart_event_formdata event_formdata;
+-						size_t newlength = 0;
++						size_t newlength = new_val_len;
+ 
+ 						event_formdata.post_bytes_processed = SG(read_post_bytes);
+ 						event_formdata.name = param;
+@@ -955,10 +966,9 @@
  						new_val_len = newlength;
  					}
  					
 -#if HAVE_MBSTRING && !defined(COMPILE_DL_MBSTRING)
 +#if HAVE_MBSTRING && !defined(COMPILE_DL_MBSTRING) && (PHP_VERSION_ID < 50400)
  					if (php_mb_encoding_translation(TSRMLS_C)) {
- 						php_mb_gpc_stack_variable(param, value, &val_list, &len_list, 
- 												  &num_vars, &num_vars_max TSRMLS_CC);
-@@ -1032,6 +1041,10 @@
+-						php_mb_gpc_stack_variable(param, value, &val_list, &len_list, 
+-												  &num_vars, &num_vars_max TSRMLS_CC);
++						php_mb_gpc_stack_variable(param, value, &val_list, &len_list, &num_vars, &num_vars_max TSRMLS_CC);
+ 					} else {
+ 						safe_php_register_variable(param, value, array_ptr, 0 TSRMLS_CC);
+ 					}
+@@ -967,6 +977,12 @@
+ #endif
+ #ifdef ZEND_ENGINE_2
+ 				} else {
++#if PHP_VERSION_ID >= 50311
++					if (count == PG(max_input_vars) + 1) {
++						php_error_docref(NULL TSRMLS_CC, E_WARNING, "Input variables exceeded %ld. To increase the limit change max_input_vars in php.ini.", PG(max_input_vars));
++					}
++#endif
++					{
+ 					multipart_event_formdata event_formdata;
+ 
+ 					event_formdata.post_bytes_processed = SG(read_post_bytes);
+@@ -976,6 +992,7 @@
+ 					event_formdata.newlength = NULL;
+                     suhosin_rfc1867_filter(MULTIPART_EVENT_FORMDATA, &event_formdata, &event_extra_data TSRMLS_CC);			    
+                 }
++				}
+ #endif				
+ 				if (!strcasecmp(param, "MAX_FILE_SIZE")) {
+ 					max_file_size = atol(value);
+@@ -1013,8 +1030,8 @@
+ 			
+ 			/* New Rule: never repair potential malicious user input */
+ 			if (!skip_upload) {
+-				char *tmp = param;
+ 				long c = 0;
++				tmp = param;
+ 				
+ 				while (*tmp) {
+ 					if (*tmp == '[') {
+@@ -1032,42 +1049,30 @@
  					}
  					tmp++;				
  				}
@@ -679,16 +907,173 @@ diff -uNr suhosin-0.9.33/rfc1867.c suhosin-0.9.33.php54/rfc1867.c
  			}
  
  			total_bytes = cancel_upload = 0;
-@@ -1193,7 +1206,7 @@
- 				sprintf(lbuf, "%s_name", param);
++			temp_filename = NULL;
++			fd = -1;
+ 
+ 			if (!skip_upload) {
+ 				multipart_event_file_start event_file_start;
+ 				
+-				/* Handle file */
+-				fd = php_open_temporary_fd(PG(upload_tmp_dir), "php", &temp_filename TSRMLS_CC);
+-#if PHP_VERSION_ID >= 50302 || (PHP_VERSION_ID >= 50212 && PHP_VERSION_ID < 50300)
+-                                upload_cnt--;
+-#endif
+-				if (fd==-1) {
+-					sapi_module.sapi_error(E_WARNING, "File upload error - unable to create a temporary file");
+-					cancel_upload = UPLOAD_ERROR_E;
+-				}
+-
+ 				event_file_start.post_bytes_processed = SG(read_post_bytes);
+ 				event_file_start.name = param;
+ 				event_file_start.filename = &filename;
+ 				if (suhosin_rfc1867_filter(MULTIPART_EVENT_FILE_START, &event_file_start, &event_extra_data TSRMLS_CC) == FAILURE) {
+-					if (temp_filename) {
+-						if (cancel_upload != UPLOAD_ERROR_E) { /* file creation failed */
+-							close(fd);
+-							unlink(temp_filename);
+-						}
+-						efree(temp_filename);
+-					}
+-					temp_filename = NULL;
++					temp_filename = "";
+ 					efree(param);
+ 					efree(filename);
+ 					continue;
+ 				}
+ 			}
+ 
+-			
+ 			if (skip_upload) {
+ 				efree(param);
+ 				efree(filename);
+@@ -1083,7 +1088,28 @@
+ 
+ 			offset = 0;
+ 			end = 0;
+-			while (!cancel_upload && (blen = multipart_buffer_read(mbuff, buff, sizeof(buff), &end TSRMLS_CC)))
++
++			if (!cancel_upload) {
++				/* only bother to open temp file if we have data */
++				blen = multipart_buffer_read(mbuff, buff, sizeof(buff), &end TSRMLS_CC);
++#if DEBUG_FILE_UPLOAD
++				if (blen > 0) {
++#else
++				/* in non-debug mode we have no problem with 0-length files */
++				{
++#endif
++					fd = php_open_temporary_fd_ex(PG(upload_tmp_dir), "php", &temp_filename, 1 TSRMLS_CC);
++#if PHP_VERSION_ID >= 50302 || (PHP_VERSION_ID >= 50212 && PHP_VERSION_ID < 50300)
++					upload_cnt--;
++#endif
++					if (fd == -1) {
++						sapi_module.sapi_error(E_WARNING, "File upload error - unable to create a temporary file");
++						cancel_upload = UPLOAD_ERROR_E;
++					}
++				}
++			}
++
++			while (!cancel_upload && (blen > 0))
+ 			{
+ 				{
+ 					multipart_event_file_data event_file_data;
+@@ -1099,22 +1125,26 @@
+ 					}
+ 				}
+ 				
+-			
+-				if (PG(upload_max_filesize) > 0 && total_bytes+blen > PG(upload_max_filesize)) {
++				if (PG(upload_max_filesize) > 0 && (total_bytes+blen) > PG(upload_max_filesize)) {
+ #if DEBUG_FILE_UPLOAD
+ 					sapi_module.sapi_error(E_NOTICE, "upload_max_filesize of %ld bytes exceeded - file [%s=%s] not saved", PG(upload_max_filesize), param, filename);
+ #endif
+ 					cancel_upload = UPLOAD_ERROR_A;
+-				} else if (max_file_size && (total_bytes+blen > max_file_size)) {
++				} else if (max_file_size && ((total_bytes+blen) > max_file_size)) {
+ #if DEBUG_FILE_UPLOAD
+ 					sapi_module.sapi_error(E_NOTICE, "MAX_FILE_SIZE of %ld bytes exceeded - file [%s=%s] not saved", max_file_size, param, filename);
+ #endif
+ 					cancel_upload = UPLOAD_ERROR_B;
+ 				} else if (blen > 0) {
+-				
+ 					wlen = write(fd, buff, blen);
+ 			
+-					if (wlen < blen) {
++					if (wlen == -1) {
++						/* write failed */
++#if DEBUG_FILE_UPLOAD
++						sapi_module.sapi_error(E_NOTICE, "write() failed - %s", strerror(errno));
++#endif
++						cancel_upload = UPLOAD_ERROR_F;
++					} else if (wlen < blen) {
+ #if DEBUG_FILE_UPLOAD
+ 						sapi_module.sapi_error(E_NOTICE, "Only %d bytes were written, expected to write %d", wlen, blen);
+ #endif
+@@ -1122,10 +1152,13 @@
+ 					} else {
+ 						total_bytes += wlen;
+ 					}
+-					
+ 					offset += wlen;
+ 				} 
++
++				/* read data for next iteration */
++				blen = multipart_buffer_read(mbuff, buff, sizeof(buff), &end TSRMLS_CC);
+ 			}
++
+ 			if (fd!=-1) { /* may not be initialized if file could not be created */
+ 				close(fd);
+ 			}
+@@ -1167,8 +1200,7 @@
+ 
+ 			/* is_arr_upload is true when name of file upload field
+ 			 * ends in [.*]
+-			 * start_arr is set to point to 1st [
+-			 */
++			 * start_arr is set to point to 1st [ */
+ 			is_arr_upload =	(start_arr = strchr(param,'[')) && (param[strlen(param)-1] == ']');
+ 
+ 			if (is_arr_upload) {
+@@ -1180,24 +1212,24 @@
+ 			}
+ 			
+ 			/* Add $foo_name */
+-			if (lbuf) {
+-				efree(lbuf);
++			if (llen < strlen(param) + MAX_SIZE_OF_INDEX + 1) {
++				llen = strlen(param);
++				lbuf = (char *) safe_erealloc(lbuf, llen, 1, MAX_SIZE_OF_INDEX + 1);
++				llen += MAX_SIZE_OF_INDEX + 1;
+ 			}
+-			lbuf = (char *) emalloc(strlen(param) + MAX_SIZE_OF_INDEX + 1);
+ 			
+ 			if (is_arr_upload) {
+ 				if (abuf) efree(abuf);
+ 				abuf = estrndup(param, strlen(param)-array_len);
+-				sprintf(lbuf, "%s_name[%s]", abuf, array_index);
++				snprintf(lbuf, llen, "%s_name[%s]", abuf, array_index);
+ 			} else {
+-				sprintf(lbuf, "%s_name", param);
++				snprintf(lbuf, llen, "%s_name", param);
  			}
  
 -#if HAVE_MBSTRING && !defined(COMPILE_DL_MBSTRING)
 +#if HAVE_MBSTRING && !defined(COMPILE_DL_MBSTRING) && (PHP_VERSION_ID < 50400)
  			if (php_mb_encoding_translation(TSRMLS_C)) {
  				if (num_vars>=num_vars_max){	
- 					php_mb_gpc_realloc_buffer(&val_list, &len_list, &num_vars_max, 
-@@ -1224,22 +1237,23 @@
+-					php_mb_gpc_realloc_buffer(&val_list, &len_list, &num_vars_max, 
+-											  1 TSRMLS_CC);
++					php_mb_gpc_realloc_buffer(&val_list, &len_list, &num_vars_max, 1 TSRMLS_CC);
+ 				}
+ 				val_list[num_vars] = filename;
+ 				len_list[num_vars] = strlen(filename);
+@@ -1218,28 +1250,28 @@
+ 			 * it is a valid path separator. However, IE in all it's wisdom always sends
+ 			 * the full path of the file on the user's filesystem, which means that unless
+ 			 * the user does basename() they get a bogus file name. Until IE's user base drops 
+-			 * to nill or problem is fixed this code must remain enabled for all systems.
+-			 */
++			 * to nill or problem is fixed this code must remain enabled for all systems. */
+ 			s = strrchr(filename, '\\');
  			if ((tmp = strrchr(filename, '/')) > s) {
  				s = tmp;
  			}
@@ -720,18 +1105,94 @@ diff -uNr suhosin-0.9.33/rfc1867.c suhosin-0.9.33.php54/rfc1867.c
  					safe_php_register_variable(lbuf, s+1, NULL, 0 TSRMLS_CC);
  				} else {
  					safe_php_register_variable(lbuf, filename, NULL, 0 TSRMLS_CC);
-@@ -1252,7 +1266,7 @@
+@@ -1248,11 +1280,11 @@
+ 
+ 			/* Add $foo[name] */
+ 			if (is_arr_upload) {
+-				sprintf(lbuf, "%s[name][%s]", abuf, array_index);
++				snprintf(lbuf, llen, "%s[name][%s]", abuf, array_index);
  			} else {
- 				sprintf(lbuf, "%s[name]", param);
+-				sprintf(lbuf, "%s[name]", param);
++				snprintf(lbuf, llen, "%s[name]", param);
  			}
 -			if (s && s > filename) {
 +			if (s && s >= filename) {
  				register_http_post_files_variable(lbuf, s+1, http_post_files, 0 TSRMLS_CC);
  			} else {
  				register_http_post_files_variable(lbuf, filename, http_post_files, 0 TSRMLS_CC);
+@@ -1273,9 +1305,9 @@
+ 
+ 			/* Add $foo_type */
+ 			if (is_arr_upload) {
+-				sprintf(lbuf, "%s_type[%s]", abuf, array_index);
++				snprintf(lbuf, llen, "%s_type[%s]", abuf, array_index);
+ 			} else {
+-				sprintf(lbuf, "%s_type", param);
++				snprintf(lbuf, llen, "%s_type", param);
+ 			}
+ 			if (!is_anonymous) {
+ 				safe_php_register_variable(lbuf, cd, NULL, 0 TSRMLS_CC);
+@@ -1283,9 +1315,9 @@
+ 
+ 			/* Add $foo[type] */
+ 			if (is_arr_upload) {
+-				sprintf(lbuf, "%s[type][%s]", abuf, array_index);
++				snprintf(lbuf, llen, "%s[type][%s]", abuf, array_index);
+ 			} else {
+-				sprintf(lbuf, "%s[type]", param);
++				snprintf(lbuf, llen, "%s[type]", param);
+ 			}
+ 			register_http_post_files_variable(lbuf, cd, http_post_files, 0 TSRMLS_CC);
+ 
+@@ -1311,9 +1343,9 @@
+ 
+ 				/* Add $foo[tmp_name] */
+ 				if (is_arr_upload) {
+-					sprintf(lbuf, "%s[tmp_name][%s]", abuf, array_index);
++					snprintf(lbuf, llen, "%s[tmp_name][%s]", abuf, array_index);
+ 				} else {
+-					sprintf(lbuf, "%s[tmp_name]", param);
++					snprintf(lbuf, llen, "%s[tmp_name]", param);
+ 				}
+ 				add_protected_variable(lbuf TSRMLS_CC);
+ 				ZVAL_STRING(&zfilename, temp_filename, 1);
+@@ -1336,17 +1368,17 @@
+ 				}	
+ 	
+ 				if (is_arr_upload) {
+-					sprintf(lbuf, "%s[error][%s]", abuf, array_index);
++					snprintf(lbuf, llen, "%s[error][%s]", abuf, array_index);
+ 				} else {
+-					sprintf(lbuf, "%s[error]", param);
++					snprintf(lbuf, llen, "%s[error]", param);
+ 				}
+ 				register_http_post_files_variable_ex(lbuf, &error_type, http_post_files, 0 TSRMLS_CC);
+ 
+ 				/* Add $foo_size */
+ 				if (is_arr_upload) {
+-					sprintf(lbuf, "%s_size[%s]", abuf, array_index);
++					snprintf(lbuf, llen, "%s_size[%s]", abuf, array_index);
+ 				} else {
+-					sprintf(lbuf, "%s_size", param);
++					snprintf(lbuf, llen, "%s_size", param);
+ 				}
+ 				if (!is_anonymous) {
+ 					safe_php_register_variable_ex(lbuf, &file_size, NULL, 0 TSRMLS_CC);
+@@ -1354,9 +1386,9 @@
+ 
+ 				/* Add $foo[size] */
+ 				if (is_arr_upload) {
+-					sprintf(lbuf, "%s[size][%s]", abuf, array_index);
++					snprintf(lbuf, llen, "%s[size][%s]", abuf, array_index);
+ 				} else {
+-					sprintf(lbuf, "%s[size]", param);
++					snprintf(lbuf, llen, "%s[size]", param);
+ 				}
+ 				register_http_post_files_variable_ex(lbuf, &file_size, http_post_files, 0 TSRMLS_CC);
+ 			}
 diff -uNr suhosin-0.9.33/session.c suhosin-0.9.33.php54/session.c
 --- suhosin-0.9.33/session.c	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php54/session.c	Tue Feb 11 23:15:20 2014
++++ suhosin-0.9.33.php54/session.c	Wed Feb 12 06:48:57 2014
 @@ -3,7 +3,7 @@
    | Suhosin Version 1                            |
    +----------------------------------------------------------------------+
@@ -978,7 +1439,7 @@ diff -uNr suhosin-0.9.33/session.c suhosin-0.9.33.php54/session.c
  
 diff -uNr suhosin-0.9.33/sha256.c suhosin-0.9.33.php54/sha256.c
 --- suhosin-0.9.33/sha256.c	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php54/sha256.c	Tue Feb 11 23:15:20 2014
++++ suhosin-0.9.33.php54/sha256.c	Wed Feb 12 06:48:57 2014
 @@ -3,7 +3,7 @@
    | Suhosin Version 1                                                    |
    +----------------------------------------------------------------------+
@@ -1011,7 +1472,7 @@ diff -uNr suhosin-0.9.33/sha256.c suhosin-0.9.33.php54/sha256.c
  	{NULL, NULL, NULL}
 diff -uNr suhosin-0.9.33/sha256.h suhosin-0.9.33.php54/sha256.h
 --- suhosin-0.9.33/sha256.h	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php54/sha256.h	Tue Feb 11 23:15:20 2014
++++ suhosin-0.9.33.php54/sha256.h	Wed Feb 12 06:48:57 2014
 @@ -3,7 +3,7 @@
    | Suhosin Version 1                                                    |
    +----------------------------------------------------------------------+
@@ -1023,7 +1484,7 @@ diff -uNr suhosin-0.9.33/sha256.h suhosin-0.9.33.php54/sha256.h
    | that is bundled with this package in the file LICENSE, and is        |
 diff -uNr suhosin-0.9.33/suhosin.c suhosin-0.9.33.php54/suhosin.c
 --- suhosin-0.9.33/suhosin.c	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php54/suhosin.c	Tue Feb 11 23:15:20 2014
++++ suhosin-0.9.33.php54/suhosin.c	Wed Feb 12 06:48:57 2014
 @@ -3,7 +3,7 @@
    | Suhosin Version 1                                                    |
    +----------------------------------------------------------------------+
@@ -1119,7 +1580,7 @@ diff -uNr suhosin-0.9.33/suhosin.c suhosin-0.9.33.php54/suhosin.c
  
 diff -uNr suhosin-0.9.33/suhosin_rfc1867.h suhosin-0.9.33.php54/suhosin_rfc1867.h
 --- suhosin-0.9.33/suhosin_rfc1867.h	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php54/suhosin_rfc1867.h	Tue Feb 11 23:15:20 2014
++++ suhosin-0.9.33.php54/suhosin_rfc1867.h	Wed Feb 12 06:48:57 2014
 @@ -3,7 +3,7 @@
    | Suhosin Version 1                                                    |
    +----------------------------------------------------------------------+
@@ -1139,7 +1600,7 @@ diff -uNr suhosin-0.9.33/suhosin_rfc1867.h suhosin-0.9.33.php54/suhosin_rfc1867.
  #else
 diff -uNr suhosin-0.9.33/treat_data.c suhosin-0.9.33.php54/treat_data.c
 --- suhosin-0.9.33/treat_data.c	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php54/treat_data.c	Tue Feb 11 23:15:20 2014
++++ suhosin-0.9.33.php54/treat_data.c	Wed Feb 12 06:48:57 2014
 @@ -3,7 +3,7 @@
    | Suhosin Version 1                                                    |
    +----------------------------------------------------------------------+
@@ -1164,7 +1625,7 @@ diff -uNr suhosin-0.9.33/treat_data.c suhosin-0.9.33.php54/treat_data.c
  		old_input_filter = sapi_module.input_filter;
 diff -uNr suhosin-0.9.33/ufilter.c suhosin-0.9.33.php54/ufilter.c
 --- suhosin-0.9.33/ufilter.c	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php54/ufilter.c	Tue Feb 11 23:15:20 2014
++++ suhosin-0.9.33.php54/ufilter.c	Wed Feb 12 06:48:57 2014
 @@ -3,7 +3,7 @@
    | Suhosin Version 1                                                    |
    +----------------------------------------------------------------------+
