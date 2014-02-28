@@ -35,7 +35,7 @@ REQUIREMENTS:
 
 * Linux, Windows or any other platform where PHP is supported.
 * For Suhosin 0.9.33 - PHP 5.1 to PHP 5.5.
-* For Suhosin 0.9.35 - PHP 5.3 or a newer version.
+* For Suhosin 0.9.35 - PHP 5.4 or a newer version.
 
 (PHP 5.1 is supported by using the patch meant for PHP 5.2)
 (If you are using PHP 5.5, only PHP 5.5.4 or higher is supported)
