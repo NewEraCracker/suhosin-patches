@@ -1,5 +1,9 @@
 This folder contains some extra patches that you may find useful.
 
+neweracracker.gmail.com.asc
+neweracracker.mail.ru.asc
+- My PGP keys used to sign my packages.
+
 suhosin-patch-5.2.16-0.9.7.patch.gz
 - Official suhosin-patch for PHP 5.2.16 (Also works in PHP 5.2.17)
 
