@@ -1,6 +1,6 @@
 diff -uNr suhosin-0.9.35/config.w32 suhosin-0.9.35.patched/config.w32
---- suhosin-0.9.35/config.w32	Mon Feb 24 22:39:47 2014
-+++ suhosin-0.9.35.patched/config.w32	Mon Mar 17 19:41:21 2014
+--- suhosin-0.9.35/config.w32	Mon Feb 24 22:39:48 2014
++++ suhosin-0.9.35.patched/config.w32	Thu Mar 27 00:22:16 2014
 @@ -4,5 +4,5 @@
  ARG_ENABLE("suhosin", "whether to enable suhosin support", "yes");
  
@@ -9,8 +9,8 @@ diff -uNr suhosin-0.9.35/config.w32 suhosin-0.9.35.patched/config.w32
 +	EXTENSION("suhosin", "suhosin.c sha256.c memory_limit.c treat_data.c ifilter.c post_handler.c ufilter.c rfc1867.c rfc1867_new.c log.c header.c execute.c ex_imp.c session.c aes.c");
  }
 diff -uNr suhosin-0.9.35/ex_imp.c suhosin-0.9.35.patched/ex_imp.c
---- suhosin-0.9.35/ex_imp.c	Mon Feb 24 22:39:47 2014
-+++ suhosin-0.9.35.patched/ex_imp.c	Mon Mar 17 19:41:21 2014
+--- suhosin-0.9.35/ex_imp.c	Mon Feb 24 22:39:48 2014
++++ suhosin-0.9.35.patched/ex_imp.c	Thu Mar 27 00:22:16 2014
 @@ -550,7 +550,7 @@
  	}
  
@@ -21,8 +21,8 @@ diff -uNr suhosin-0.9.35/ex_imp.c suhosin-0.9.35.patched/ex_imp.c
  	}
  
 diff -uNr suhosin-0.9.35/execute.c suhosin-0.9.35.patched/execute.c
---- suhosin-0.9.35/execute.c	Mon Feb 24 22:39:47 2014
-+++ suhosin-0.9.35.patched/execute.c	Mon Mar 17 20:02:28 2014
+--- suhosin-0.9.35/execute.c	Mon Feb 24 22:39:48 2014
++++ suhosin-0.9.35.patched/execute.c	Thu Mar 27 00:22:16 2014
 @@ -379,9 +379,9 @@
  	return SUHOSIN_CODE_TYPE_UNKNOWN;
  }
@@ -298,8 +298,8 @@ diff -uNr suhosin-0.9.35/execute.c suhosin-0.9.35.patched/execute.c
  #endif
  		
 diff -uNr suhosin-0.9.35/php_suhosin.h suhosin-0.9.35.patched/php_suhosin.h
---- suhosin-0.9.35/php_suhosin.h	Mon Feb 24 22:39:47 2014
-+++ suhosin-0.9.35.patched/php_suhosin.h	Mon Mar 17 19:41:21 2014
+--- suhosin-0.9.35/php_suhosin.h	Mon Feb 24 22:39:48 2014
++++ suhosin-0.9.35.patched/php_suhosin.h	Thu Mar 27 00:22:16 2014
 @@ -191,6 +191,7 @@
  	int (*old_php_body_write)(const char *str, unsigned int str_length TSRMLS_DC);
  
@@ -309,8 +309,8 @@ diff -uNr suhosin-0.9.35/php_suhosin.h suhosin-0.9.35.patched/php_suhosin.h
  	int 	(*old_s_read)(void **mod_data, const char *key, char **val, int *vallen TSRMLS_DC);
  	int	(*old_s_write)(void **mod_data, const char *key, const char *val, const int vallen TSRMLS_DC);
 diff -uNr suhosin-0.9.35/post_handler.c suhosin-0.9.35.patched/post_handler.c
---- suhosin-0.9.35/post_handler.c	Mon Feb 24 22:39:47 2014
-+++ suhosin-0.9.35.patched/post_handler.c	Mon Mar 17 19:41:21 2014
+--- suhosin-0.9.35/post_handler.c	Mon Feb 24 22:39:48 2014
++++ suhosin-0.9.35.patched/post_handler.c	Thu Mar 27 00:22:16 2014
 @@ -71,9 +71,13 @@
  			val_len = php_url_decode(val, (p - val));
  			val = estrndup(val, val_len);
@@ -326,8 +326,8 @@ diff -uNr suhosin-0.9.35/post_handler.c suhosin-0.9.35.patched/post_handler.c
  				SUHOSIN_G(abort_request)=1;
  			}
 diff -uNr suhosin-0.9.35/rfc1867.c suhosin-0.9.35.patched/rfc1867.c
---- suhosin-0.9.35/rfc1867.c	Mon Feb 24 22:39:47 2014
-+++ suhosin-0.9.35.patched/rfc1867.c	Mon Mar 17 19:41:21 2014
+--- suhosin-0.9.35/rfc1867.c	Mon Feb 24 22:39:48 2014
++++ suhosin-0.9.35.patched/rfc1867.c	Thu Mar 27 00:22:16 2014
 @@ -2,7 +2,7 @@
     +----------------------------------------------------------------------+
     | PHP Version 5                                                        |
@@ -893,9 +893,28 @@ diff -uNr suhosin-0.9.35/rfc1867.c suhosin-0.9.35.patched/rfc1867.c
  				}
  				register_http_post_files_variable_ex(lbuf, &file_size, http_post_files, 0 TSRMLS_CC);
  			}
+diff -uNr suhosin-0.9.35/rfc1867_new.c suhosin-0.9.35.patched/rfc1867_new.c
+--- suhosin-0.9.35/rfc1867_new.c	Mon Feb 24 22:39:48 2014
++++ suhosin-0.9.35.patched/rfc1867_new.c	Thu Mar 27 00:22:17 2014
+@@ -174,6 +174,7 @@
+ }
+ /* }}} */
+ 
++#if UNUSED_0
+ static int unlink_filename(char **filename TSRMLS_DC) /* {{{ */
+ {
+ 	VCWD_UNLINK(*filename);
+@@ -188,6 +189,7 @@
+ 	FREE_HASHTABLE(SG(rfc1867_uploaded_files));
+ }
+ /* }}} */
++#endif
+ 
+ /* {{{ Following code is based on apache_multipart_buffer.c from libapreq-0.33 package. */
+ 
 diff -uNr suhosin-0.9.35/session.c suhosin-0.9.35.patched/session.c
---- suhosin-0.9.35/session.c	Mon Feb 24 22:39:47 2014
-+++ suhosin-0.9.35.patched/session.c	Mon Mar 17 19:41:21 2014
+--- suhosin-0.9.35/session.c	Mon Feb 24 22:39:48 2014
++++ suhosin-0.9.35.patched/session.c	Thu Mar 27 00:22:16 2014
 @@ -495,6 +495,25 @@
      ulong num_key;                                              \
      zval **struc;
@@ -974,8 +993,8 @@ diff -uNr suhosin-0.9.35/session.c suhosin-0.9.35.patched/session.c
  }
  
 diff -uNr suhosin-0.9.35/suhosin.c suhosin-0.9.35.patched/suhosin.c
---- suhosin-0.9.35/suhosin.c	Mon Feb 24 22:39:47 2014
-+++ suhosin-0.9.35.patched/suhosin.c	Mon Mar 17 20:02:35 2014
+--- suhosin-0.9.35/suhosin.c	Mon Feb 24 22:39:48 2014
++++ suhosin-0.9.35.patched/suhosin.c	Thu Mar 27 00:22:16 2014
 @@ -1216,6 +1216,15 @@
  {
  	SDEBUG("(RSHUTDOWN)");
@@ -993,8 +1012,8 @@ diff -uNr suhosin-0.9.35/suhosin.c suhosin-0.9.35.patched/suhosin.c
  	   variables in the request shutdown
  	   because input filtering is done before 
 diff -uNr suhosin-0.9.35/suhosin_rfc1867.h suhosin-0.9.35.patched/suhosin_rfc1867.h
---- suhosin-0.9.35/suhosin_rfc1867.h	Mon Feb 24 22:39:47 2014
-+++ suhosin-0.9.35.patched/suhosin_rfc1867.h	Mon Mar 17 19:41:21 2014
+--- suhosin-0.9.35/suhosin_rfc1867.h	Mon Feb 24 22:39:48 2014
++++ suhosin-0.9.35.patched/suhosin_rfc1867.h	Thu Mar 27 00:22:16 2014
 @@ -79,7 +79,6 @@
  SAPI_POST_HANDLER_FUNC(suhosin_rfc1867_post_handler);
  
@@ -1004,8 +1023,8 @@ diff -uNr suhosin-0.9.35/suhosin_rfc1867.h suhosin-0.9.35.patched/suhosin_rfc186
  extern PHP_SUHOSIN_API int (*php_rfc1867_callback)(unsigned int event, void *event_data, void **extra TSRMLS_DC);
  #else
 diff -uNr suhosin-0.9.35/ufilter.c suhosin-0.9.35.patched/ufilter.c
---- suhosin-0.9.35/ufilter.c	Mon Feb 24 22:39:47 2014
-+++ suhosin-0.9.35.patched/ufilter.c	Mon Mar 17 19:41:21 2014
+--- suhosin-0.9.35/ufilter.c	Mon Feb 24 22:39:48 2014
++++ suhosin-0.9.35.patched/ufilter.c	Thu Mar 27 00:22:16 2014
 @@ -31,7 +31,6 @@
  #include "php_variables.h"
  #include "suhosin_rfc1867.h"
