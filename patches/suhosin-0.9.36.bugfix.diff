@@ -132,6 +132,15 @@ diff -uNr suhosin-0.9.36.old/execute.c suhosin-0.9.36.new/execute.c
  		    retval = 0;
  		}
  	}
+@@ -1366,7 +1375,7 @@
+     }
+ #else
+     /* we have to live with the possibility that this call fails */
+-    php_win32_get_random_bytes(rbuf, 8 * sizeof(php_uint32));
++    php_win32_get_random_bytes(&seedbuf[6], 8 * sizeof(php_uint32));
+ #endif
+ 
+     suhosin_SHA256Init(&context);
 @@ -1538,7 +1547,7 @@
  {
  #ifdef PHP_ATLEAST_5_3
