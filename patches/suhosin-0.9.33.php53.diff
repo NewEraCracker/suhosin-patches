@@ -1467,14 +1467,14 @@ diff -uNra suhosin-0.9.33/suhosin.c suhosin-0.9.33.php53/suhosin.c
  	STANDARD_ZEND_EXTENSION_PROPERTIES
  };
  
-+static void suhosin_module_activate()
++static void suhosin_module_activate(void)
 +{
 +	TSRMLS_FETCH();
 +
 +	suhosin_hook_post_handlers(TSRMLS_C);
 +}
 +
-+static void suhosin_module_deactivate()
++static void suhosin_module_deactivate(void)
 +{
 +	TSRMLS_FETCH();
 +
@@ -1488,7 +1488,7 @@ diff -uNra suhosin-0.9.33/suhosin.c suhosin-0.9.33.php53/suhosin.c
  
  /* Stealth Mode functions */
  
-+static void stealth_module_activate()
++static void stealth_module_activate(void)
 +{
 +	if (orig_module_activate != NULL) {
 +		orig_module_activate();
@@ -1496,7 +1496,7 @@ diff -uNra suhosin-0.9.33/suhosin.c suhosin-0.9.33.php53/suhosin.c
 +	suhosin_module_activate();
 +}
 +
-+static void stealth_module_deactivate()
++static void stealth_module_deactivate(void)
 +{
 +	if (orig_module_deactivate != NULL) {
 +		orig_module_deactivate();
