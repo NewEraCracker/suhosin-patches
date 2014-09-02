@@ -33,12 +33,12 @@ and just report the bug to this unofficial project.
 
 REQUIREMENTS:
 
-* Linux, Windows or any other platform where PHP is supported.
+Suhosin works in Linux, Windows or any other platform where PHP is supported.
 * For Suhosin 0.9.33 - PHP 5.1 and PHP 5.2.
 * For Suhosin 0.9.36 - PHP 5.3 or a newer version.
 
-(PHP 5.1 is supported by using the patch meant for PHP 5.2)
-(If you are using PHP 5.5, only PHP 5.5.4 or higher is supported)
+PHP 5.1 is supported by using the patch meant for PHP 5.2
+If you are using PHP 5.5, only PHP 5.5.4 or higher is supported
 
 ===============================================================================
 
@@ -50,7 +50,41 @@ compatible with your current PHP version.
 
 Then you can install it via adequate install procedure for your platform.
 
-(I will fill this section later with further details if required.)
+The process for patching and building in Linux platforms is outlined below:
+
+Step 0. Unpacking and patching
+
+  tar -zxvf suhosin-0.9.36.tgz
+  cd suhosin-0.9.36
+  patch -p 1 -i ../suhosin-0.9.36.bugfix.diff
+
+Step 1. Compiling
+
+  export PHP_PREFIX="/usr"
+
+  $PHP_PREFIX/bin/phpize
+
+  ./configure \
+  --enable-suhosin=shared \
+  --with-php-config=$PHP_PREFIX/bin/php-config
+
+  make
+
+  You must specify the real prefix where PHP is installed in the "export"
+  command. It may be "/usr" "/usr/local", or something else.
+
+Step 2. Installing
+
+  make install
+
+Step 3. Configuring
+
+Suhosin can be installed as a PHP extension.
+
+If you have /etc/php.d directory, you should copy suhosin.ini inside and modify
+default values.
+
+If not, you need to edit your php.ini file (usually /etc/php.ini).
 
 ===============================================================================
 
