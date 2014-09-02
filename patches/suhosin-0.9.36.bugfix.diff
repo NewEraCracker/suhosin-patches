@@ -1,6 +1,6 @@
 diff -uNra suhosin-0.9.36/config.w32 suhosin-0.9.36.new/config.w32
 --- suhosin-0.9.36/config.w32	Tue Jun 10 09:58:36 2014
-+++ suhosin-0.9.36.new/config.w32	Wed Aug 13 18:14:06 2014
++++ suhosin-0.9.36.new/config.w32	Tue Sep  2 20:12:17 2014
 @@ -4,5 +4,5 @@
  ARG_ENABLE("suhosin", "whether to enable suhosin support", "yes");
  
@@ -10,7 +10,7 @@ diff -uNra suhosin-0.9.36/config.w32 suhosin-0.9.36.new/config.w32
  }
 diff -uNra suhosin-0.9.36/ex_imp.c suhosin-0.9.36.new/ex_imp.c
 --- suhosin-0.9.36/ex_imp.c	Tue Jun 10 09:58:36 2014
-+++ suhosin-0.9.36.new/ex_imp.c	Wed Aug 13 18:14:06 2014
++++ suhosin-0.9.36.new/ex_imp.c	Tue Sep  2 20:12:17 2014
 @@ -550,7 +550,7 @@
  	}
  
@@ -20,9 +20,30 @@ diff -uNra suhosin-0.9.36/ex_imp.c suhosin-0.9.36.new/ex_imp.c
  		return 0;
  	}
  
+@@ -734,9 +734,8 @@
+ };
+ /* }}} */
+ 
+-void suhosin_hook_ex_imp()
++void suhosin_hook_ex_imp(TSRMLS_D)
+ {
+-	TSRMLS_FETCH();
+ 	
+ 	/* replace the extract and import_request_variables functions */
+ 	zend_hash_del(CG(function_table), "extract", sizeof("extract"));
+@@ -747,9 +746,6 @@
+ 	zend_register_functions(NULL, suhosin_ex_imp_functions, NULL, MODULE_PERSISTENT TSRMLS_CC);
+ #endif
+  
+-	
+-	
+-			
+ }
+ 
+ 
 diff -uNra suhosin-0.9.36/execute.c suhosin-0.9.36.new/execute.c
 --- suhosin-0.9.36/execute.c	Tue Jun 10 09:58:36 2014
-+++ suhosin-0.9.36.new/execute.c	Wed Aug 13 18:14:06 2014
++++ suhosin-0.9.36.new/execute.c	Tue Sep  2 20:12:17 2014
 @@ -386,9 +386,9 @@
  	return SUHOSIN_CODE_TYPE_UNKNOWN;
  }
@@ -290,9 +311,144 @@ diff -uNra suhosin-0.9.36/execute.c suhosin-0.9.36.new/execute.c
  	zend_execute = old_execute;
  #endif
  		
+diff -uNra suhosin-0.9.36/ifilter.c suhosin-0.9.36.new/ifilter.c
+--- suhosin-0.9.36/ifilter.c	Tue Jun 10 09:58:36 2014
++++ suhosin-0.9.36.new/ifilter.c	Tue Sep  2 20:12:17 2014
+@@ -150,7 +150,6 @@
+ 		
+ 		temp = (unsigned char *)Z_STRVAL_PP(tzval);
+ 		
+-		t = temp;
+ 		for (t = temp; *t; t++) {
+ 			if (suhosin_is_dangerous_char[*t]) {
+ 				extra += 2;
+@@ -187,12 +186,11 @@
+ void suhosin_register_server_variables(zval *track_vars_array TSRMLS_DC)
+ {
+         HashTable *svars;
+-        int retval, failure=0;
+-        
+-		orig_register_server_variables(track_vars_array TSRMLS_CC);
++        int retval = 0, failure = 0;
++
++        orig_register_server_variables(track_vars_array TSRMLS_CC);
+ 
+         svars = Z_ARRVAL_P(track_vars_array);
+-        
+ 	if (!SUHOSIN_G(simulation)) {
+     		retval = zend_hash_del(svars, "HTTP_GET_VARS", sizeof("HTTP_GET_VARS"));
+     		if (retval == SUCCESS) failure = 1;
+@@ -366,7 +364,7 @@
+ 	}
+ 	
+ 	/* Drop this variable if it begins with whitespace which is disallowed */
+-	if (*var == ' ') {
++	if (isspace(*var)) {
+ 		if (SUHOSIN_G(disallow_ws)) {
+ 			suhosin_log(S_VARS, "request variable name begins with disallowed whitespace - dropped variable '%s'", var);
+ 			if (!SUHOSIN_G(simulation)) {
+diff -uNra suhosin-0.9.36/log.c suhosin-0.9.36.new/log.c
+--- suhosin-0.9.36/log.c	Tue Jun 10 09:58:36 2014
++++ suhosin-0.9.36.new/log.c	Tue Sep  2 20:12:17 2014
+@@ -112,7 +112,7 @@
+ 	char *ip_address;
+ 	char *fname;
+ 	char *alertstring;
+-	int lineno;
++	int lineno = 0;
+ 	va_list ap;
+ 	TSRMLS_FETCH();
+ 
+@@ -160,12 +160,15 @@
+ 	if (zend_is_executing(TSRMLS_C)) {
+ 		zend_execute_data *exdata = EG(current_execute_data);
+ 		if (exdata) {
+-			if (getcaller && exdata->prev_execute_data) {
++			if (getcaller && exdata->prev_execute_data && exdata->prev_execute_data->opline && exdata->prev_execute_data->op_array) {
+ 				lineno = exdata->prev_execute_data->opline->lineno;
+-				fname = (char *)exdata->prev_execute_data->op_array->filename;									
+-			} else {
++				fname = (char *)exdata->prev_execute_data->op_array->filename;
++			} else if (exdata->opline && exdata->op_array) {
+ 				lineno = exdata->opline->lineno;
+-				fname = (char *)exdata->op_array->filename;				
++				fname = (char *)exdata->op_array->filename;
++			} else {
++				lineno = 0;
++				fname = "[unknown filename]";
+ 			}
+ 		} else {
+ 			lineno = zend_get_executed_lineno(TSRMLS_C);
+@@ -260,7 +263,7 @@
+ 
+ 	gettimeofday(&tv, NULL);
+ 	now = tv.tv_sec;
+-	php_gmtime_r(&now, &tm);
++	php_localtime_r(&now, &tm);
+ 	ap_php_snprintf(error, sizeof(error), "%s %2d %02d:%02d:%02d [%u] %s\n", month_names[tm.tm_mon], tm.tm_mday, tm.tm_hour, tm.tm_min, tm.tm_sec, getpid(),buf);
+ 	towrite = strlen(error);
+ 	wbuf = error;
+diff -uNra suhosin-0.9.36/memory_limit.c suhosin-0.9.36.new/memory_limit.c
+--- suhosin-0.9.36/memory_limit.c	Tue Jun 10 09:58:36 2014
++++ suhosin-0.9.36.new/memory_limit.c	Tue Sep  2 20:12:17 2014
+@@ -74,10 +74,9 @@
+ /* }}} */
+ 
+ 
+-void suhosin_hook_memory_limit()
++void suhosin_hook_memory_limit(TSRMLS_D)
+ {
+ 	zend_ini_entry *ini_entry;
+-	TSRMLS_FETCH();
+ 
+ 	/* check if we are compiled against memory_limit */
+ 	if (zend_hash_find(EG(ini_directives), "memory_limit", sizeof("memory_limit"), (void **) &ini_entry)==FAILURE) {
+diff -uNra suhosin-0.9.36/php_suhosin.h suhosin-0.9.36.new/php_suhosin.h
+--- suhosin-0.9.36/php_suhosin.h	Tue Jun 10 09:58:36 2014
++++ suhosin-0.9.36.new/php_suhosin.h	Tue Sep  2 20:12:17 2014
+@@ -39,6 +39,10 @@
+ #endif    
+ #endif
+ 
++#ifndef PHP_VERSION_ID
++#define PHP_VERSION_ID (PHP_MAJOR_VERSION * 10000 + PHP_MINOR_VERSION * 100 + PHP_RELEASE_VERSION)
++#endif
++
+ extern zend_module_entry suhosin_module_entry;
+ #define phpext_suhosin_ptr &suhosin_module_entry
+ 
+@@ -290,10 +294,13 @@
+ #define S_MAIL				(1<<7L)
+ #define S_SESSION			(1<<8L)
+ #define S_INTERNAL			(1<<29L)
+-#define S_GETCALLER         (1<<30L)
+ #define S_ALL (S_MEMORY | S_VARS | S_INCLUDE | S_FILES | S_MAIL | S_SESSION | S_MISC | S_SQL | S_EXECUTOR)
+ #endif
+ 
++#ifndef S_GETCALLER
++#define S_GETCALLER         (1<<30L)
++#endif
++
+ #define SUHOSIN_NORMAL	0
+ #define SUHOSIN_EVAL	1
+ 
+@@ -324,10 +331,10 @@
+ void suhosin_unhook_header_handler();
+ void suhosin_hook_session(TSRMLS_D);
+ void suhosin_unhook_session(TSRMLS_D);
+-void suhosin_hook_sha256();
+-void suhosin_hook_ex_imp();
++void suhosin_hook_sha256(TSRMLS_D);
++void suhosin_hook_ex_imp(TSRMLS_D);
+ void suhosin_hook_treat_data();
+-void suhosin_hook_memory_limit();
++void suhosin_hook_memory_limit(TSRMLS_D);
+ void suhosin_hook_execute(TSRMLS_D);
+ void suhosin_unhook_execute();
+ void suhosin_aes_gentables();
 diff -uNra suhosin-0.9.36/post_handler.c suhosin-0.9.36.new/post_handler.c
 --- suhosin-0.9.36/post_handler.c	Tue Jun 10 09:58:36 2014
-+++ suhosin-0.9.36.new/post_handler.c	Wed Aug 13 18:14:06 2014
++++ suhosin-0.9.36.new/post_handler.c	Tue Sep  2 20:12:18 2014
 @@ -71,9 +71,13 @@
  			val_len = php_url_decode(val, (p - val));
  			val = estrndup(val, val_len);
@@ -309,7 +465,7 @@ diff -uNra suhosin-0.9.36/post_handler.c suhosin-0.9.36.new/post_handler.c
  			}
 diff -uNra suhosin-0.9.36/rfc1867.c suhosin-0.9.36.new/rfc1867.c
 --- suhosin-0.9.36/rfc1867.c	Tue Jun 10 09:58:36 2014
-+++ suhosin-0.9.36.new/rfc1867.c	Wed Aug 13 18:14:06 2014
++++ suhosin-0.9.36.new/rfc1867.c	Tue Sep  2 20:12:18 2014
 @@ -2,7 +2,7 @@
     +----------------------------------------------------------------------+
     | PHP Version 5                                                        |
@@ -877,7 +1033,7 @@ diff -uNra suhosin-0.9.36/rfc1867.c suhosin-0.9.36.new/rfc1867.c
  			}
 diff -uNra suhosin-0.9.36/rfc1867_new.c suhosin-0.9.36.new/rfc1867_new.c
 --- suhosin-0.9.36/rfc1867_new.c	Tue Jun 10 09:58:36 2014
-+++ suhosin-0.9.36.new/rfc1867_new.c	Wed Aug 13 18:14:06 2014
++++ suhosin-0.9.36.new/rfc1867_new.c	Tue Sep  2 20:12:18 2014
 @@ -174,6 +174,7 @@
  }
  /* }}} */
@@ -896,7 +1052,37 @@ diff -uNra suhosin-0.9.36/rfc1867_new.c suhosin-0.9.36.new/rfc1867_new.c
  
 diff -uNra suhosin-0.9.36/session.c suhosin-0.9.36.new/session.c
 --- suhosin-0.9.36/session.c	Tue Jun 10 09:58:36 2014
-+++ suhosin-0.9.36.new/session.c	Wed Aug 13 18:14:06 2014
++++ suhosin-0.9.36.new/session.c	Tue Sep  2 20:12:18 2014
+@@ -1,19 +1,19 @@
+ /*
+   +----------------------------------------------------------------------+
+-  | Suhosin Version 1                            |
++  | Suhosin Version 1                                                    |
+   +----------------------------------------------------------------------+
+-  | Copyright (c) 2006-2007 The Hardened-PHP Project             |
+-  | Copyright (c) 2007-2014 SektionEins GmbH                 |
++  | Copyright (c) 2006-2007 The Hardened-PHP Project                     |
++  | Copyright (c) 2007-2014 SektionEins GmbH                             |
+   +----------------------------------------------------------------------+
+-  | This source file is subject to version 3.01 of the PHP license,  |
+-  | that is bundled with this package in the file LICENSE, and is    |
+-  | available through the world-wide-web at the following url:       |
+-  | http://www.php.net/license/3_01.txt                  |
++  | This source file is subject to version 3.01 of the PHP license,      |
++  | that is bundled with this package in the file LICENSE, and is        |
++  | available through the world-wide-web at the following url:           |
++  | http://www.php.net/license/3_01.txt                                  |
+   | If you did not receive a copy of the PHP license and are unable to   |
+-  | obtain it through the world-wide-web, please send a note to      |
+-  | license@php.net so we can mail you a copy immediately.       |
++  | obtain it through the world-wide-web, please send a note to          |
++  | license@php.net so we can mail you a copy immediately.               |
+   +----------------------------------------------------------------------+
+-  | Author: Stefan Esser <sesser@sektioneins.de>             |
++  | Author: Stefan Esser <sesser@sektioneins.de>                         |
+   +----------------------------------------------------------------------+
+ */
+ /*
 @@ -497,6 +497,25 @@
      ulong num_key;                                              \
      zval **struc;
@@ -931,7 +1117,27 @@ diff -uNra suhosin-0.9.36/session.c suhosin-0.9.36.new/session.c
  
  static int suhosin_get_session_var(char *name, size_t namelen, zval ***state_var TSRMLS_DC) /* {{{ */
  {
-@@ -1132,7 +1152,7 @@
+@@ -1000,7 +1020,9 @@
+         }
+     }
+     
+-    SUHOSIN_G(s_original_mod) = old_mod;
++    if (SUHOSIN_G(s_original_mod) == NULL) {
++        SUHOSIN_G(s_original_mod) = old_mod;
++    }
+     
+     mod = SUHOSIN_G(s_module);
+     memcpy(mod, old_mod, sizeof(ps_module));
+@@ -1020,7 +1042,7 @@
+     int r;
+     char *tmp;
+ 
+-    if ((ps_mod_user) && (SUHOSIN_G(s_original_mod) == ps_mod_user) && (strcmp(new_value, "user") == NULL)) {
++    if ((ps_mod_user) && (SUHOSIN_G(s_original_mod) == ps_mod_user) && (strcmp(new_value, "user") == 0)) {
+         return SUCCESS;
+     }
+ 
+@@ -1132,7 +1154,7 @@
  
      /* increase session identifier entropy */
      if (SESSION_G(entropy_length) == 0 || SESSION_G(entropy_file) == NULL) {
@@ -940,7 +1146,7 @@ diff -uNra suhosin-0.9.36/session.c suhosin-0.9.36.new/session.c
          /* ensure that /dev/urandom exists */
          int fd = VCWD_OPEN("/dev/urandom", O_RDONLY);
          if (fd >= 0) {
-@@ -1140,6 +1160,7 @@
+@@ -1140,6 +1162,7 @@
              SESSION_G(entropy_length) = 16;
              SESSION_G(entropy_file) = pestrdup("/dev/urandom", 1);
          }
@@ -948,9 +1154,33 @@ diff -uNra suhosin-0.9.36/session.c suhosin-0.9.36.new/session.c
      }
  }
  
+diff -uNra suhosin-0.9.36/sha256.c suhosin-0.9.36.new/sha256.c
+--- suhosin-0.9.36/sha256.c	Tue Jun 10 09:58:36 2014
++++ suhosin-0.9.36.new/sha256.c	Tue Sep  2 20:12:18 2014
+@@ -402,9 +402,8 @@
+ /* }}} */
+ 
+ 
+-void suhosin_hook_sha256()
++void suhosin_hook_sha256(TSRMLS_D)
+ {
+-	TSRMLS_FETCH();
+ 	
+ 	/* check if we already have sha256 support */
+ 	if (zend_hash_exists(CG(function_table), "sha256", sizeof("sha256"))) {
+@@ -418,9 +417,6 @@
+ 	zend_register_functions(NULL, suhosin_sha256_functions, NULL, MODULE_PERSISTENT TSRMLS_CC);
+ #endif
+  
+-	
+-	
+-			
+ }
+ 
+ 
 diff -uNra suhosin-0.9.36/suhosin.c suhosin-0.9.36.new/suhosin.c
 --- suhosin-0.9.36/suhosin.c	Tue Jun 10 09:58:36 2014
-+++ suhosin-0.9.36.new/suhosin.c	Wed Aug 13 18:14:07 2014
++++ suhosin-0.9.36.new/suhosin.c	Tue Sep  2 20:12:18 2014
 @@ -46,18 +46,19 @@
  static int (*old_startup)(zend_extension *extension) = NULL;
  static zend_extension *ze = NULL;
@@ -1128,9 +1358,37 @@ diff -uNra suhosin-0.9.36/suhosin.c suhosin-0.9.36.new/suhosin.c
  	return res;
  }
  
+@@ -1142,11 +1158,12 @@
+ 		zend_ini_entry *i;
+ 		if (zend_hash_find(EG(ini_directives), "display_errors", sizeof("display_errors"), (void **) &i) == SUCCESS) {
+ 			if (i->on_modify) {
++				i->on_modify(i, "0", strlen("0"), i->mh_arg1, i->mh_arg2, i->mh_arg3, ZEND_INI_STAGE_STARTUP TSRMLS_CC);
+ 				if (SUHOSIN_G(disable_display_errors) > 1) {
+-					zend_alter_ini_entry_ex("display_errors", sizeof("display_errors"), "0", sizeof("0"), ZEND_INI_SYSTEM, ZEND_INI_STAGE_STARTUP, 0 TSRMLS_CC);
++					i->value = estrdup("0");
++					i->value_length = strlen(i->value);
+ 					i->on_modify = OnUpdate_fail;
+ 				} else {
+-					i->on_modify(i, "Off", sizeof("off"), i->mh_arg1, i->mh_arg2, i->mh_arg3, ZEND_INI_STAGE_STARTUP TSRMLS_CC);
+ 					i->on_modify = NULL;
+ 				}
+ 			}
+@@ -1167,9 +1184,9 @@
+ 	}
+ 
+ 	/* now hook a bunch of stuff */
+-	suhosin_hook_memory_limit();
+-	suhosin_hook_sha256();
+-	suhosin_hook_ex_imp();
++	suhosin_hook_memory_limit(TSRMLS_C);
++	suhosin_hook_sha256(TSRMLS_C);
++	suhosin_hook_ex_imp(TSRMLS_C);
+ 
+ #if PHP_VERSION_ID < 50500
+ 	/* register the logo for phpinfo */
 diff -uNra suhosin-0.9.36/suhosin_rfc1867.h suhosin-0.9.36.new/suhosin_rfc1867.h
 --- suhosin-0.9.36/suhosin_rfc1867.h	Tue Jun 10 09:58:36 2014
-+++ suhosin-0.9.36.new/suhosin_rfc1867.h	Wed Aug 13 18:14:07 2014
++++ suhosin-0.9.36.new/suhosin_rfc1867.h	Tue Sep  2 20:12:18 2014
 @@ -79,7 +79,6 @@
  SAPI_POST_HANDLER_FUNC(suhosin_rfc1867_post_handler);
  
@@ -1141,7 +1399,7 @@ diff -uNra suhosin-0.9.36/suhosin_rfc1867.h suhosin-0.9.36.new/suhosin_rfc1867.h
  #else
 diff -uNra suhosin-0.9.36/ufilter.c suhosin-0.9.36.new/ufilter.c
 --- suhosin-0.9.36/ufilter.c	Tue Jun 10 09:58:36 2014
-+++ suhosin-0.9.36.new/ufilter.c	Wed Aug 13 18:14:11 2014
++++ suhosin-0.9.36.new/ufilter.c	Tue Sep  2 20:12:22 2014
 @@ -31,7 +31,6 @@
  #include "php_variables.h"
  #include "suhosin_rfc1867.h"
@@ -1150,3 +1408,25 @@ diff -uNra suhosin-0.9.36/ufilter.c suhosin-0.9.36.new/ufilter.c
  #if !HAVE_RFC1867_CALLBACK
  PHP_SUHOSIN_API int (*php_rfc1867_callback)(unsigned int event, void *event_data, void **extra TSRMLS_DC) = NULL;
  #endif
+@@ -87,11 +86,10 @@
+ 
+ /* {{{ SAPI_UPLOAD_VARNAME_FILTER_FUNC
+  */
+-static int check_fileupload_varname(char *varname)
++static int check_fileupload_varname(char *varname TSRMLS_DC)
+ {
+ 	char *index, *prev_index = NULL, *var;
+ 	unsigned int var_len, total_len, depth = 0;
+-	TSRMLS_FETCH();
+ 
+ 	var = estrdup(varname);
+ 
+@@ -228,7 +226,7 @@
+ 		  		}
+ 		    
+ 			    
+-			    if (check_fileupload_varname(mefs->name) == FAILURE) {
++			    if (check_fileupload_varname(mefs->name TSRMLS_CC) == FAILURE) {
+ 				    goto continue_with_failure;
+ 			    }
+ 		    }
