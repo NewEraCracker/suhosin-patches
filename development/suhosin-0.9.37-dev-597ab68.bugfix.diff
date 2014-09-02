@@ -1,6 +1,6 @@
-diff -uNra suhosin-0.9.37-dev-820a9ba/config.w32 suhosin-0.9.37-dev-820a9ba/config.w32
---- suhosin-0.9.37-dev-820a9ba/config.w32	Fri Aug  1 17:14:35 2014
-+++ suhosin-0.9.37-dev-820a9ba/config.w32	Fri Aug 15 17:27:04 2014
+diff -uNra suhosin-0.9.37-dev-597ab68/config.w32 suhosin-0.9.37-dev-597ab68/config.w32
+--- suhosin-0.9.37-dev-597ab68/config.w32	Sun Aug 31 19:44:31 2014
++++ suhosin-0.9.37-dev-597ab68/config.w32	Tue Sep  2 18:49:05 2014
 @@ -1,8 +1,15 @@
  // $Id: config.w32,v 1.1.1.1 2007-11-28 01:15:35 sesser Exp $
  // vim:ft=javascript
@@ -19,9 +19,9 @@ diff -uNra suhosin-0.9.37-dev-820a9ba/config.w32 suhosin-0.9.37-dev-820a9ba/conf
 +		AC_DEFINE("SUHOSIN_EXPERIMENTAL", 1, "Whether to enable experimental suhosin features");
 +	}
  }
-diff -uNra suhosin-0.9.37-dev-820a9ba/ex_imp.c suhosin-0.9.37-dev-820a9ba/ex_imp.c
---- suhosin-0.9.37-dev-820a9ba/ex_imp.c	Fri Aug  1 17:14:35 2014
-+++ suhosin-0.9.37-dev-820a9ba/ex_imp.c	Fri Aug 15 17:24:59 2014
+diff -uNra suhosin-0.9.37-dev-597ab68/ex_imp.c suhosin-0.9.37-dev-597ab68/ex_imp.c
+--- suhosin-0.9.37-dev-597ab68/ex_imp.c	Sun Aug 31 19:44:31 2014
++++ suhosin-0.9.37-dev-597ab68/ex_imp.c	Tue Sep  2 18:49:05 2014
 @@ -668,9 +668,8 @@
  };
  /* }}} */
@@ -43,9 +43,9 @@ diff -uNra suhosin-0.9.37-dev-820a9ba/ex_imp.c suhosin-0.9.37-dev-820a9ba/ex_imp
  }
  
  
-diff -uNra suhosin-0.9.37-dev-820a9ba/execute.c suhosin-0.9.37-dev-820a9ba/execute.c
---- suhosin-0.9.37-dev-820a9ba/execute.c	Fri Aug  1 17:14:35 2014
-+++ suhosin-0.9.37-dev-820a9ba/execute.c	Fri Aug 15 17:24:59 2014
+diff -uNra suhosin-0.9.37-dev-597ab68/execute.c suhosin-0.9.37-dev-597ab68/execute.c
+--- suhosin-0.9.37-dev-597ab68/execute.c	Sun Aug 31 19:44:31 2014
++++ suhosin-0.9.37-dev-597ab68/execute.c	Tue Sep  2 18:49:05 2014
 @@ -24,7 +24,6 @@
  #endif
  
@@ -333,9 +333,9 @@ diff -uNra suhosin-0.9.37-dev-820a9ba/execute.c suhosin-0.9.37-dev-820a9ba/execu
  	zend_execute = old_execute;
  #endif
  		
-diff -uNra suhosin-0.9.37-dev-820a9ba/memory_limit.c suhosin-0.9.37-dev-820a9ba/memory_limit.c
---- suhosin-0.9.37-dev-820a9ba/memory_limit.c	Fri Aug  1 17:14:35 2014
-+++ suhosin-0.9.37-dev-820a9ba/memory_limit.c	Fri Aug 15 17:31:13 2014
+diff -uNra suhosin-0.9.37-dev-597ab68/memory_limit.c suhosin-0.9.37-dev-597ab68/memory_limit.c
+--- suhosin-0.9.37-dev-597ab68/memory_limit.c	Sun Aug 31 19:44:31 2014
++++ suhosin-0.9.37-dev-597ab68/memory_limit.c	Tue Sep  2 18:49:05 2014
 @@ -74,10 +74,9 @@
  /* }}} */
  
@@ -348,10 +348,10 @@ diff -uNra suhosin-0.9.37-dev-820a9ba/memory_limit.c suhosin-0.9.37-dev-820a9ba/
  
  	/* check if we are compiled against memory_limit */
  	if (zend_hash_find(EG(ini_directives), "memory_limit", sizeof("memory_limit"), (void **) &ini_entry)==FAILURE) {
-diff -uNra suhosin-0.9.37-dev-820a9ba/php_suhosin.h suhosin-0.9.37-dev-820a9ba/php_suhosin.h
---- suhosin-0.9.37-dev-820a9ba/php_suhosin.h	Fri Aug  1 17:14:35 2014
-+++ suhosin-0.9.37-dev-820a9ba/php_suhosin.h	Fri Aug 15 17:31:13 2014
-@@ -425,10 +425,10 @@
+diff -uNra suhosin-0.9.37-dev-597ab68/php_suhosin.h suhosin-0.9.37-dev-597ab68/php_suhosin.h
+--- suhosin-0.9.37-dev-597ab68/php_suhosin.h	Sun Aug 31 19:44:31 2014
++++ suhosin-0.9.37-dev-597ab68/php_suhosin.h	Tue Sep  2 18:49:05 2014
+@@ -428,10 +428,10 @@
  void suhosin_unhook_header_handler();
  void suhosin_hook_session(TSRMLS_D);
  void suhosin_unhook_session(TSRMLS_D);
@@ -365,9 +365,9 @@ diff -uNra suhosin-0.9.37-dev-820a9ba/php_suhosin.h suhosin-0.9.37-dev-820a9ba/p
  void suhosin_hook_execute(TSRMLS_D);
  void suhosin_unhook_execute();
  void suhosin_aes_gentables();
-diff -uNra suhosin-0.9.37-dev-820a9ba/post_handler.c suhosin-0.9.37-dev-820a9ba/post_handler.c
---- suhosin-0.9.37-dev-820a9ba/post_handler.c	Fri Aug  1 17:14:35 2014
-+++ suhosin-0.9.37-dev-820a9ba/post_handler.c	Fri Aug 15 17:24:59 2014
+diff -uNra suhosin-0.9.37-dev-597ab68/post_handler.c suhosin-0.9.37-dev-597ab68/post_handler.c
+--- suhosin-0.9.37-dev-597ab68/post_handler.c	Sun Aug 31 19:44:31 2014
++++ suhosin-0.9.37-dev-597ab68/post_handler.c	Tue Sep  2 18:49:05 2014
 @@ -71,9 +71,13 @@
  			val_len = php_url_decode(val, (p - val));
  			val = estrndup(val, val_len);
@@ -382,9 +382,9 @@ diff -uNra suhosin-0.9.37-dev-820a9ba/post_handler.c suhosin-0.9.37-dev-820a9ba/
  			} else {
  				SUHOSIN_G(abort_request)=1;
  			}
-diff -uNra suhosin-0.9.37-dev-820a9ba/rfc1867.c suhosin-0.9.37-dev-820a9ba/rfc1867.c
---- suhosin-0.9.37-dev-820a9ba/rfc1867.c	Fri Aug  1 17:14:35 2014
-+++ suhosin-0.9.37-dev-820a9ba/rfc1867.c	Fri Aug 15 17:24:59 2014
+diff -uNra suhosin-0.9.37-dev-597ab68/rfc1867.c suhosin-0.9.37-dev-597ab68/rfc1867.c
+--- suhosin-0.9.37-dev-597ab68/rfc1867.c	Sun Aug 31 19:44:31 2014
++++ suhosin-0.9.37-dev-597ab68/rfc1867.c	Tue Sep  2 18:49:05 2014
 @@ -2,7 +2,7 @@
     +----------------------------------------------------------------------+
     | PHP Version 5                                                        |
@@ -950,9 +950,9 @@ diff -uNra suhosin-0.9.37-dev-820a9ba/rfc1867.c suhosin-0.9.37-dev-820a9ba/rfc18
  				}
  				register_http_post_files_variable_ex(lbuf, &file_size, http_post_files, 0 TSRMLS_CC);
  			}
-diff -uNra suhosin-0.9.37-dev-820a9ba/rfc1867_new.c suhosin-0.9.37-dev-820a9ba/rfc1867_new.c
---- suhosin-0.9.37-dev-820a9ba/rfc1867_new.c	Fri Aug  1 17:14:35 2014
-+++ suhosin-0.9.37-dev-820a9ba/rfc1867_new.c	Fri Aug 15 17:24:59 2014
+diff -uNra suhosin-0.9.37-dev-597ab68/rfc1867_new.c suhosin-0.9.37-dev-597ab68/rfc1867_new.c
+--- suhosin-0.9.37-dev-597ab68/rfc1867_new.c	Sun Aug 31 19:44:31 2014
++++ suhosin-0.9.37-dev-597ab68/rfc1867_new.c	Tue Sep  2 18:49:05 2014
 @@ -174,6 +174,7 @@
  }
  /* }}} */
@@ -969,9 +969,39 @@ diff -uNra suhosin-0.9.37-dev-820a9ba/rfc1867_new.c suhosin-0.9.37-dev-820a9ba/r
  
  /* {{{ Following code is based on apache_multipart_buffer.c from libapreq-0.33 package. */
  
-diff -uNra suhosin-0.9.37-dev-820a9ba/session.c suhosin-0.9.37-dev-820a9ba/session.c
---- suhosin-0.9.37-dev-820a9ba/session.c	Fri Aug  1 17:14:35 2014
-+++ suhosin-0.9.37-dev-820a9ba/session.c	Fri Aug 15 17:24:59 2014
+diff -uNra suhosin-0.9.37-dev-597ab68/session.c suhosin-0.9.37-dev-597ab68/session.c
+--- suhosin-0.9.37-dev-597ab68/session.c	Sun Aug 31 19:44:31 2014
++++ suhosin-0.9.37-dev-597ab68/session.c	Tue Sep  2 18:49:05 2014
+@@ -1,19 +1,19 @@
+ /*
+   +----------------------------------------------------------------------+
+-  | Suhosin Version 1                            |
++  | Suhosin Version 1                                                    |
+   +----------------------------------------------------------------------+
+-  | Copyright (c) 2006-2007 The Hardened-PHP Project             |
+-  | Copyright (c) 2007-2014 SektionEins GmbH                 |
++  | Copyright (c) 2006-2007 The Hardened-PHP Project                     |
++  | Copyright (c) 2007-2014 SektionEins GmbH                             |
+   +----------------------------------------------------------------------+
+-  | This source file is subject to version 3.01 of the PHP license,  |
+-  | that is bundled with this package in the file LICENSE, and is    |
+-  | available through the world-wide-web at the following url:       |
+-  | http://www.php.net/license/3_01.txt                  |
++  | This source file is subject to version 3.01 of the PHP license,      |
++  | that is bundled with this package in the file LICENSE, and is        |
++  | available through the world-wide-web at the following url:           |
++  | http://www.php.net/license/3_01.txt                                  |
+   | If you did not receive a copy of the PHP license and are unable to   |
+-  | obtain it through the world-wide-web, please send a note to      |
+-  | license@php.net so we can mail you a copy immediately.       |
++  | obtain it through the world-wide-web, please send a note to          |
++  | license@php.net so we can mail you a copy immediately.               |
+   +----------------------------------------------------------------------+
+-  | Author: Stefan Esser <sesser@sektioneins.de>             |
++  | Author: Stefan Esser <sesser@sektioneins.de>                         |
+   +----------------------------------------------------------------------+
+ */
+ /*
 @@ -497,6 +497,25 @@
      ulong num_key;                                              \
      zval **struc;
@@ -1006,7 +1036,18 @@ diff -uNra suhosin-0.9.37-dev-820a9ba/session.c suhosin-0.9.37-dev-820a9ba/sessi
  
  static int suhosin_get_session_var(char *name, size_t namelen, zval ***state_var TSRMLS_DC) /* {{{ */
  {
-@@ -1132,7 +1152,7 @@
+@@ -1000,7 +1020,9 @@
+         }
+     }
+     
+-    SUHOSIN_G(s_original_mod) = old_mod;
++    if (SUHOSIN_G(s_original_mod) == NULL) {
++        SUHOSIN_G(s_original_mod) = old_mod;
++    }
+     
+     mod = SUHOSIN_G(s_module);
+     memcpy(mod, old_mod, sizeof(ps_module));
+@@ -1132,7 +1154,7 @@
  
      /* increase session identifier entropy */
      if (SESSION_G(entropy_length) == 0 || SESSION_G(entropy_file) == NULL) {
@@ -1015,7 +1056,7 @@ diff -uNra suhosin-0.9.37-dev-820a9ba/session.c suhosin-0.9.37-dev-820a9ba/sessi
          /* ensure that /dev/urandom exists */
          int fd = VCWD_OPEN("/dev/urandom", O_RDONLY);
          if (fd >= 0) {
-@@ -1140,6 +1160,7 @@
+@@ -1140,6 +1162,7 @@
              SESSION_G(entropy_length) = 16;
              SESSION_G(entropy_file) = pestrdup("/dev/urandom", 1);
          }
@@ -1023,9 +1064,9 @@ diff -uNra suhosin-0.9.37-dev-820a9ba/session.c suhosin-0.9.37-dev-820a9ba/sessi
      }
  }
  
-diff -uNra suhosin-0.9.37-dev-820a9ba/sha256.c suhosin-0.9.37-dev-820a9ba/sha256.c
---- suhosin-0.9.37-dev-820a9ba/sha256.c	Fri Aug  1 17:14:35 2014
-+++ suhosin-0.9.37-dev-820a9ba/sha256.c	Fri Aug 15 17:24:59 2014
+diff -uNra suhosin-0.9.37-dev-597ab68/sha256.c suhosin-0.9.37-dev-597ab68/sha256.c
+--- suhosin-0.9.37-dev-597ab68/sha256.c	Sun Aug 31 19:44:31 2014
++++ suhosin-0.9.37-dev-597ab68/sha256.c	Tue Sep  2 18:49:05 2014
 @@ -402,9 +402,8 @@
  /* }}} */
  
@@ -1047,9 +1088,9 @@ diff -uNra suhosin-0.9.37-dev-820a9ba/sha256.c suhosin-0.9.37-dev-820a9ba/sha256
  }
  
  
-diff -uNra suhosin-0.9.37-dev-820a9ba/suhosin.c suhosin-0.9.37-dev-820a9ba/suhosin.c
---- suhosin-0.9.37-dev-820a9ba/suhosin.c	Fri Aug  1 17:14:35 2014
-+++ suhosin-0.9.37-dev-820a9ba/suhosin.c	Fri Aug 15 17:37:25 2014
+diff -uNra suhosin-0.9.37-dev-597ab68/suhosin.c suhosin-0.9.37-dev-597ab68/suhosin.c
+--- suhosin-0.9.37-dev-597ab68/suhosin.c	Sun Aug 31 19:44:31 2014
++++ suhosin-0.9.37-dev-597ab68/suhosin.c	Tue Sep  2 18:49:05 2014
 @@ -47,18 +47,19 @@
  static int (*old_startup)(zend_extension *extension) = NULL;
  static zend_extension *ze = NULL;
@@ -1240,9 +1281,9 @@ diff -uNra suhosin-0.9.37-dev-820a9ba/suhosin.c suhosin-0.9.37-dev-820a9ba/suhos
  
  #if PHP_VERSION_ID < 50500
  	/* register the logo for phpinfo */
-diff -uNra suhosin-0.9.37-dev-820a9ba/suhosin_rfc1867.h suhosin-0.9.37-dev-820a9ba/suhosin_rfc1867.h
---- suhosin-0.9.37-dev-820a9ba/suhosin_rfc1867.h	Fri Aug  1 17:14:35 2014
-+++ suhosin-0.9.37-dev-820a9ba/suhosin_rfc1867.h	Fri Aug 15 17:24:59 2014
+diff -uNra suhosin-0.9.37-dev-597ab68/suhosin_rfc1867.h suhosin-0.9.37-dev-597ab68/suhosin_rfc1867.h
+--- suhosin-0.9.37-dev-597ab68/suhosin_rfc1867.h	Sun Aug 31 19:44:31 2014
++++ suhosin-0.9.37-dev-597ab68/suhosin_rfc1867.h	Tue Sep  2 18:49:05 2014
 @@ -79,7 +79,6 @@
  SAPI_POST_HANDLER_FUNC(suhosin_rfc1867_post_handler);
  
@@ -1251,9 +1292,9 @@ diff -uNra suhosin-0.9.37-dev-820a9ba/suhosin_rfc1867.h suhosin-0.9.37-dev-820a9
  #if !HAVE_RFC1867_CALLBACK
  extern PHP_SUHOSIN_API int (*php_rfc1867_callback)(unsigned int event, void *event_data, void **extra TSRMLS_DC);
  #else
-diff -uNra suhosin-0.9.37-dev-820a9ba/ufilter.c suhosin-0.9.37-dev-820a9ba/ufilter.c
---- suhosin-0.9.37-dev-820a9ba/ufilter.c	Fri Aug  1 17:14:35 2014
-+++ suhosin-0.9.37-dev-820a9ba/ufilter.c	Fri Aug 15 17:24:59 2014
+diff -uNra suhosin-0.9.37-dev-597ab68/ufilter.c suhosin-0.9.37-dev-597ab68/ufilter.c
+--- suhosin-0.9.37-dev-597ab68/ufilter.c	Sun Aug 31 19:44:31 2014
++++ suhosin-0.9.37-dev-597ab68/ufilter.c	Tue Sep  2 18:49:11 2014
 @@ -32,7 +32,6 @@
  #include "suhosin_rfc1867.h"
  #include "ext/standard/php_var.h"
