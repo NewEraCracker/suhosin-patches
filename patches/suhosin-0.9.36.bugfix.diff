@@ -1123,7 +1123,7 @@ diff -uNra suhosin-0.9.36/session.c suhosin-0.9.36.new/session.c
      
 -    SUHOSIN_G(s_original_mod) = old_mod;
 +#if PHP_VERSION_ID >= 50400
-+    if (!SESSION_G(mod_user_implemented)) {
++    if (SUHOSIN_G(s_original_mod) == NULL || !SESSION_G(mod_user_implemented)) {
 +#endif
 +        SUHOSIN_G(s_original_mod) = old_mod;
 +#if PHP_VERSION_ID >= 50400
