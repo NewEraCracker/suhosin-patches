@@ -1042,11 +1042,11 @@ diff -uNra suhosin-0.9.37-dev-597ab68/session.c suhosin-0.9.37-dev-597ab68/sessi
      
 -    SUHOSIN_G(s_original_mod) = old_mod;
 +#if PHP_VERSION_ID >= 50400
-+    if (SUHOSIN_G(s_original_mod) == NULL || !SESSION_G(mod_user_implemented)) {
++    /* if (SUHOSIN_G(s_original_mod) == NULL || !SESSION_G(mod_user_implemented)) { */
 +#endif
 +        SUHOSIN_G(s_original_mod) = old_mod;
 +#if PHP_VERSION_ID >= 50400
-+    }
++    /* } */
 +#endif
      
      mod = SUHOSIN_G(s_module);
