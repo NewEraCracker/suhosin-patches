@@ -1,6 +1,6 @@
-diff -uNra suhosin-0.9.37-dev-597ab68/config.w32 suhosin-0.9.37-dev-597ab68/config.w32
---- suhosin-0.9.37-dev-597ab68/config.w32	Sun Aug 31 19:44:31 2014
-+++ suhosin-0.9.37-dev-597ab68/config.w32	Wed Sep  3 21:03:02 2014
+diff -uNra suhosin-0.9.37-dev-c8724cd/config.w32 suhosin-0.9.37-dev-c8724cd/config.w32
+--- suhosin-0.9.37-dev-c8724cd/config.w32	Sat Oct 11 09:25:59 2014
++++ suhosin-0.9.37-dev-c8724cd/config.w32	Sat Oct 11 12:08:56 2014
 @@ -1,8 +1,15 @@
  // $Id: config.w32,v 1.1.1.1 2007-11-28 01:15:35 sesser Exp $
  // vim:ft=javascript
@@ -19,9 +19,9 @@ diff -uNra suhosin-0.9.37-dev-597ab68/config.w32 suhosin-0.9.37-dev-597ab68/conf
 +		AC_DEFINE("SUHOSIN_EXPERIMENTAL", 1, "Whether to enable experimental suhosin features");
 +	}
  }
-diff -uNra suhosin-0.9.37-dev-597ab68/ex_imp.c suhosin-0.9.37-dev-597ab68/ex_imp.c
---- suhosin-0.9.37-dev-597ab68/ex_imp.c	Sun Aug 31 19:44:31 2014
-+++ suhosin-0.9.37-dev-597ab68/ex_imp.c	Wed Sep  3 21:03:02 2014
+diff -uNra suhosin-0.9.37-dev-c8724cd/ex_imp.c suhosin-0.9.37-dev-c8724cd/ex_imp.c
+--- suhosin-0.9.37-dev-c8724cd/ex_imp.c	Sat Oct 11 09:25:59 2014
++++ suhosin-0.9.37-dev-c8724cd/ex_imp.c	Sat Oct 11 12:08:57 2014
 @@ -668,9 +668,8 @@
  };
  /* }}} */
@@ -43,9 +43,9 @@ diff -uNra suhosin-0.9.37-dev-597ab68/ex_imp.c suhosin-0.9.37-dev-597ab68/ex_imp
  }
  
  
-diff -uNra suhosin-0.9.37-dev-597ab68/execute.c suhosin-0.9.37-dev-597ab68/execute.c
---- suhosin-0.9.37-dev-597ab68/execute.c	Sun Aug 31 19:44:31 2014
-+++ suhosin-0.9.37-dev-597ab68/execute.c	Wed Sep  3 21:03:02 2014
+diff -uNra suhosin-0.9.37-dev-c8724cd/execute.c suhosin-0.9.37-dev-c8724cd/execute.c
+--- suhosin-0.9.37-dev-c8724cd/execute.c	Sat Oct 11 09:25:59 2014
++++ suhosin-0.9.37-dev-c8724cd/execute.c	Sat Oct 11 12:08:56 2014
 @@ -24,7 +24,6 @@
  #endif
  
@@ -333,9 +333,9 @@ diff -uNra suhosin-0.9.37-dev-597ab68/execute.c suhosin-0.9.37-dev-597ab68/execu
  	zend_execute = old_execute;
  #endif
  		
-diff -uNra suhosin-0.9.37-dev-597ab68/memory_limit.c suhosin-0.9.37-dev-597ab68/memory_limit.c
---- suhosin-0.9.37-dev-597ab68/memory_limit.c	Sun Aug 31 19:44:31 2014
-+++ suhosin-0.9.37-dev-597ab68/memory_limit.c	Wed Sep  3 21:03:02 2014
+diff -uNra suhosin-0.9.37-dev-c8724cd/memory_limit.c suhosin-0.9.37-dev-c8724cd/memory_limit.c
+--- suhosin-0.9.37-dev-c8724cd/memory_limit.c	Sat Oct 11 09:25:59 2014
++++ suhosin-0.9.37-dev-c8724cd/memory_limit.c	Sat Oct 11 12:08:57 2014
 @@ -74,10 +74,9 @@
  /* }}} */
  
@@ -348,10 +348,10 @@ diff -uNra suhosin-0.9.37-dev-597ab68/memory_limit.c suhosin-0.9.37-dev-597ab68/
  
  	/* check if we are compiled against memory_limit */
  	if (zend_hash_find(EG(ini_directives), "memory_limit", sizeof("memory_limit"), (void **) &ini_entry)==FAILURE) {
-diff -uNra suhosin-0.9.37-dev-597ab68/php_suhosin.h suhosin-0.9.37-dev-597ab68/php_suhosin.h
---- suhosin-0.9.37-dev-597ab68/php_suhosin.h	Sun Aug 31 19:44:31 2014
-+++ suhosin-0.9.37-dev-597ab68/php_suhosin.h	Wed Sep  3 21:03:02 2014
-@@ -428,10 +428,10 @@
+diff -uNra suhosin-0.9.37-dev-c8724cd/php_suhosin.h suhosin-0.9.37-dev-c8724cd/php_suhosin.h
+--- suhosin-0.9.37-dev-c8724cd/php_suhosin.h	Sat Oct 11 09:25:59 2014
++++ suhosin-0.9.37-dev-c8724cd/php_suhosin.h	Sat Oct 11 12:08:58 2014
+@@ -430,10 +430,10 @@
  void suhosin_unhook_header_handler();
  void suhosin_hook_session(TSRMLS_D);
  void suhosin_unhook_session(TSRMLS_D);
@@ -365,9 +365,9 @@ diff -uNra suhosin-0.9.37-dev-597ab68/php_suhosin.h suhosin-0.9.37-dev-597ab68/p
  void suhosin_hook_execute(TSRMLS_D);
  void suhosin_unhook_execute();
  void suhosin_aes_gentables();
-diff -uNra suhosin-0.9.37-dev-597ab68/post_handler.c suhosin-0.9.37-dev-597ab68/post_handler.c
---- suhosin-0.9.37-dev-597ab68/post_handler.c	Sun Aug 31 19:44:31 2014
-+++ suhosin-0.9.37-dev-597ab68/post_handler.c	Wed Sep  3 21:03:02 2014
+diff -uNra suhosin-0.9.37-dev-c8724cd/post_handler.c suhosin-0.9.37-dev-c8724cd/post_handler.c
+--- suhosin-0.9.37-dev-c8724cd/post_handler.c	Sat Oct 11 09:25:59 2014
++++ suhosin-0.9.37-dev-c8724cd/post_handler.c	Sat Oct 11 12:08:58 2014
 @@ -71,9 +71,13 @@
  			val_len = php_url_decode(val, (p - val));
  			val = estrndup(val, val_len);
@@ -382,9 +382,9 @@ diff -uNra suhosin-0.9.37-dev-597ab68/post_handler.c suhosin-0.9.37-dev-597ab68/
  			} else {
  				SUHOSIN_G(abort_request)=1;
  			}
-diff -uNra suhosin-0.9.37-dev-597ab68/rfc1867.c suhosin-0.9.37-dev-597ab68/rfc1867.c
---- suhosin-0.9.37-dev-597ab68/rfc1867.c	Sun Aug 31 19:44:31 2014
-+++ suhosin-0.9.37-dev-597ab68/rfc1867.c	Wed Sep  3 21:03:02 2014
+diff -uNra suhosin-0.9.37-dev-c8724cd/rfc1867.c suhosin-0.9.37-dev-c8724cd/rfc1867.c
+--- suhosin-0.9.37-dev-c8724cd/rfc1867.c	Sat Oct 11 09:25:59 2014
++++ suhosin-0.9.37-dev-c8724cd/rfc1867.c	Sat Oct 11 12:08:58 2014
 @@ -2,7 +2,7 @@
     +----------------------------------------------------------------------+
     | PHP Version 5                                                        |
@@ -950,28 +950,31 @@ diff -uNra suhosin-0.9.37-dev-597ab68/rfc1867.c suhosin-0.9.37-dev-597ab68/rfc18
  				}
  				register_http_post_files_variable_ex(lbuf, &file_size, http_post_files, 0 TSRMLS_CC);
  			}
-diff -uNra suhosin-0.9.37-dev-597ab68/rfc1867_new.c suhosin-0.9.37-dev-597ab68/rfc1867_new.c
---- suhosin-0.9.37-dev-597ab68/rfc1867_new.c	Sun Aug 31 19:44:31 2014
-+++ suhosin-0.9.37-dev-597ab68/rfc1867_new.c	Wed Sep  3 21:03:03 2014
-@@ -174,6 +174,7 @@
+diff -uNra suhosin-0.9.37-dev-c8724cd/rfc1867_new.c suhosin-0.9.37-dev-c8724cd/rfc1867_new.c
+--- suhosin-0.9.37-dev-c8724cd/rfc1867_new.c	Sat Oct 11 09:25:59 2014
++++ suhosin-0.9.37-dev-c8724cd/rfc1867_new.c	Sat Oct 11 12:08:58 2014
+@@ -181,12 +181,12 @@
  }
  /* }}} */
  
-+#if UNUSED_0
- static int unlink_filename(char **filename TSRMLS_DC) /* {{{ */
- {
- 	VCWD_UNLINK(*filename);
-@@ -188,6 +189,7 @@
- 	FREE_HASHTABLE(SG(rfc1867_uploaded_files));
- }
+-// void destroy_uploaded_files_hash(TSRMLS_D) /* {{{ */
+-// {
+-// 	zend_hash_apply(SG(rfc1867_uploaded_files), (apply_func_t) unlink_filename TSRMLS_CC);
+-// 	zend_hash_destroy(SG(rfc1867_uploaded_files));
+-// 	FREE_HASHTABLE(SG(rfc1867_uploaded_files));
+-// }
++static void destroy_uploaded_files_hash(TSRMLS_D) /* {{{ */
++{
++	zend_hash_apply(SG(rfc1867_uploaded_files), (apply_func_t) unlink_filename TSRMLS_CC);
++	zend_hash_destroy(SG(rfc1867_uploaded_files));
++	FREE_HASHTABLE(SG(rfc1867_uploaded_files));
++}
  /* }}} */
-+#endif
  
  /* {{{ Following code is based on apache_multipart_buffer.c from libapreq-0.33 package. */
- 
-diff -uNra suhosin-0.9.37-dev-597ab68/session.c suhosin-0.9.37-dev-597ab68/session.c
---- suhosin-0.9.37-dev-597ab68/session.c	Sun Aug 31 19:44:31 2014
-+++ suhosin-0.9.37-dev-597ab68/session.c	Wed Sep  3 21:09:52 2014
+diff -uNra suhosin-0.9.37-dev-c8724cd/session.c suhosin-0.9.37-dev-c8724cd/session.c
+--- suhosin-0.9.37-dev-c8724cd/session.c	Sat Oct 11 09:25:59 2014
++++ suhosin-0.9.37-dev-c8724cd/session.c	Sat Oct 11 12:08:58 2014
 @@ -1,19 +1,19 @@
  /*
    +----------------------------------------------------------------------+
@@ -1088,9 +1091,9 @@ diff -uNra suhosin-0.9.37-dev-597ab68/session.c suhosin-0.9.37-dev-597ab68/sessi
      }
  }
  
-diff -uNra suhosin-0.9.37-dev-597ab68/sha256.c suhosin-0.9.37-dev-597ab68/sha256.c
---- suhosin-0.9.37-dev-597ab68/sha256.c	Sun Aug 31 19:44:31 2014
-+++ suhosin-0.9.37-dev-597ab68/sha256.c	Wed Sep  3 21:03:03 2014
+diff -uNra suhosin-0.9.37-dev-c8724cd/sha256.c suhosin-0.9.37-dev-c8724cd/sha256.c
+--- suhosin-0.9.37-dev-c8724cd/sha256.c	Sat Oct 11 09:25:59 2014
++++ suhosin-0.9.37-dev-c8724cd/sha256.c	Sat Oct 11 12:08:58 2014
 @@ -402,9 +402,8 @@
  /* }}} */
  
@@ -1112,9 +1115,9 @@ diff -uNra suhosin-0.9.37-dev-597ab68/sha256.c suhosin-0.9.37-dev-597ab68/sha256
  }
  
  
-diff -uNra suhosin-0.9.37-dev-597ab68/suhosin.c suhosin-0.9.37-dev-597ab68/suhosin.c
---- suhosin-0.9.37-dev-597ab68/suhosin.c	Sun Aug 31 19:44:31 2014
-+++ suhosin-0.9.37-dev-597ab68/suhosin.c	Wed Sep  3 21:03:03 2014
+diff -uNra suhosin-0.9.37-dev-c8724cd/suhosin.c suhosin-0.9.37-dev-c8724cd/suhosin.c
+--- suhosin-0.9.37-dev-c8724cd/suhosin.c	Sat Oct 11 09:25:59 2014
++++ suhosin-0.9.37-dev-c8724cd/suhosin.c	Sat Oct 11 12:08:58 2014
 @@ -47,18 +47,19 @@
  static int (*old_startup)(zend_extension *extension) = NULL;
  static zend_extension *ze = NULL;
@@ -1292,7 +1295,7 @@ diff -uNra suhosin-0.9.37-dev-597ab68/suhosin.c suhosin-0.9.37-dev-597ab68/suhos
  	return res;
  }
  
-@@ -1008,9 +1024,9 @@
+@@ -1010,9 +1026,9 @@
  	}
  
  	/* now hook a bunch of stuff */
@@ -1305,9 +1308,9 @@ diff -uNra suhosin-0.9.37-dev-597ab68/suhosin.c suhosin-0.9.37-dev-597ab68/suhos
  
  #if PHP_VERSION_ID < 50500
  	/* register the logo for phpinfo */
-diff -uNra suhosin-0.9.37-dev-597ab68/suhosin_rfc1867.h suhosin-0.9.37-dev-597ab68/suhosin_rfc1867.h
---- suhosin-0.9.37-dev-597ab68/suhosin_rfc1867.h	Sun Aug 31 19:44:31 2014
-+++ suhosin-0.9.37-dev-597ab68/suhosin_rfc1867.h	Wed Sep  3 21:03:03 2014
+diff -uNra suhosin-0.9.37-dev-c8724cd/suhosin_rfc1867.h suhosin-0.9.37-dev-c8724cd/suhosin_rfc1867.h
+--- suhosin-0.9.37-dev-c8724cd/suhosin_rfc1867.h	Sat Oct 11 09:25:59 2014
++++ suhosin-0.9.37-dev-c8724cd/suhosin_rfc1867.h	Sat Oct 11 12:08:59 2014
 @@ -79,7 +79,6 @@
  SAPI_POST_HANDLER_FUNC(suhosin_rfc1867_post_handler);
  
@@ -1316,9 +1319,9 @@ diff -uNra suhosin-0.9.37-dev-597ab68/suhosin_rfc1867.h suhosin-0.9.37-dev-597ab
  #if !HAVE_RFC1867_CALLBACK
  extern PHP_SUHOSIN_API int (*php_rfc1867_callback)(unsigned int event, void *event_data, void **extra TSRMLS_DC);
  #else
-diff -uNra suhosin-0.9.37-dev-597ab68/ufilter.c suhosin-0.9.37-dev-597ab68/ufilter.c
---- suhosin-0.9.37-dev-597ab68/ufilter.c	Sun Aug 31 19:44:31 2014
-+++ suhosin-0.9.37-dev-597ab68/ufilter.c	Wed Sep  3 21:03:03 2014
+diff -uNra suhosin-0.9.37-dev-c8724cd/ufilter.c suhosin-0.9.37-dev-c8724cd/ufilter.c
+--- suhosin-0.9.37-dev-c8724cd/ufilter.c	Sat Oct 11 09:25:59 2014
++++ suhosin-0.9.37-dev-c8724cd/ufilter.c	Sat Oct 11 12:09:17 2014
 @@ -32,7 +32,6 @@
  #include "suhosin_rfc1867.h"
  #include "ext/standard/php_var.h"
@@ -1340,7 +1343,7 @@ diff -uNra suhosin-0.9.37-dev-597ab68/ufilter.c suhosin-0.9.37-dev-597ab68/ufilt
  
  	var = estrdup(varname);
  
-@@ -203,7 +201,7 @@
+@@ -208,7 +206,7 @@
  		  		}
  		    
  			    
