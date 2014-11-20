@@ -1,6 +1,6 @@
-diff -uNra suhosin-0.9.36/config.w32 suhosin-0.9.36.new/config.w32
+diff -uNra suhosin-0.9.36/config.w32 suhosin-0.9.36/config.w32
 --- suhosin-0.9.36/config.w32	Tue Jun 10 09:58:36 2014
-+++ suhosin-0.9.36.new/config.w32	Sat Nov 15 14:37:00 2014
++++ suhosin-0.9.36/config.w32	Thu Nov 20 21:33:38 2014
 @@ -1,8 +1,8 @@
  // $Id: config.w32,v 1.1.1.1 2007-11-28 01:15:35 sesser Exp $
  // vim:ft=javascript
@@ -12,9 +12,9 @@ diff -uNra suhosin-0.9.36/config.w32 suhosin-0.9.36.new/config.w32
 -	EXTENSION("suhosin", "suhosin.c sha256.c memory_limit.c treat_data.c ifilter.c post_handler.c ufilter.c rfc1867.c log.c header.c execute.c ex_imp.c session.c aes.c");
 +	EXTENSION("suhosin", "suhosin.c sha256.c memory_limit.c treat_data.c ifilter.c post_handler.c ufilter.c rfc1867.c rfc1867_new.c log.c header.c execute.c ex_imp.c session.c aes.c");
  }
-diff -uNra suhosin-0.9.36/ex_imp.c suhosin-0.9.36.new/ex_imp.c
+diff -uNra suhosin-0.9.36/ex_imp.c suhosin-0.9.36/ex_imp.c
 --- suhosin-0.9.36/ex_imp.c	Tue Jun 10 09:58:36 2014
-+++ suhosin-0.9.36.new/ex_imp.c	Sat Nov 15 14:37:00 2014
++++ suhosin-0.9.36/ex_imp.c	Thu Nov 20 21:33:38 2014
 @@ -550,7 +550,7 @@
  	}
  
@@ -45,9 +45,9 @@ diff -uNra suhosin-0.9.36/ex_imp.c suhosin-0.9.36.new/ex_imp.c
  }
  
  
-diff -uNra suhosin-0.9.36/execute.c suhosin-0.9.36.new/execute.c
+diff -uNra suhosin-0.9.36/execute.c suhosin-0.9.36/execute.c
 --- suhosin-0.9.36/execute.c	Tue Jun 10 09:58:36 2014
-+++ suhosin-0.9.36.new/execute.c	Sat Nov 15 14:37:00 2014
++++ suhosin-0.9.36/execute.c	Thu Nov 20 21:33:38 2014
 @@ -386,9 +386,9 @@
  	return SUHOSIN_CODE_TYPE_UNKNOWN;
  }
@@ -162,7 +162,7 @@ diff -uNra suhosin-0.9.36/execute.c suhosin-0.9.36.new/execute.c
  #else
      /* we have to live with the possibility that this call fails */
 -    php_win32_get_random_bytes(rbuf, 8 * sizeof(php_uint32));
-+    php_win32_get_random_bytes(&seedbuf[6], 8 * sizeof(php_uint32));
++    php_win32_get_random_bytes((unsigned char*)&seedbuf[6], 8 * sizeof(php_uint32));
  #endif
  
      suhosin_SHA256Init(&context);
@@ -315,9 +315,9 @@ diff -uNra suhosin-0.9.36/execute.c suhosin-0.9.36.new/execute.c
  	zend_execute = old_execute;
  #endif
  		
-diff -uNra suhosin-0.9.36/ifilter.c suhosin-0.9.36.new/ifilter.c
+diff -uNra suhosin-0.9.36/ifilter.c suhosin-0.9.36/ifilter.c
 --- suhosin-0.9.36/ifilter.c	Tue Jun 10 09:58:36 2014
-+++ suhosin-0.9.36.new/ifilter.c	Sat Nov 15 14:37:00 2014
++++ suhosin-0.9.36/ifilter.c	Thu Nov 20 21:33:38 2014
 @@ -33,6 +33,13 @@
  
  static void (*orig_register_server_variables)(zval *track_vars_array TSRMLS_DC) = NULL;
@@ -374,9 +374,9 @@ diff -uNra suhosin-0.9.36/ifilter.c suhosin-0.9.36.new/ifilter.c
  	
  		if (SUHOSIN_G(disallow_nul)) {
  			suhosin_log(S_VARS, "ASCII-NUL chars not allowed within request variables - dropped variable '%s'", var);
-diff -uNra suhosin-0.9.36/log.c suhosin-0.9.36.new/log.c
+diff -uNra suhosin-0.9.36/log.c suhosin-0.9.36/log.c
 --- suhosin-0.9.36/log.c	Tue Jun 10 09:58:36 2014
-+++ suhosin-0.9.36.new/log.c	Sat Nov 15 14:37:00 2014
++++ suhosin-0.9.36/log.c	Thu Nov 20 21:33:38 2014
 @@ -112,7 +112,7 @@
  	char *ip_address;
  	char *fname;
@@ -415,9 +415,9 @@ diff -uNra suhosin-0.9.36/log.c suhosin-0.9.36.new/log.c
  	ap_php_snprintf(error, sizeof(error), "%s %2d %02d:%02d:%02d [%u] %s\n", month_names[tm.tm_mon], tm.tm_mday, tm.tm_hour, tm.tm_min, tm.tm_sec, getpid(),buf);
  	towrite = strlen(error);
  	wbuf = error;
-diff -uNra suhosin-0.9.36/memory_limit.c suhosin-0.9.36.new/memory_limit.c
+diff -uNra suhosin-0.9.36/memory_limit.c suhosin-0.9.36/memory_limit.c
 --- suhosin-0.9.36/memory_limit.c	Tue Jun 10 09:58:36 2014
-+++ suhosin-0.9.36.new/memory_limit.c	Sat Nov 15 14:37:00 2014
++++ suhosin-0.9.36/memory_limit.c	Thu Nov 20 21:33:38 2014
 @@ -74,10 +74,9 @@
  /* }}} */
  
@@ -430,9 +430,9 @@ diff -uNra suhosin-0.9.36/memory_limit.c suhosin-0.9.36.new/memory_limit.c
  
  	/* check if we are compiled against memory_limit */
  	if (zend_hash_find(EG(ini_directives), "memory_limit", sizeof("memory_limit"), (void **) &ini_entry)==FAILURE) {
-diff -uNra suhosin-0.9.36/php_suhosin.h suhosin-0.9.36.new/php_suhosin.h
+diff -uNra suhosin-0.9.36/php_suhosin.h suhosin-0.9.36/php_suhosin.h
 --- suhosin-0.9.36/php_suhosin.h	Tue Jun 10 09:58:36 2014
-+++ suhosin-0.9.36.new/php_suhosin.h	Sat Nov 15 14:37:00 2014
++++ suhosin-0.9.36/php_suhosin.h	Thu Nov 20 21:33:38 2014
 @@ -39,6 +39,10 @@
  #endif    
  #endif
@@ -473,9 +473,9 @@ diff -uNra suhosin-0.9.36/php_suhosin.h suhosin-0.9.36.new/php_suhosin.h
  void suhosin_hook_execute(TSRMLS_D);
  void suhosin_unhook_execute();
  void suhosin_aes_gentables();
-diff -uNra suhosin-0.9.36/post_handler.c suhosin-0.9.36.new/post_handler.c
+diff -uNra suhosin-0.9.36/post_handler.c suhosin-0.9.36/post_handler.c
 --- suhosin-0.9.36/post_handler.c	Tue Jun 10 09:58:36 2014
-+++ suhosin-0.9.36.new/post_handler.c	Sat Nov 15 14:37:00 2014
++++ suhosin-0.9.36/post_handler.c	Thu Nov 20 21:33:39 2014
 @@ -71,9 +71,13 @@
  			val_len = php_url_decode(val, (p - val));
  			val = estrndup(val, val_len);
@@ -490,9 +490,9 @@ diff -uNra suhosin-0.9.36/post_handler.c suhosin-0.9.36.new/post_handler.c
  			} else {
  				SUHOSIN_G(abort_request)=1;
  			}
-diff -uNra suhosin-0.9.36/rfc1867.c suhosin-0.9.36.new/rfc1867.c
+diff -uNra suhosin-0.9.36/rfc1867.c suhosin-0.9.36/rfc1867.c
 --- suhosin-0.9.36/rfc1867.c	Tue Jun 10 09:58:36 2014
-+++ suhosin-0.9.36.new/rfc1867.c	Sat Nov 15 14:37:00 2014
++++ suhosin-0.9.36/rfc1867.c	Thu Nov 20 21:33:39 2014
 @@ -2,7 +2,7 @@
     +----------------------------------------------------------------------+
     | PHP Version 5                                                        |
@@ -1058,9 +1058,9 @@ diff -uNra suhosin-0.9.36/rfc1867.c suhosin-0.9.36.new/rfc1867.c
  				}
  				register_http_post_files_variable_ex(lbuf, &file_size, http_post_files, 0 TSRMLS_CC);
  			}
-diff -uNra suhosin-0.9.36/rfc1867_new.c suhosin-0.9.36.new/rfc1867_new.c
+diff -uNra suhosin-0.9.36/rfc1867_new.c suhosin-0.9.36/rfc1867_new.c
 --- suhosin-0.9.36/rfc1867_new.c	Tue Jun 10 09:58:36 2014
-+++ suhosin-0.9.36.new/rfc1867_new.c	Sat Nov 15 14:37:00 2014
++++ suhosin-0.9.36/rfc1867_new.c	Thu Nov 20 21:33:39 2014
 @@ -181,7 +181,7 @@
  }
  /* }}} */
@@ -1070,9 +1070,9 @@ diff -uNra suhosin-0.9.36/rfc1867_new.c suhosin-0.9.36.new/rfc1867_new.c
  {
  	zend_hash_apply(SG(rfc1867_uploaded_files), (apply_func_t) unlink_filename TSRMLS_CC);
  	zend_hash_destroy(SG(rfc1867_uploaded_files));
-diff -uNra suhosin-0.9.36/session.c suhosin-0.9.36.new/session.c
+diff -uNra suhosin-0.9.36/session.c suhosin-0.9.36/session.c
 --- suhosin-0.9.36/session.c	Tue Jun 10 09:58:36 2014
-+++ suhosin-0.9.36.new/session.c	Sat Nov 15 14:37:00 2014
++++ suhosin-0.9.36/session.c	Thu Nov 20 21:33:39 2014
 @@ -1,19 +1,19 @@
  /*
    +----------------------------------------------------------------------+
@@ -1146,19 +1146,24 @@ diff -uNra suhosin-0.9.36/session.c suhosin-0.9.36.new/session.c
  
  static int suhosin_get_session_var(char *name, size_t namelen, zval ***state_var TSRMLS_DC) /* {{{ */
  {
-@@ -1018,9 +1036,10 @@
+@@ -1018,13 +1036,14 @@
  static PHP_INI_MH(suhosin_OnUpdateSaveHandler)
  {
      int r;
 -    char *tmp;
-+    ps_module *current_mod = SESSION_G(mod);
++    ps_module *original_mod = SUHOSIN_G(s_original_mod);
  
 -    if ((ps_mod_user) && (SUHOSIN_G(s_original_mod) == ps_mod_user) && (strcmp(new_value, "user") == NULL)) {
-+    /* During runtime stage, only update when new value is different than current, to prevent infinite loops */
-+    if ((stage == PHP_INI_STAGE_RUNTIME) && (current_mod != NULL) && (strcasecmp(current_mod->s_name, new_value) == 0)) {
++    /* During runtime stage, to prevent infinite loops, only update when new value is different than original */
++    if (stage == PHP_INI_STAGE_RUNTIME && original_mod && strcasecmp(original_mod->s_name, new_value) == 0) {
          return SUCCESS;
      }
  
+-    SESSION_G(mod) = SUHOSIN_G(s_original_mod);
++    SESSION_G(mod) = original_mod;
+     
+     r = old_OnUpdateSaveHandler(entry, new_value, new_value_length, mh_arg1, mh_arg2, mh_arg3, stage TSRMLS_CC);
+     
 @@ -1095,12 +1114,6 @@
      }
  #endif
@@ -1189,9 +1194,9 @@ diff -uNra suhosin-0.9.36/session.c suhosin-0.9.36.new/session.c
      }
  }
  
-diff -uNra suhosin-0.9.36/sha256.c suhosin-0.9.36.new/sha256.c
+diff -uNra suhosin-0.9.36/sha256.c suhosin-0.9.36/sha256.c
 --- suhosin-0.9.36/sha256.c	Tue Jun 10 09:58:36 2014
-+++ suhosin-0.9.36.new/sha256.c	Sat Nov 15 14:37:00 2014
++++ suhosin-0.9.36/sha256.c	Thu Nov 20 21:33:39 2014
 @@ -402,9 +402,8 @@
  /* }}} */
  
@@ -1213,9 +1218,9 @@ diff -uNra suhosin-0.9.36/sha256.c suhosin-0.9.36.new/sha256.c
  }
  
  
-diff -uNra suhosin-0.9.36/suhosin.c suhosin-0.9.36.new/suhosin.c
+diff -uNra suhosin-0.9.36/suhosin.c suhosin-0.9.36/suhosin.c
 --- suhosin-0.9.36/suhosin.c	Tue Jun 10 09:58:36 2014
-+++ suhosin-0.9.36.new/suhosin.c	Sat Nov 15 14:39:00 2014
++++ suhosin-0.9.36/suhosin.c	Thu Nov 20 21:33:39 2014
 @@ -46,18 +46,19 @@
  static int (*old_startup)(zend_extension *extension) = NULL;
  static zend_extension *ze = NULL;
@@ -1421,9 +1426,9 @@ diff -uNra suhosin-0.9.36/suhosin.c suhosin-0.9.36.new/suhosin.c
  
  #if PHP_VERSION_ID < 50500
  	/* register the logo for phpinfo */
-diff -uNra suhosin-0.9.36/suhosin_rfc1867.h suhosin-0.9.36.new/suhosin_rfc1867.h
+diff -uNra suhosin-0.9.36/suhosin_rfc1867.h suhosin-0.9.36/suhosin_rfc1867.h
 --- suhosin-0.9.36/suhosin_rfc1867.h	Tue Jun 10 09:58:36 2014
-+++ suhosin-0.9.36.new/suhosin_rfc1867.h	Sat Nov 15 14:37:00 2014
++++ suhosin-0.9.36/suhosin_rfc1867.h	Thu Nov 20 21:33:39 2014
 @@ -79,7 +79,6 @@
  SAPI_POST_HANDLER_FUNC(suhosin_rfc1867_post_handler);
  
@@ -1432,9 +1437,9 @@ diff -uNra suhosin-0.9.36/suhosin_rfc1867.h suhosin-0.9.36.new/suhosin_rfc1867.h
  #if !HAVE_RFC1867_CALLBACK
  extern PHP_SUHOSIN_API int (*php_rfc1867_callback)(unsigned int event, void *event_data, void **extra TSRMLS_DC);
  #else
-diff -uNra suhosin-0.9.36/ufilter.c suhosin-0.9.36.new/ufilter.c
+diff -uNra suhosin-0.9.36/ufilter.c suhosin-0.9.36/ufilter.c
 --- suhosin-0.9.36/ufilter.c	Tue Jun 10 09:58:36 2014
-+++ suhosin-0.9.36.new/ufilter.c	Sat Nov 15 14:37:00 2014
++++ suhosin-0.9.36/ufilter.c	Thu Nov 20 21:33:43 2014
 @@ -31,7 +31,6 @@
  #include "php_variables.h"
  #include "suhosin_rfc1867.h"
