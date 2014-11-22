@@ -1,71 +1,18 @@
-diff -uNra suhosin-0.9.37-dev-df62872/config.w32 suhosin-0.9.37-dev-df62872/config.w32
---- suhosin-0.9.37-dev-df62872/config.w32	Tue Nov 18 19:49:30 2014
-+++ suhosin-0.9.37-dev-df62872/config.w32	Thu Nov 20 21:33:32 2014
-@@ -1,8 +1,15 @@
- // $Id: config.w32,v 1.1.1.1 2007-11-28 01:15:35 sesser Exp $
- // vim:ft=javascript
- 
--ARG_ENABLE("suhosin", "whether to enable suhosin support", "yes");
-+ARG_ENABLE("suhosin", "Whether to enable suhosin support", "yes");
- 
- if (PHP_SUHOSIN == "yes") {
- 	EXTENSION("suhosin", "suhosin.c sha256.c memory_limit.c treat_data.c ifilter.c post_handler.c ufilter.c rfc1867.c rfc1867_new.c log.c header.c execute.c ex_imp.c session.c aes.c crypt.c");
-+
-+	ARG_ENABLE("suhosin-experimental", "Enable experimental suhosin features", "no");
-+
-+	if (PHP_SUHOSIN_EXPERIMENTAL != "no") {
-+		ADD_FLAG("CFLAGS_SUHOSIN", "/D SUHOSIN_EXPERIMENTAL");
-+		AC_DEFINE("SUHOSIN_EXPERIMENTAL", 1, "Whether to enable experimental suhosin features");
-+	}
- }
-diff -uNra suhosin-0.9.37-dev-df62872/ex_imp.c suhosin-0.9.37-dev-df62872/ex_imp.c
---- suhosin-0.9.37-dev-df62872/ex_imp.c	Tue Nov 18 19:49:30 2014
-+++ suhosin-0.9.37-dev-df62872/ex_imp.c	Thu Nov 20 21:33:32 2014
-@@ -668,9 +668,8 @@
- };
- /* }}} */
- 
--void suhosin_hook_ex_imp()
-+void suhosin_hook_ex_imp(TSRMLS_D)
- {
--	TSRMLS_FETCH();
- 	
- 	/* replace the extract and import_request_variables functions */
- 	zend_hash_del(CG(function_table), "extract", sizeof("extract"));
-@@ -683,9 +682,6 @@
- 	zend_register_functions(NULL, suhosin_ex_imp_functions, NULL, MODULE_PERSISTENT TSRMLS_CC);
- #endif
-  
--	
--	
--			
- }
- 
- 
-diff -uNra suhosin-0.9.37-dev-df62872/execute.c suhosin-0.9.37-dev-df62872/execute.c
---- suhosin-0.9.37-dev-df62872/execute.c	Tue Nov 18 19:49:30 2014
-+++ suhosin-0.9.37-dev-df62872/execute.c	Thu Nov 20 21:33:32 2014
-@@ -24,7 +24,6 @@
- #endif
- 
- #include <fcntl.h>
--#include <fnmatch.h>
- #include "php.h"
- #include "php_ini.h"
- #include "zend_hash.h"
-@@ -40,9 +39,11 @@
+diff -uNra suhosin-0.9.37-dev-4989cdd/execute.c suhosin-0.9.37-dev-4989cdd/execute.c
+--- suhosin-0.9.37-dev-4989cdd/execute.c	Sat Nov 22 15:19:38 2014
++++ suhosin-0.9.37-dev-4989cdd/execute.c	Sat Nov 22 20:14:25 2014
+@@ -39,9 +39,7 @@
  #include "sha256.h"
  
  #ifdef PHP_WIN32
+-# ifdef HAVE_FNMATCH
+-#  include "win32/fnmatch.h"
+-# endif
 +# include "win32/fnmatch.h"
  # include "win32/winutil.h"
  # include "win32/time.h"
  #else
-+# include <fnmatch.h>
- # include <sys/time.h>
- #endif
- 
-@@ -387,9 +388,9 @@
+@@ -392,9 +390,9 @@
  	return SUHOSIN_CODE_TYPE_UNKNOWN;
  }
  
@@ -77,7 +24,7 @@ diff -uNra suhosin-0.9.37-dev-df62872/execute.c suhosin-0.9.37-dev-df62872/execu
  static void suhosin_execute_ex(zend_execute_data *execute_data TSRMLS_DC)
  {
  	zend_op_array *op_array = execute_data->op_array;
-@@ -692,12 +693,20 @@
+@@ -697,12 +695,20 @@
  {
  	zval **regex,
  	     **replace,
@@ -101,7 +48,7 @@ diff -uNra suhosin-0.9.37-dev-df62872/execute.c suhosin-0.9.37-dev-df62872/execu
  		
  	if (Z_TYPE_PP(regex) == IS_ARRAY) {
  		zval	**regex_entry;
-@@ -1115,33 +1124,34 @@
+@@ -1120,33 +1126,34 @@
  #ifndef PHP_ATLEAST_5_3
  	zval **function_name;
  #endif
@@ -147,7 +94,7 @@ diff -uNra suhosin-0.9.37-dev-df62872/execute.c suhosin-0.9.37-dev-df62872/execu
  	
  	/*
  	 * A bit of a hack, but not a bad one: we see if the handler of the function
-@@ -1155,22 +1165,22 @@
+@@ -1160,22 +1167,22 @@
  	/* Now check if function is forbidden by Suhosin */
  	if (SUHOSIN_G(in_code_type) == SUHOSIN_EVAL) {
  		if (SUHOSIN_G(eval_whitelist) != NULL) {
@@ -174,16 +121,7 @@ diff -uNra suhosin-0.9.37-dev-df62872/execute.c suhosin-0.9.37-dev-df62872/execu
  		    retval = 0;
  		}
  	}
-@@ -1386,7 +1396,7 @@
-     }
- #else
-     /* we have to live with the possibility that this call fails */
--    php_win32_get_random_bytes(rbuf, 8 * sizeof(php_uint32));
-+    php_win32_get_random_bytes((unsigned char*)&seedbuf[6], 8 * sizeof(php_uint32));
- #endif
- 
-     suhosin_SHA256Init(&context);
-@@ -1558,7 +1568,7 @@
+@@ -1563,7 +1570,7 @@
  {
  #ifdef PHP_ATLEAST_5_3
  	if (zend_parse_parameters_none() == FAILURE) {
@@ -192,15 +130,7 @@ diff -uNra suhosin-0.9.37-dev-df62872/execute.c suhosin-0.9.37-dev-df62872/execu
  	}
  #else
          int argc = ZEND_NUM_ARGS();
-@@ -1677,37 +1687,21 @@
- #define FUNCTION_WARNING() zend_error(E_WARNING, "%s() has been disabled for security reasons", get_active_function_name(TSRMLS_C));
- #define FUNCTION_SIMULATE_WARNING() zend_error(E_WARNING, "SIMULATION - %s() has been disabled for security reasons", get_active_function_name(TSRMLS_C));
- 
--/* {{{ void suhosin_execute_internal(zend_execute_data *execute_data_ptr, int return_value_used TSRMLS_DC)
-+/* {{{ void suhosin_execute_internal
-  *    This function provides a hook for internal execution */
- #if PHP_VERSION_ID >= 50500
- #define EX_T(offset) (*EX_TMP_VAR(execute_data_ptr, offset))
+@@ -1689,30 +1696,14 @@
  
  static void suhosin_execute_internal(zend_execute_data *execute_data_ptr, zend_fcall_info *fci, int return_value_used TSRMLS_DC)
  {
@@ -233,7 +163,7 @@ diff -uNra suhosin-0.9.37-dev-df62872/execute.c suhosin-0.9.37-dev-df62872/execu
  	char *lcname;
  	int function_name_strlen, free_lcname = 0;
  	zend_class_entry *ce = NULL;
-@@ -1732,18 +1726,6 @@
+@@ -1737,18 +1728,6 @@
  		zend_str_tolower(lcname, function_name_strlen);
  	}
  
@@ -252,7 +182,7 @@ diff -uNra suhosin-0.9.37-dev-df62872/execute.c suhosin-0.9.37-dev-df62872/execu
  	SDEBUG("function: %s", lcname);
  
  	if (SUHOSIN_G(in_code_type) == SUHOSIN_EVAL) {
-@@ -1794,6 +1776,31 @@
+@@ -1799,6 +1778,31 @@
  		int retval = 0;
  		void *handler = ((zend_internal_function *) execute_data_ptr->function_state.function)->handler;
  		
@@ -284,7 +214,7 @@ diff -uNra suhosin-0.9.37-dev-df62872/execute.c suhosin-0.9.37-dev-df62872/execu
  		if (handler != ZEND_FN(display_disabled_function)) {
  		    retval = ih->handler(IH_HANDLER_PARAM_PASSTHRU);
  		}
-@@ -1826,6 +1833,7 @@
+@@ -1831,6 +1835,7 @@
  /* }}} */
  
  
@@ -292,7 +222,7 @@ diff -uNra suhosin-0.9.37-dev-df62872/execute.c suhosin-0.9.37-dev-df62872/execu
  /* {{{ int function_lookup(zend_extension *extension)
   */
  static int function_lookup(zend_extension *extension)
-@@ -1843,6 +1851,7 @@
+@@ -1848,6 +1853,7 @@
  	return 0;
  }
  /* }}} */
@@ -300,7 +230,7 @@ diff -uNra suhosin-0.9.37-dev-df62872/execute.c suhosin-0.9.37-dev-df62872/execu
  
  
  /* {{{ void suhosin_hook_execute()
-@@ -1857,12 +1866,10 @@
+@@ -1862,12 +1868,10 @@
  #else	
  	old_execute = zend_execute;
  	zend_execute = suhosin_execute;
@@ -313,7 +243,7 @@ diff -uNra suhosin-0.9.37-dev-df62872/execute.c suhosin-0.9.37-dev-df62872/execu
  	if (zo_set_oe_ex == NULL) {	
  		zo_set_oe_ex = (void *)DL_FETCH_SYMBOL(NULL, "zend_optimizer_set_oe_ex");
  	}
-@@ -1908,15 +1915,13 @@
+@@ -1913,15 +1917,13 @@
   */
  void suhosin_unhook_execute()
  {
@@ -332,41 +262,34 @@ diff -uNra suhosin-0.9.37-dev-df62872/execute.c suhosin-0.9.37-dev-df62872/execu
  	zend_execute = old_execute;
  #endif
  		
-diff -uNra suhosin-0.9.37-dev-df62872/memory_limit.c suhosin-0.9.37-dev-df62872/memory_limit.c
---- suhosin-0.9.37-dev-df62872/memory_limit.c	Tue Nov 18 19:49:30 2014
-+++ suhosin-0.9.37-dev-df62872/memory_limit.c	Thu Nov 20 21:33:32 2014
-@@ -74,10 +74,9 @@
- /* }}} */
+diff -uNra suhosin-0.9.37-dev-4989cdd/post_handler.c suhosin-0.9.37-dev-4989cdd/post_handler.c
+--- suhosin-0.9.37-dev-4989cdd/post_handler.c	Sat Nov 22 15:19:38 2014
++++ suhosin-0.9.37-dev-4989cdd/post_handler.c	Sat Nov 22 20:14:25 2014
+@@ -34,9 +34,6 @@
+ #include "ext/standard/url.h"
+ #include "ext/standard/php_smart_str.h"
  
+-#ifdef PHP_WIN32
+-#include "win32/php_inttypes.h"
+-#endif
  
--void suhosin_hook_memory_limit()
-+void suhosin_hook_memory_limit(TSRMLS_D)
- {
- 	zend_ini_entry *ini_entry;
--	TSRMLS_FETCH();
+ SAPI_POST_HANDLER_FUNC(suhosin_rfc1867_post_handler);
  
- 	/* check if we are compiled against memory_limit */
- 	if (zend_hash_find(EG(ini_directives), "memory_limit", sizeof("memory_limit"), (void **) &ini_entry)==FAILURE) {
-diff -uNra suhosin-0.9.37-dev-df62872/php_suhosin.h suhosin-0.9.37-dev-df62872/php_suhosin.h
---- suhosin-0.9.37-dev-df62872/php_suhosin.h	Tue Nov 18 19:49:30 2014
-+++ suhosin-0.9.37-dev-df62872/php_suhosin.h	Thu Nov 20 21:33:32 2014
-@@ -433,10 +433,10 @@
- void suhosin_unhook_header_handler();
- void suhosin_hook_session(TSRMLS_D);
- void suhosin_unhook_session(TSRMLS_D);
--void suhosin_hook_sha256();
--void suhosin_hook_ex_imp();
-+void suhosin_hook_sha256(TSRMLS_D);
-+void suhosin_hook_ex_imp(TSRMLS_D);
- void suhosin_hook_treat_data();
--void suhosin_hook_memory_limit();
-+void suhosin_hook_memory_limit(TSRMLS_D);
- void suhosin_hook_execute(TSRMLS_D);
- void suhosin_unhook_execute();
- void suhosin_aes_gentables();
-diff -uNra suhosin-0.9.37-dev-df62872/rfc1867.c suhosin-0.9.37-dev-df62872/rfc1867.c
---- suhosin-0.9.37-dev-df62872/rfc1867.c	Tue Nov 18 19:49:30 2014
-+++ suhosin-0.9.37-dev-df62872/rfc1867.c	Thu Nov 20 21:33:32 2014
+@@ -90,6 +87,11 @@
+ 	}
+ }
+ #else
++
++#ifdef PHP_WIN32
++#include "win32/php_inttypes.h"
++#endif
++
+ typedef struct post_var_data {
+ 	smart_str str;
+ 	char *ptr;
+diff -uNra suhosin-0.9.37-dev-4989cdd/rfc1867.c suhosin-0.9.37-dev-4989cdd/rfc1867.c
+--- suhosin-0.9.37-dev-4989cdd/rfc1867.c	Sat Nov 22 15:19:38 2014
++++ suhosin-0.9.37-dev-4989cdd/rfc1867.c	Sat Nov 22 20:14:25 2014
 @@ -2,7 +2,7 @@
     +----------------------------------------------------------------------+
     | PHP Version 5                                                        |
@@ -932,9 +855,9 @@ diff -uNra suhosin-0.9.37-dev-df62872/rfc1867.c suhosin-0.9.37-dev-df62872/rfc18
  				}
  				register_http_post_files_variable_ex(lbuf, &file_size, http_post_files, 0 TSRMLS_CC);
  			}
-diff -uNra suhosin-0.9.37-dev-df62872/rfc1867_new.c suhosin-0.9.37-dev-df62872/rfc1867_new.c
---- suhosin-0.9.37-dev-df62872/rfc1867_new.c	Tue Nov 18 19:49:30 2014
-+++ suhosin-0.9.37-dev-df62872/rfc1867_new.c	Thu Nov 20 21:33:32 2014
+diff -uNra suhosin-0.9.37-dev-4989cdd/rfc1867_new.c suhosin-0.9.37-dev-4989cdd/rfc1867_new.c
+--- suhosin-0.9.37-dev-4989cdd/rfc1867_new.c	Sat Nov 22 15:19:38 2014
++++ suhosin-0.9.37-dev-4989cdd/rfc1867_new.c	Sat Nov 22 20:14:25 2014
 @@ -181,12 +181,12 @@
  }
  /* }}} */
@@ -954,9 +877,9 @@ diff -uNra suhosin-0.9.37-dev-df62872/rfc1867_new.c suhosin-0.9.37-dev-df62872/r
  /* }}} */
  
  /* {{{ Following code is based on apache_multipart_buffer.c from libapreq-0.33 package. */
-diff -uNra suhosin-0.9.37-dev-df62872/session.c suhosin-0.9.37-dev-df62872/session.c
---- suhosin-0.9.37-dev-df62872/session.c	Tue Nov 18 19:49:30 2014
-+++ suhosin-0.9.37-dev-df62872/session.c	Thu Nov 20 21:33:32 2014
+diff -uNra suhosin-0.9.37-dev-4989cdd/session.c suhosin-0.9.37-dev-4989cdd/session.c
+--- suhosin-0.9.37-dev-4989cdd/session.c	Sat Nov 22 15:19:38 2014
++++ suhosin-0.9.37-dev-4989cdd/session.c	Sat Nov 22 20:14:25 2014
 @@ -302,13 +302,14 @@
  static PHP_INI_MH(suhosin_OnUpdateSaveHandler)
  {
@@ -992,33 +915,9 @@ diff -uNra suhosin-0.9.37-dev-df62872/session.c suhosin-0.9.37-dev-df62872/sessi
      }
  }
  
-diff -uNra suhosin-0.9.37-dev-df62872/sha256.c suhosin-0.9.37-dev-df62872/sha256.c
---- suhosin-0.9.37-dev-df62872/sha256.c	Tue Nov 18 19:49:30 2014
-+++ suhosin-0.9.37-dev-df62872/sha256.c	Thu Nov 20 21:33:32 2014
-@@ -402,9 +402,8 @@
- /* }}} */
- 
- 
--void suhosin_hook_sha256()
-+void suhosin_hook_sha256(TSRMLS_D)
- {
--	TSRMLS_FETCH();
- 	
- 	/* check if we already have sha256 support */
- 	if (zend_hash_exists(CG(function_table), "sha256", sizeof("sha256"))) {
-@@ -418,9 +417,6 @@
- 	zend_register_functions(NULL, suhosin_sha256_functions, NULL, MODULE_PERSISTENT TSRMLS_CC);
- #endif
-  
--	
--	
--			
- }
- 
- 
-diff -uNra suhosin-0.9.37-dev-df62872/suhosin.c suhosin-0.9.37-dev-df62872/suhosin.c
---- suhosin-0.9.37-dev-df62872/suhosin.c	Tue Nov 18 19:49:30 2014
-+++ suhosin-0.9.37-dev-df62872/suhosin.c	Thu Nov 20 21:33:32 2014
+diff -uNra suhosin-0.9.37-dev-4989cdd/suhosin.c suhosin-0.9.37-dev-4989cdd/suhosin.c
+--- suhosin-0.9.37-dev-4989cdd/suhosin.c	Sat Nov 22 15:19:38 2014
++++ suhosin-0.9.37-dev-4989cdd/suhosin.c	Sat Nov 22 20:14:25 2014
 @@ -47,18 +47,19 @@
  static int (*old_startup)(zend_extension *extension) = NULL;
  static zend_extension *ze = NULL;
@@ -1196,60 +1095,15 @@ diff -uNra suhosin-0.9.37-dev-df62872/suhosin.c suhosin-0.9.37-dev-df62872/suhos
  	return res;
  }
  
-@@ -1046,9 +1062,9 @@
- 	}
+diff -uNra suhosin-0.9.37-dev-4989cdd/suhosin_rfc1867.h suhosin-0.9.37-dev-4989cdd/suhosin_rfc1867.h
+--- suhosin-0.9.37-dev-4989cdd/suhosin_rfc1867.h	Sat Nov 22 15:19:38 2014
++++ suhosin-0.9.37-dev-4989cdd/suhosin_rfc1867.h	Sat Nov 22 20:14:25 2014
+@@ -78,8 +78,6 @@
  
- 	/* now hook a bunch of stuff */
--	suhosin_hook_memory_limit();
--	suhosin_hook_sha256();
--	suhosin_hook_ex_imp();
-+	suhosin_hook_memory_limit(TSRMLS_C);
-+	suhosin_hook_sha256(TSRMLS_C);
-+	suhosin_hook_ex_imp(TSRMLS_C);
- 
- #if PHP_VERSION_ID < 50500
- 	/* register the logo for phpinfo */
-diff -uNra suhosin-0.9.37-dev-df62872/suhosin_rfc1867.h suhosin-0.9.37-dev-df62872/suhosin_rfc1867.h
---- suhosin-0.9.37-dev-df62872/suhosin_rfc1867.h	Tue Nov 18 19:49:30 2014
-+++ suhosin-0.9.37-dev-df62872/suhosin_rfc1867.h	Thu Nov 20 21:33:32 2014
-@@ -79,7 +79,6 @@
  SAPI_POST_HANDLER_FUNC(suhosin_rfc1867_post_handler);
  
- void destroy_uploaded_files_hash(TSRMLS_D);
+-// void destroy_uploaded_files_hash(TSRMLS_D);
 -extern PHP_SUHOSIN_API int (*old_rfc1867_callback)(unsigned int event, void *event_data, void **extra TSRMLS_DC);
  #if !HAVE_RFC1867_CALLBACK
  extern PHP_SUHOSIN_API int (*php_rfc1867_callback)(unsigned int event, void *event_data, void **extra TSRMLS_DC);
  #else
-diff -uNra suhosin-0.9.37-dev-df62872/ufilter.c suhosin-0.9.37-dev-df62872/ufilter.c
---- suhosin-0.9.37-dev-df62872/ufilter.c	Tue Nov 18 19:49:30 2014
-+++ suhosin-0.9.37-dev-df62872/ufilter.c	Thu Nov 20 21:33:38 2014
-@@ -32,7 +32,6 @@
- #include "suhosin_rfc1867.h"
- #include "ext/standard/php_var.h"
- 
--PHP_SUHOSIN_API int (*old_rfc1867_callback)(unsigned int event, void *event_data, void **extra TSRMLS_DC) = NULL;
- #if !HAVE_RFC1867_CALLBACK
- PHP_SUHOSIN_API int (*php_rfc1867_callback)(unsigned int event, void *event_data, void **extra TSRMLS_DC) = NULL;
- #endif
-@@ -40,11 +39,10 @@
- 
- /* {{{ SAPI_UPLOAD_VARNAME_FILTER_FUNC
-  */
--static int check_fileupload_varname(char *varname)
-+static int check_fileupload_varname(char *varname TSRMLS_DC)
- {
- 	char *index, *prev_index = NULL, *var;
- 	unsigned int var_len, total_len, depth = 0;
--	TSRMLS_FETCH();
- 
- 	var = estrdup(varname);
- 
-@@ -226,7 +224,7 @@
- 		  		}
- 		    
- 			    
--			    if (check_fileupload_varname(mefs->name) == FAILURE) {
-+			    if (check_fileupload_varname(mefs->name TSRMLS_CC) == FAILURE) {
- 				    goto continue_with_failure;
- 			    }
- 		    }
