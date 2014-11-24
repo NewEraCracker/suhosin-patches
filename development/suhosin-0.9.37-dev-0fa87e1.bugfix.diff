@@ -1,18 +1,7 @@
-diff -uNra suhosin-0.9.37-dev-4989cdd/execute.c suhosin-0.9.37-dev-4989cdd/execute.c
---- suhosin-0.9.37-dev-4989cdd/execute.c	Sat Nov 22 15:19:38 2014
-+++ suhosin-0.9.37-dev-4989cdd/execute.c	Sat Nov 22 20:14:25 2014
-@@ -39,9 +39,7 @@
- #include "sha256.h"
- 
- #ifdef PHP_WIN32
--# ifdef HAVE_FNMATCH
--#  include "win32/fnmatch.h"
--# endif
-+# include "win32/fnmatch.h"
- # include "win32/winutil.h"
- # include "win32/time.h"
- #else
-@@ -392,9 +390,9 @@
+diff -uNra suhosin-0.9.37-dev-0fa87e1/execute.c suhosin-0.9.37-dev-0fa87e1/execute.c
+--- suhosin-0.9.37-dev-0fa87e1/execute.c	Mon Nov 24 14:26:50 2014
++++ suhosin-0.9.37-dev-0fa87e1/execute.c	Mon Nov 24 15:14:01 2014
+@@ -390,9 +390,9 @@
  	return SUHOSIN_CODE_TYPE_UNKNOWN;
  }
  
@@ -24,7 +13,7 @@ diff -uNra suhosin-0.9.37-dev-4989cdd/execute.c suhosin-0.9.37-dev-4989cdd/execu
  static void suhosin_execute_ex(zend_execute_data *execute_data TSRMLS_DC)
  {
  	zend_op_array *op_array = execute_data->op_array;
-@@ -697,12 +695,20 @@
+@@ -695,12 +695,20 @@
  {
  	zval **regex,
  	     **replace,
@@ -48,7 +37,7 @@ diff -uNra suhosin-0.9.37-dev-4989cdd/execute.c suhosin-0.9.37-dev-4989cdd/execu
  		
  	if (Z_TYPE_PP(regex) == IS_ARRAY) {
  		zval	**regex_entry;
-@@ -1120,33 +1126,34 @@
+@@ -1118,33 +1126,34 @@
  #ifndef PHP_ATLEAST_5_3
  	zval **function_name;
  #endif
@@ -94,7 +83,7 @@ diff -uNra suhosin-0.9.37-dev-4989cdd/execute.c suhosin-0.9.37-dev-4989cdd/execu
  	
  	/*
  	 * A bit of a hack, but not a bad one: we see if the handler of the function
-@@ -1160,22 +1167,22 @@
+@@ -1158,22 +1167,22 @@
  	/* Now check if function is forbidden by Suhosin */
  	if (SUHOSIN_G(in_code_type) == SUHOSIN_EVAL) {
  		if (SUHOSIN_G(eval_whitelist) != NULL) {
@@ -121,7 +110,7 @@ diff -uNra suhosin-0.9.37-dev-4989cdd/execute.c suhosin-0.9.37-dev-4989cdd/execu
  		    retval = 0;
  		}
  	}
-@@ -1563,7 +1570,7 @@
+@@ -1561,7 +1570,7 @@
  {
  #ifdef PHP_ATLEAST_5_3
  	if (zend_parse_parameters_none() == FAILURE) {
@@ -130,7 +119,7 @@ diff -uNra suhosin-0.9.37-dev-4989cdd/execute.c suhosin-0.9.37-dev-4989cdd/execu
  	}
  #else
          int argc = ZEND_NUM_ARGS();
-@@ -1689,30 +1696,14 @@
+@@ -1687,30 +1696,14 @@
  
  static void suhosin_execute_internal(zend_execute_data *execute_data_ptr, zend_fcall_info *fci, int return_value_used TSRMLS_DC)
  {
@@ -163,7 +152,7 @@ diff -uNra suhosin-0.9.37-dev-4989cdd/execute.c suhosin-0.9.37-dev-4989cdd/execu
  	char *lcname;
  	int function_name_strlen, free_lcname = 0;
  	zend_class_entry *ce = NULL;
-@@ -1737,18 +1728,6 @@
+@@ -1735,18 +1728,6 @@
  		zend_str_tolower(lcname, function_name_strlen);
  	}
  
@@ -182,7 +171,7 @@ diff -uNra suhosin-0.9.37-dev-4989cdd/execute.c suhosin-0.9.37-dev-4989cdd/execu
  	SDEBUG("function: %s", lcname);
  
  	if (SUHOSIN_G(in_code_type) == SUHOSIN_EVAL) {
-@@ -1799,6 +1778,31 @@
+@@ -1797,6 +1778,31 @@
  		int retval = 0;
  		void *handler = ((zend_internal_function *) execute_data_ptr->function_state.function)->handler;
  		
@@ -214,7 +203,7 @@ diff -uNra suhosin-0.9.37-dev-4989cdd/execute.c suhosin-0.9.37-dev-4989cdd/execu
  		if (handler != ZEND_FN(display_disabled_function)) {
  		    retval = ih->handler(IH_HANDLER_PARAM_PASSTHRU);
  		}
-@@ -1831,6 +1835,7 @@
+@@ -1829,6 +1835,7 @@
  /* }}} */
  
  
@@ -222,7 +211,7 @@ diff -uNra suhosin-0.9.37-dev-4989cdd/execute.c suhosin-0.9.37-dev-4989cdd/execu
  /* {{{ int function_lookup(zend_extension *extension)
   */
  static int function_lookup(zend_extension *extension)
-@@ -1848,6 +1853,7 @@
+@@ -1846,6 +1853,7 @@
  	return 0;
  }
  /* }}} */
@@ -230,7 +219,7 @@ diff -uNra suhosin-0.9.37-dev-4989cdd/execute.c suhosin-0.9.37-dev-4989cdd/execu
  
  
  /* {{{ void suhosin_hook_execute()
-@@ -1862,12 +1868,10 @@
+@@ -1860,12 +1868,10 @@
  #else	
  	old_execute = zend_execute;
  	zend_execute = suhosin_execute;
@@ -243,7 +232,7 @@ diff -uNra suhosin-0.9.37-dev-4989cdd/execute.c suhosin-0.9.37-dev-4989cdd/execu
  	if (zo_set_oe_ex == NULL) {	
  		zo_set_oe_ex = (void *)DL_FETCH_SYMBOL(NULL, "zend_optimizer_set_oe_ex");
  	}
-@@ -1913,15 +1917,13 @@
+@@ -1911,15 +1917,13 @@
   */
  void suhosin_unhook_execute()
  {
@@ -262,34 +251,9 @@ diff -uNra suhosin-0.9.37-dev-4989cdd/execute.c suhosin-0.9.37-dev-4989cdd/execu
  	zend_execute = old_execute;
  #endif
  		
-diff -uNra suhosin-0.9.37-dev-4989cdd/post_handler.c suhosin-0.9.37-dev-4989cdd/post_handler.c
---- suhosin-0.9.37-dev-4989cdd/post_handler.c	Sat Nov 22 15:19:38 2014
-+++ suhosin-0.9.37-dev-4989cdd/post_handler.c	Sat Nov 22 20:14:25 2014
-@@ -34,9 +34,6 @@
- #include "ext/standard/url.h"
- #include "ext/standard/php_smart_str.h"
- 
--#ifdef PHP_WIN32
--#include "win32/php_inttypes.h"
--#endif
- 
- SAPI_POST_HANDLER_FUNC(suhosin_rfc1867_post_handler);
- 
-@@ -90,6 +87,11 @@
- 	}
- }
- #else
-+
-+#ifdef PHP_WIN32
-+#include "win32/php_inttypes.h"
-+#endif
-+
- typedef struct post_var_data {
- 	smart_str str;
- 	char *ptr;
-diff -uNra suhosin-0.9.37-dev-4989cdd/rfc1867.c suhosin-0.9.37-dev-4989cdd/rfc1867.c
---- suhosin-0.9.37-dev-4989cdd/rfc1867.c	Sat Nov 22 15:19:38 2014
-+++ suhosin-0.9.37-dev-4989cdd/rfc1867.c	Sat Nov 22 20:14:25 2014
+diff -uNra suhosin-0.9.37-dev-0fa87e1/rfc1867.c suhosin-0.9.37-dev-0fa87e1/rfc1867.c
+--- suhosin-0.9.37-dev-0fa87e1/rfc1867.c	Mon Nov 24 14:26:50 2014
++++ suhosin-0.9.37-dev-0fa87e1/rfc1867.c	Mon Nov 24 15:14:02 2014
 @@ -2,7 +2,7 @@
     +----------------------------------------------------------------------+
     | PHP Version 5                                                        |
@@ -855,9 +819,9 @@ diff -uNra suhosin-0.9.37-dev-4989cdd/rfc1867.c suhosin-0.9.37-dev-4989cdd/rfc18
  				}
  				register_http_post_files_variable_ex(lbuf, &file_size, http_post_files, 0 TSRMLS_CC);
  			}
-diff -uNra suhosin-0.9.37-dev-4989cdd/rfc1867_new.c suhosin-0.9.37-dev-4989cdd/rfc1867_new.c
---- suhosin-0.9.37-dev-4989cdd/rfc1867_new.c	Sat Nov 22 15:19:38 2014
-+++ suhosin-0.9.37-dev-4989cdd/rfc1867_new.c	Sat Nov 22 20:14:25 2014
+diff -uNra suhosin-0.9.37-dev-0fa87e1/rfc1867_new.c suhosin-0.9.37-dev-0fa87e1/rfc1867_new.c
+--- suhosin-0.9.37-dev-0fa87e1/rfc1867_new.c	Mon Nov 24 14:26:50 2014
++++ suhosin-0.9.37-dev-0fa87e1/rfc1867_new.c	Mon Nov 24 15:14:02 2014
 @@ -181,12 +181,12 @@
  }
  /* }}} */
@@ -877,9 +841,9 @@ diff -uNra suhosin-0.9.37-dev-4989cdd/rfc1867_new.c suhosin-0.9.37-dev-4989cdd/r
  /* }}} */
  
  /* {{{ Following code is based on apache_multipart_buffer.c from libapreq-0.33 package. */
-diff -uNra suhosin-0.9.37-dev-4989cdd/session.c suhosin-0.9.37-dev-4989cdd/session.c
---- suhosin-0.9.37-dev-4989cdd/session.c	Sat Nov 22 15:19:38 2014
-+++ suhosin-0.9.37-dev-4989cdd/session.c	Sat Nov 22 20:14:25 2014
+diff -uNra suhosin-0.9.37-dev-0fa87e1/session.c suhosin-0.9.37-dev-0fa87e1/session.c
+--- suhosin-0.9.37-dev-0fa87e1/session.c	Mon Nov 24 14:26:50 2014
++++ suhosin-0.9.37-dev-0fa87e1/session.c	Mon Nov 24 15:14:02 2014
 @@ -302,13 +302,14 @@
  static PHP_INI_MH(suhosin_OnUpdateSaveHandler)
  {
@@ -915,9 +879,9 @@ diff -uNra suhosin-0.9.37-dev-4989cdd/session.c suhosin-0.9.37-dev-4989cdd/sessi
      }
  }
  
-diff -uNra suhosin-0.9.37-dev-4989cdd/suhosin.c suhosin-0.9.37-dev-4989cdd/suhosin.c
---- suhosin-0.9.37-dev-4989cdd/suhosin.c	Sat Nov 22 15:19:38 2014
-+++ suhosin-0.9.37-dev-4989cdd/suhosin.c	Sat Nov 22 20:14:25 2014
+diff -uNra suhosin-0.9.37-dev-0fa87e1/suhosin.c suhosin-0.9.37-dev-0fa87e1/suhosin.c
+--- suhosin-0.9.37-dev-0fa87e1/suhosin.c	Mon Nov 24 14:26:50 2014
++++ suhosin-0.9.37-dev-0fa87e1/suhosin.c	Mon Nov 24 15:14:02 2014
 @@ -47,18 +47,19 @@
  static int (*old_startup)(zend_extension *extension) = NULL;
  static zend_extension *ze = NULL;
@@ -1058,7 +1022,7 @@ diff -uNra suhosin-0.9.37-dev-4989cdd/suhosin.c suhosin-0.9.37-dev-4989cdd/suhos
  	
  	/* Ugly but working hack */
  	new_info_length = sizeof("%s\n    with %s v%s, %s, by %s\n")
-@@ -234,28 +256,22 @@
+@@ -234,29 +256,23 @@
  	/* Stealth Mode */
  	orig_module_startup = ze->startup;
  	orig_module_shutdown = ze->shutdown;
@@ -1080,7 +1044,9 @@ diff -uNra suhosin-0.9.37-dev-4989cdd/suhosin.c suhosin-0.9.37-dev-4989cdd/suhos
 +	ze->op_array_ctor = stealth_op_array_ctor;
 +	ze->op_array_dtor = stealth_op_array_dtor;
  	
- 	res = old_startup(ext);
+ 	if (old_startup != NULL) {
+ 		res = old_startup(ext);
+ 	}
  
 -/*    ex->name = NULL; 
 -    ex->author = NULL;
@@ -1090,20 +1056,18 @@ diff -uNra suhosin-0.9.37-dev-4989cdd/suhosin.c suhosin-0.9.37-dev-4989cdd/suhos
 -    /*zend_extensions.head=NULL;*/
 -
  	suhosin_module_startup(NULL);
-     
--	
+-    
+ 	
  	return res;
  }
- 
-diff -uNra suhosin-0.9.37-dev-4989cdd/suhosin_rfc1867.h suhosin-0.9.37-dev-4989cdd/suhosin_rfc1867.h
---- suhosin-0.9.37-dev-4989cdd/suhosin_rfc1867.h	Sat Nov 22 15:19:38 2014
-+++ suhosin-0.9.37-dev-4989cdd/suhosin_rfc1867.h	Sat Nov 22 20:14:25 2014
-@@ -78,8 +78,6 @@
+diff -uNra suhosin-0.9.37-dev-0fa87e1/suhosin_rfc1867.h suhosin-0.9.37-dev-0fa87e1/suhosin_rfc1867.h
+--- suhosin-0.9.37-dev-0fa87e1/suhosin_rfc1867.h	Mon Nov 24 14:26:50 2014
++++ suhosin-0.9.37-dev-0fa87e1/suhosin_rfc1867.h	Mon Nov 24 15:14:02 2014
+@@ -78,7 +78,6 @@
  
  SAPI_POST_HANDLER_FUNC(suhosin_rfc1867_post_handler);
  
 -// void destroy_uploaded_files_hash(TSRMLS_D);
--extern PHP_SUHOSIN_API int (*old_rfc1867_callback)(unsigned int event, void *event_data, void **extra TSRMLS_DC);
  #if !HAVE_RFC1867_CALLBACK
  extern PHP_SUHOSIN_API int (*php_rfc1867_callback)(unsigned int event, void *event_data, void **extra TSRMLS_DC);
  #else
