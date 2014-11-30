@@ -819,28 +819,6 @@ diff -uNra suhosin-0.9.37-dev-0fa87e1/rfc1867.c suhosin-0.9.37-dev-0fa87e1/rfc18
  				}
  				register_http_post_files_variable_ex(lbuf, &file_size, http_post_files, 0 TSRMLS_CC);
  			}
-diff -uNra suhosin-0.9.37-dev-0fa87e1/rfc1867_new.c suhosin-0.9.37-dev-0fa87e1/rfc1867_new.c
---- suhosin-0.9.37-dev-0fa87e1/rfc1867_new.c	Mon Nov 24 14:26:50 2014
-+++ suhosin-0.9.37-dev-0fa87e1/rfc1867_new.c	Mon Nov 24 15:14:02 2014
-@@ -181,12 +181,12 @@
- }
- /* }}} */
- 
--// void destroy_uploaded_files_hash(TSRMLS_D) /* {{{ */
--// {
--// 	zend_hash_apply(SG(rfc1867_uploaded_files), (apply_func_t) unlink_filename TSRMLS_CC);
--// 	zend_hash_destroy(SG(rfc1867_uploaded_files));
--// 	FREE_HASHTABLE(SG(rfc1867_uploaded_files));
--// }
-+static void destroy_uploaded_files_hash(TSRMLS_D) /* {{{ */
-+{
-+	zend_hash_apply(SG(rfc1867_uploaded_files), (apply_func_t) unlink_filename TSRMLS_CC);
-+	zend_hash_destroy(SG(rfc1867_uploaded_files));
-+	FREE_HASHTABLE(SG(rfc1867_uploaded_files));
-+}
- /* }}} */
- 
- /* {{{ Following code is based on apache_multipart_buffer.c from libapreq-0.33 package. */
 diff -uNra suhosin-0.9.37-dev-0fa87e1/session.c suhosin-0.9.37-dev-0fa87e1/session.c
 --- suhosin-0.9.37-dev-0fa87e1/session.c	Mon Nov 24 14:26:50 2014
 +++ suhosin-0.9.37-dev-0fa87e1/session.c	Mon Nov 24 15:14:02 2014
