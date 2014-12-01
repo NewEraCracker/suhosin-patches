@@ -27,8 +27,8 @@ diff -uNra suhosin-0.9.33/config.w32 suhosin-0.9.33.php52/config.w32
  }
 diff -uNra suhosin-0.9.33/crypt.c suhosin-0.9.33.php52/crypt.c
 --- suhosin-0.9.33/crypt.c	Thu Jan  1 00:00:00 1970
-+++ suhosin-0.9.33.php52/crypt.c	Mon Dec  1 17:25:46 2014
-@@ -0,0 +1,220 @@
++++ suhosin-0.9.33.php52/crypt.c	Mon Dec  1 23:10:01 2014
+@@ -0,0 +1,211 @@
 +/*
 +  +----------------------------------------------------------------------+
 +  | Suhosin Version 1                                                    |
@@ -112,12 +112,11 @@ diff -uNra suhosin-0.9.33/crypt.c suhosin-0.9.33.php52/crypt.c
 +   Hash a string */
 +static PHP_FUNCTION(suhosin_crypt)
 +{
-+	char salt[BLOWFISH_SALT_LEN+1];
++	char salt[BLOWFISH_SALT_LEN + 1];
 +	char *str, *salt_in = NULL;
 +	int str_len, salt_in_len = 0;
-+	char *crypt_res;
 +
-+	salt[0]=salt[BLOWFISH_SALT_LEN]='\0';
++	salt[0] = salt[BLOWFISH_SALT_LEN] = '\0';
 +
 +	/* This will produce suitable results if people depend on DES-encryption
 +	   available (passing always 2-character salt). At least for glibc6.1 */
@@ -156,25 +155,17 @@ diff -uNra suhosin-0.9.33/crypt.c suhosin-0.9.33.php52/crypt.c
 +		char output[BLOWFISH_SALT_LEN + 1];
 +		memset(output, 0, BLOWFISH_SALT_LEN + 1);
 +
-+		crypt_res = suhosin_crypt_blowfish_rn(str, salt, output, sizeof(output));
-+		if (!crypt_res) {
-+			if (salt[0]=='*' && salt[1]=='0') {
-+				RETVAL_STRING("*1", 1);
-+			} else {
-+				RETVAL_STRING("*0", 1);
-+			}
-+		} else {
-+			RETVAL_STRING(output, 1);
-+		}
++		suhosin_crypt_blowfish_rn(str, salt, output, sizeof(output));
++		RETVAL_STRING(output, 1);
 +
 +		memset(output, 0, BLOWFISH_SALT_LEN + 1);
 +	} else {
 +#ifdef ZTS
-+        tsrm_mutex_lock(suhosin_crypt_mutex);
++		tsrm_mutex_lock(suhosin_crypt_mutex);
 +#endif
 +		RETVAL_STRING(crypt(str, salt), 1);
 +#ifdef ZTS
-+        tsrm_mutex_unlock(suhosin_crypt_mutex);
++		tsrm_mutex_unlock(suhosin_crypt_mutex);
 +#endif
 +	}
 +}
