@@ -1,6 +1,6 @@
-diff -uNra suhosin-0.9.37-dev-0fa87e1/execute.c suhosin-0.9.37-dev-0fa87e1/execute.c
---- suhosin-0.9.37-dev-0fa87e1/execute.c	Mon Nov 24 14:26:50 2014
-+++ suhosin-0.9.37-dev-0fa87e1/execute.c	Mon Nov 24 15:14:01 2014
+diff -uNra suhosin-0.9.37.1/execute.c suhosin-0.9.37.1/execute.c
+--- suhosin-0.9.37.1/execute.c	Mon Nov 24 14:26:50 2014
++++ suhosin-0.9.37.1/execute.c	Mon Nov 24 15:14:01 2014
 @@ -390,9 +390,9 @@
  	return SUHOSIN_CODE_TYPE_UNKNOWN;
  }
@@ -251,9 +251,9 @@ diff -uNra suhosin-0.9.37-dev-0fa87e1/execute.c suhosin-0.9.37-dev-0fa87e1/execu
  	zend_execute = old_execute;
  #endif
  		
-diff -uNra suhosin-0.9.37-dev-0fa87e1/rfc1867.c suhosin-0.9.37-dev-0fa87e1/rfc1867.c
---- suhosin-0.9.37-dev-0fa87e1/rfc1867.c	Mon Nov 24 14:26:50 2014
-+++ suhosin-0.9.37-dev-0fa87e1/rfc1867.c	Mon Nov 24 15:14:02 2014
+diff -uNra suhosin-0.9.37.1/rfc1867.c suhosin-0.9.37.1/rfc1867.c
+--- suhosin-0.9.37.1/rfc1867.c	Mon Nov 24 14:26:50 2014
++++ suhosin-0.9.37.1/rfc1867.c	Mon Nov 24 15:14:02 2014
 @@ -2,7 +2,7 @@
     +----------------------------------------------------------------------+
     | PHP Version 5                                                        |
@@ -819,9 +819,9 @@ diff -uNra suhosin-0.9.37-dev-0fa87e1/rfc1867.c suhosin-0.9.37-dev-0fa87e1/rfc18
  				}
  				register_http_post_files_variable_ex(lbuf, &file_size, http_post_files, 0 TSRMLS_CC);
  			}
-diff -uNra suhosin-0.9.37-dev-0fa87e1/session.c suhosin-0.9.37-dev-0fa87e1/session.c
---- suhosin-0.9.37-dev-0fa87e1/session.c	Mon Nov 24 14:26:50 2014
-+++ suhosin-0.9.37-dev-0fa87e1/session.c	Mon Nov 24 15:14:02 2014
+diff -uNra suhosin-0.9.37.1/session.c suhosin-0.9.37.1/session.c
+--- suhosin-0.9.37.1/session.c	Mon Nov 24 14:26:50 2014
++++ suhosin-0.9.37.1/session.c	Mon Nov 24 15:14:02 2014
 @@ -302,13 +302,14 @@
  static PHP_INI_MH(suhosin_OnUpdateSaveHandler)
  {
@@ -857,9 +857,9 @@ diff -uNra suhosin-0.9.37-dev-0fa87e1/session.c suhosin-0.9.37-dev-0fa87e1/sessi
      }
  }
  
-diff -uNra suhosin-0.9.37-dev-0fa87e1/suhosin.c suhosin-0.9.37-dev-0fa87e1/suhosin.c
---- suhosin-0.9.37-dev-0fa87e1/suhosin.c	Mon Nov 24 14:26:50 2014
-+++ suhosin-0.9.37-dev-0fa87e1/suhosin.c	Mon Nov 24 15:14:02 2014
+diff -uNra suhosin-0.9.37.1/suhosin.c suhosin-0.9.37.1/suhosin.c
+--- suhosin-0.9.37.1/suhosin.c	Mon Nov 24 14:26:50 2014
++++ suhosin-0.9.37.1/suhosin.c	Mon Nov 24 15:14:02 2014
 @@ -47,18 +47,19 @@
  static int (*old_startup)(zend_extension *extension) = NULL;
  static zend_extension *ze = NULL;
@@ -1038,9 +1038,9 @@ diff -uNra suhosin-0.9.37-dev-0fa87e1/suhosin.c suhosin-0.9.37-dev-0fa87e1/suhos
  	
  	return res;
  }
-diff -uNra suhosin-0.9.37-dev-0fa87e1/suhosin_rfc1867.h suhosin-0.9.37-dev-0fa87e1/suhosin_rfc1867.h
---- suhosin-0.9.37-dev-0fa87e1/suhosin_rfc1867.h	Mon Nov 24 14:26:50 2014
-+++ suhosin-0.9.37-dev-0fa87e1/suhosin_rfc1867.h	Mon Nov 24 15:14:02 2014
+diff -uNra suhosin-0.9.37.1/suhosin_rfc1867.h suhosin-0.9.37.1/suhosin_rfc1867.h
+--- suhosin-0.9.37.1/suhosin_rfc1867.h	Mon Nov 24 14:26:50 2014
++++ suhosin-0.9.37.1/suhosin_rfc1867.h	Mon Nov 24 15:14:02 2014
 @@ -78,7 +78,6 @@
  
  SAPI_POST_HANDLER_FUNC(suhosin_rfc1867_post_handler);
