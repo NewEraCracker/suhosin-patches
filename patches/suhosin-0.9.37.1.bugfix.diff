@@ -1,6 +1,6 @@
 diff -uNra suhosin-0.9.37.1/execute.c suhosin-0.9.37.1/execute.c
---- suhosin-0.9.37.1/execute.c	Mon Nov 24 14:26:50 2014
-+++ suhosin-0.9.37.1/execute.c	Mon Nov 24 15:14:01 2014
+--- suhosin-0.9.37.1/execute.c	Fri Dec 12 14:46:19 2014
++++ suhosin-0.9.37.1/execute.c	Sat Feb 28 00:00:00 2015
 @@ -390,9 +390,9 @@
  	return SUHOSIN_CODE_TYPE_UNKNOWN;
  }
@@ -13,7 +13,17 @@ diff -uNra suhosin-0.9.37.1/execute.c suhosin-0.9.37.1/execute.c
  static void suhosin_execute_ex(zend_execute_data *execute_data TSRMLS_DC)
  {
  	zend_op_array *op_array = execute_data->op_array;
-@@ -695,12 +695,20 @@
+@@ -438,7 +438,8 @@
+ 		
+ 			if (*action) {
+ 			
+-				if (strncmp("http://", action, sizeof("http://")-1)==0) {
++				if (strncasecmp("http://", action, sizeof("http://")-1)==0
++				|| strncasecmp("https://", action, sizeof("https://")-1)==0) {
+ 					sapi_header_line ctr = {0};
+ 				
+ 					if (code == -1) {
+@@ -695,12 +696,20 @@
  {
  	zval **regex,
  	     **replace,
@@ -22,11 +32,13 @@ diff -uNra suhosin-0.9.37.1/execute.c suhosin-0.9.37.1/execute.c
 +	     **subject;
  
 -	 if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "ZZZ|ZZ", &regex, &replace, &subject, &limit, &zcount) == FAILURE) {
+-	 	return(0);
+-	 }
 +#ifndef PHP_ATLEAST_5_3
 +	zval **limit;
 +	if (ZEND_NUM_ARGS() < 3 || zend_get_parameters_ex(3, &regex, &replace, &subject, &limit) == FAILURE) {
- 	 	return(0);
- 	 }
++	 	return (0);
++	}
 +#else
 +	long limit = -1;
 +	zval **zcount = NULL;
@@ -37,7 +49,59 @@ diff -uNra suhosin-0.9.37.1/execute.c suhosin-0.9.37.1/execute.c
  		
  	if (Z_TYPE_PP(regex) == IS_ARRAY) {
  		zval	**regex_entry;
-@@ -1118,33 +1126,34 @@
+@@ -776,7 +785,10 @@
+ 		return (1);
+ 	}
+ 
+-	if (headers_len > 0 && headers && (strstr(headers,"\n\n") || strstr(headers,"\r\n\r\n")) ) {
++	if (headers_len > 0 && headers &&
++		(strstr(headers, "\n\n") || strstr(headers, "\n\r\n") /* double newline */
++			|| *headers == '\n' || (headers[0] == '\r' && headers[1] == '\n') /* starts with newline */
++	)) {
+ 		suhosin_log(S_MAIL, "mail() - double newline in headers, possible injection, mail dropped");
+ 		if (!SUHOSIN_G(simulation)) {
+ 			RETVAL_FALSE;
+@@ -787,14 +799,14 @@
+ 	/* check for spam attempts with buggy webforms */
+ 	if (to_len > 0 && to) {
+ 		do {
+-			tmp = strchr(to, '\n');
+-			tmp = tmp == NULL ? strchr(to, '\r') : tmp;
++			if ((tmp = strchr(to, '\n')) == NULL)
++				tmp = strchr(to, '\r');
+ 			if (tmp == NULL) break;
+-			to = tmp+1;
+-			if (isspace(*to)) continue;
++			to = tmp + 1;
++			if (!isspace(*to)) break;
+ 		} while (1);
+ 		if (tmp != NULL) {
+-			suhosin_log(S_MAIL, "mail() - newline in to header, possible injection, mail dropped");
++			suhosin_log(S_MAIL, "mail() - newline in To header, possible injection, mail dropped");
+ 			if (!SUHOSIN_G(simulation)) {
+ 				RETVAL_FALSE;
+ 				return (1);
+@@ -804,14 +816,14 @@
+ 
+ 	if (subject_len > 0 && subject) {
+ 		do {
+-			tmp = strchr(subject, '\n');
+-			tmp = tmp == NULL ? strchr(subject, '\r') : tmp;
++			if ((tmp = strchr(subject, '\n')) == NULL)
++				tmp = strchr(subject, '\r');
+ 			if (tmp == NULL) break;
+-			subject = tmp+1;
+-			if (isspace(*subject)) continue;
++			subject = tmp + 1;
++			if (!isspace(*subject)) break;
+ 		} while (1);
+ 		if (tmp != NULL) {
+-			suhosin_log(S_MAIL, "mail() - newline in subject header, possible injection, mail dropped");
++			suhosin_log(S_MAIL, "mail() - newline in Subject header, possible injection, mail dropped");
+ 			if (!SUHOSIN_G(simulation)) {
+ 				RETVAL_FALSE;
+ 				return (1);
+@@ -1118,33 +1130,34 @@
  #ifndef PHP_ATLEAST_5_3
  	zval **function_name;
  #endif
@@ -83,7 +147,7 @@ diff -uNra suhosin-0.9.37.1/execute.c suhosin-0.9.37.1/execute.c
  	
  	/*
  	 * A bit of a hack, but not a bad one: we see if the handler of the function
-@@ -1158,22 +1167,22 @@
+@@ -1158,22 +1171,22 @@
  	/* Now check if function is forbidden by Suhosin */
  	if (SUHOSIN_G(in_code_type) == SUHOSIN_EVAL) {
  		if (SUHOSIN_G(eval_whitelist) != NULL) {
@@ -110,7 +174,78 @@ diff -uNra suhosin-0.9.37.1/execute.c suhosin-0.9.37.1/execute.c
  		    retval = 0;
  		}
  	}
-@@ -1561,7 +1570,7 @@
+@@ -1471,41 +1484,45 @@
+ 
+ static int ih_srand(IH_HANDLER_PARAMS)
+ {
+-    int argc = ZEND_NUM_ARGS();
++	int argc = ZEND_NUM_ARGS();
+ 	long seed;
+ 
+-	if (zend_parse_parameters(argc TSRMLS_CC, "|l", &seed) == FAILURE || SUHOSIN_G(srand_ignore)) {
+-    	if (SUHOSIN_G(srand_ignore)) {
+-    		SUHOSIN_G(r_is_seeded) = 0;
+-    	}
+-    	return (1);
+-    }
++	if (SUHOSIN_G(srand_ignore)) {
++		SUHOSIN_G(r_is_seeded) = 0;
++		return 1;
++	}
++	
++	if (zend_parse_parameters(argc TSRMLS_CC, "|l", &seed) == FAILURE) {
++		return 1;
++	}
+ 
+-    if (argc == 0) {
+-        suhosin_srand_auto(TSRMLS_C);
+-    } else {
+-        suhosin_srand(seed TSRMLS_CC);
+-    }
++	if (argc) {
++		suhosin_srand(seed TSRMLS_CC);
++	} else {
++		suhosin_srand_auto(TSRMLS_C);
++	}
+ 	return (1);
+ }
+ 
+ static int ih_mt_srand(IH_HANDLER_PARAMS)
+ {
+-    int argc = ZEND_NUM_ARGS();
++	int argc = ZEND_NUM_ARGS();
+ 	long seed;
+ 
+-	if (zend_parse_parameters(argc TSRMLS_CC, "|l", &seed) == FAILURE || SUHOSIN_G(mt_srand_ignore)) {
+-    	if (SUHOSIN_G(mt_srand_ignore)) {
+-    		SUHOSIN_G(mt_is_seeded) = 0;
+-    	}
+-    	return (1);
+-    }
+-    
+-    if (argc == 0) {
+-        suhosin_mt_srand_auto(TSRMLS_C);
+-    } else {
+-        suhosin_mt_srand(seed TSRMLS_CC);
+-    }
++	if (SUHOSIN_G(mt_srand_ignore)) {
++		SUHOSIN_G(mt_is_seeded) = 0;
++		return 1;
++	}
++	
++	if (zend_parse_parameters(argc TSRMLS_CC, "|l", &seed) == FAILURE) {
++		return 1;
++	}
++
++	if (argc) {
++		suhosin_mt_srand(seed TSRMLS_CC);
++	} else {
++		suhosin_mt_srand_auto(TSRMLS_C);
++	}
+ 	return (1);
+ }
+ 
+@@ -1561,7 +1578,7 @@
  {
  #ifdef PHP_ATLEAST_5_3
  	if (zend_parse_parameters_none() == FAILURE) {
@@ -119,7 +254,7 @@ diff -uNra suhosin-0.9.37.1/execute.c suhosin-0.9.37.1/execute.c
  	}
  #else
          int argc = ZEND_NUM_ARGS();
-@@ -1687,30 +1696,14 @@
+@@ -1687,30 +1704,14 @@
  
  static void suhosin_execute_internal(zend_execute_data *execute_data_ptr, zend_fcall_info *fci, int return_value_used TSRMLS_DC)
  {
@@ -152,7 +287,7 @@ diff -uNra suhosin-0.9.37.1/execute.c suhosin-0.9.37.1/execute.c
  	char *lcname;
  	int function_name_strlen, free_lcname = 0;
  	zend_class_entry *ce = NULL;
-@@ -1735,18 +1728,6 @@
+@@ -1735,18 +1736,6 @@
  		zend_str_tolower(lcname, function_name_strlen);
  	}
  
@@ -171,7 +306,7 @@ diff -uNra suhosin-0.9.37.1/execute.c suhosin-0.9.37.1/execute.c
  	SDEBUG("function: %s", lcname);
  
  	if (SUHOSIN_G(in_code_type) == SUHOSIN_EVAL) {
-@@ -1797,6 +1778,31 @@
+@@ -1797,6 +1786,31 @@
  		int retval = 0;
  		void *handler = ((zend_internal_function *) execute_data_ptr->function_state.function)->handler;
  		
@@ -203,7 +338,7 @@ diff -uNra suhosin-0.9.37.1/execute.c suhosin-0.9.37.1/execute.c
  		if (handler != ZEND_FN(display_disabled_function)) {
  		    retval = ih->handler(IH_HANDLER_PARAM_PASSTHRU);
  		}
-@@ -1829,6 +1835,7 @@
+@@ -1829,6 +1843,7 @@
  /* }}} */
  
  
@@ -211,7 +346,7 @@ diff -uNra suhosin-0.9.37.1/execute.c suhosin-0.9.37.1/execute.c
  /* {{{ int function_lookup(zend_extension *extension)
   */
  static int function_lookup(zend_extension *extension)
-@@ -1846,6 +1853,7 @@
+@@ -1846,6 +1861,7 @@
  	return 0;
  }
  /* }}} */
@@ -219,7 +354,7 @@ diff -uNra suhosin-0.9.37.1/execute.c suhosin-0.9.37.1/execute.c
  
  
  /* {{{ void suhosin_hook_execute()
-@@ -1860,12 +1868,10 @@
+@@ -1860,12 +1876,10 @@
  #else	
  	old_execute = zend_execute;
  	zend_execute = suhosin_execute;
@@ -232,7 +367,7 @@ diff -uNra suhosin-0.9.37.1/execute.c suhosin-0.9.37.1/execute.c
  	if (zo_set_oe_ex == NULL) {	
  		zo_set_oe_ex = (void *)DL_FETCH_SYMBOL(NULL, "zend_optimizer_set_oe_ex");
  	}
-@@ -1911,15 +1917,13 @@
+@@ -1911,15 +1925,13 @@
   */
  void suhosin_unhook_execute()
  {
@@ -252,8 +387,8 @@ diff -uNra suhosin-0.9.37.1/execute.c suhosin-0.9.37.1/execute.c
  #endif
  		
 diff -uNra suhosin-0.9.37.1/rfc1867.c suhosin-0.9.37.1/rfc1867.c
---- suhosin-0.9.37.1/rfc1867.c	Mon Nov 24 14:26:50 2014
-+++ suhosin-0.9.37.1/rfc1867.c	Mon Nov 24 15:14:02 2014
+--- suhosin-0.9.37.1/rfc1867.c	Fri Dec 12 14:46:19 2014
++++ suhosin-0.9.37.1/rfc1867.c	Sat Feb 28 00:00:00 2015
 @@ -2,7 +2,7 @@
     +----------------------------------------------------------------------+
     | PHP Version 5                                                        |
@@ -820,8 +955,8 @@ diff -uNra suhosin-0.9.37.1/rfc1867.c suhosin-0.9.37.1/rfc1867.c
  				register_http_post_files_variable_ex(lbuf, &file_size, http_post_files, 0 TSRMLS_CC);
  			}
 diff -uNra suhosin-0.9.37.1/session.c suhosin-0.9.37.1/session.c
---- suhosin-0.9.37.1/session.c	Mon Nov 24 14:26:50 2014
-+++ suhosin-0.9.37.1/session.c	Mon Nov 24 15:14:02 2014
+--- suhosin-0.9.37.1/session.c	Fri Dec 12 14:46:19 2014
++++ suhosin-0.9.37.1/session.c	Sat Feb 28 00:00:00 2015
 @@ -302,13 +302,14 @@
  static PHP_INI_MH(suhosin_OnUpdateSaveHandler)
  {
@@ -858,8 +993,8 @@ diff -uNra suhosin-0.9.37.1/session.c suhosin-0.9.37.1/session.c
  }
  
 diff -uNra suhosin-0.9.37.1/suhosin.c suhosin-0.9.37.1/suhosin.c
---- suhosin-0.9.37.1/suhosin.c	Mon Nov 24 14:26:50 2014
-+++ suhosin-0.9.37.1/suhosin.c	Mon Nov 24 15:14:02 2014
+--- suhosin-0.9.37.1/suhosin.c	Fri Dec 12 14:46:19 2014
++++ suhosin-0.9.37.1/suhosin.c	Sat Feb 28 00:00:00 2015
 @@ -47,18 +47,19 @@
  static int (*old_startup)(zend_extension *extension) = NULL;
  static zend_extension *ze = NULL;
@@ -1038,9 +1173,130 @@ diff -uNra suhosin-0.9.37.1/suhosin.c suhosin-0.9.37.1/suhosin.c
  	
  	return res;
  }
+diff -uNra suhosin-0.9.37.1/suhosin.ini suhosin-0.9.37.1/suhosin.ini
+--- suhosin-0.9.37.1/suhosin.ini	Fri Dec 12 14:46:19 2014
++++ suhosin-0.9.37.1/suhosin.ini	Sat Feb 28 00:00:00 2015
+@@ -282,10 +282,6 @@
+ ;suhosin.log.phpscript.is_safe = Off
+ ;
+ 
+-; ================
+-; Executor Options
+-; ================
+-
+ ; suhosin.log.use-x-forwarded-for
+ ; -------------------------------
+ ; * Type: Boolean
+@@ -300,6 +296,10 @@
+ ;suhosin.log.use-x-forwarded-for = Off
+ ;
+ 
++; ================
++; Executor Options
++; ================
++
+ ; suhosin.executor.max_depth
+ ; --------------------------
+ ; * Type: Integer
+@@ -455,10 +455,6 @@
+ ;suhosin.executor.disable_emodifier = Off
+ ;
+ 
+-; ============
+-; Misc Options
+-; ============
+-
+ ; suhosin.executor.allow_symlink
+ ; ------------------------------
+ ; * Type: Boolean
+@@ -471,6 +467,10 @@
+ ;suhosin.executor.allow_symlink = Off
+ ;
+ 
++; ============
++; Misc Options
++; ============
++
+ ; suhosin.simulation
+ ; ------------------
+ ; * Type: Boolean
+@@ -597,10 +597,6 @@
+ ;suhosin.mail.protect = 0
+ ;
+ 
+-; ========================
+-; SQL Injection Protection
+-; ========================
+-
+ ; suhosin.memory_limit
+ ; --------------------
+ ; * Type: Integer
+@@ -614,14 +610,13 @@
+ ; configured hard limit. This is for example useful if you want to run the script
+ ; normally with a limit of 16M but image processing scripts may raise it to 20M.
+ ; 
+-; 
+-; 
+-; This class of features is experimental and still in development. As of Suhosin
+-; version 0.9.36 only preliminary MySQL and Mysqli support was added.
+-; 
+ ;suhosin.memory_limit = 0
+ ;
+ 
++; ========================
++; SQL Injection Protection
++; ========================
++
+ ; suhosin.sql.bailout_on_error
+ ; ----------------------------
+ ; * Type: Boolean
+@@ -723,10 +718,6 @@
+ ;suhosin.sql.multiselect = 0
+ ;
+ 
+-; ==============================
+-; Transparent Encryption Options
+-; ==============================
+-
+ ; suhosin.sql.union
+ ; -----------------
+ ; * Type: Integer
+@@ -739,6 +730,10 @@
+ ;suhosin.sql.union = 0
+ ;
+ 
++; ==============================
++; Transparent Encryption Options
++; ==============================
++
+ ; suhosin.session.encrypt
+ ; -----------------------
+ ; * Type: Boolean
+@@ -900,10 +895,6 @@
+ ;suhosin.cookie.cryptlist = 
+ ;
+ 
+-; =================
+-; Filtering Options
+-; =================
+-
+ ; suhosin.cookie.plainlist
+ ; ------------------------
+ ; * Type: String
+@@ -916,6 +907,10 @@
+ ; 
+ ;suhosin.cookie.plainlist = 
+ ;
++
++; =================
++; Filtering Options
++; =================
+ 
+ ; suhosin.filter.action
+ ; ---------------------
 diff -uNra suhosin-0.9.37.1/suhosin_rfc1867.h suhosin-0.9.37.1/suhosin_rfc1867.h
---- suhosin-0.9.37.1/suhosin_rfc1867.h	Mon Nov 24 14:26:50 2014
-+++ suhosin-0.9.37.1/suhosin_rfc1867.h	Mon Nov 24 15:14:02 2014
+--- suhosin-0.9.37.1/suhosin_rfc1867.h	Fri Dec 12 14:46:19 2014
++++ suhosin-0.9.37.1/suhosin_rfc1867.h	Sat Feb 28 00:00:00 2015
 @@ -78,7 +78,6 @@
  
  SAPI_POST_HANDLER_FUNC(suhosin_rfc1867_post_handler);
