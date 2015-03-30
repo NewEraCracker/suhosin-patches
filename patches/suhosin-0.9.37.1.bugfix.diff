@@ -192,7 +192,7 @@ diff -uNra suhosin-0.9.37.1/execute.c suhosin-0.9.37.1/execute.c
 +		SUHOSIN_G(r_is_seeded) = 0;
 +		return 1;
 +	}
-+	
++
 +	if (zend_parse_parameters(argc TSRMLS_CC, "|l", &seed) == FAILURE) {
 +		return 1;
 +	}
@@ -232,7 +232,7 @@ diff -uNra suhosin-0.9.37.1/execute.c suhosin-0.9.37.1/execute.c
 +		SUHOSIN_G(mt_is_seeded) = 0;
 +		return 1;
 +	}
-+	
++
 +	if (zend_parse_parameters(argc TSRMLS_CC, "|l", &seed) == FAILURE) {
 +		return 1;
 +	}
@@ -594,7 +594,7 @@ diff -uNra suhosin-0.9.37.1/rfc1867.c suhosin-0.9.37.1/rfc1867.c
 +#else
  				if (sapi_module.input_filter(PARSE_POST, param, &value, new_val_len, &new_val_len TSRMLS_CC)) {
  #endif				
-+#endif				
++#endif
  					{
  						multipart_event_formdata event_formdata;
 -						size_t newlength = 0;

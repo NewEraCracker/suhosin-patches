@@ -2159,7 +2159,7 @@ diff -uNra suhosin-0.9.33/execute.c suhosin-0.9.33.php52/execute.c
 +		SUHOSIN_G(r_is_seeded) = 0;
 +		return 1;
 +	}
-+	
++
 +	if (zend_parse_parameters(argc TSRMLS_CC, "|l", &seed) == FAILURE) {
 +		return 1;
 +	}
@@ -2196,7 +2196,7 @@ diff -uNra suhosin-0.9.33/execute.c suhosin-0.9.33.php52/execute.c
 +		SUHOSIN_G(mt_is_seeded) = 0;
 +		return 1;
 +	}
-+	
++
 +	if (zend_parse_parameters(argc TSRMLS_CC, "|l", &seed) == FAILURE) {
 +		return 1;
 +	}
@@ -2534,7 +2534,7 @@ diff -uNra suhosin-0.9.33/log.c suhosin-0.9.33.php52/log.c
 +		if (exdata) {
 +			if (exdata->opline && exdata->op_array) {
 +				lineno = exdata->opline->lineno;
-+				fname = (char *)exdata->op_array->filename;				
++				fname = (char *)exdata->op_array->filename;
 +			} else {
 +				lineno = 0;
 +				fname = "[unknown filename]";
@@ -3017,7 +3017,7 @@ diff -uNra suhosin-0.9.33/rfc1867.c suhosin-0.9.33.php52/rfc1867.c
 +#else
  				if (sapi_module.input_filter(PARSE_POST, param, &value, new_val_len, &new_val_len TSRMLS_CC)) {
  #endif				
-+#endif				
++#endif
  					{
  						multipart_event_formdata event_formdata;
 -						size_t newlength = 0;
@@ -3709,7 +3709,7 @@ diff -uNra suhosin-0.9.33/suhosin.c suhosin-0.9.33.php52/suhosin.c
 +	ze->deactivate = stealth_module_deactivate;
 +	ze->op_array_ctor = stealth_op_array_ctor;
 +	ze->op_array_dtor = stealth_op_array_dtor;
-+	
++
 +	if (old_startup != NULL) {
 +		res = old_startup(ext);
 +	}
