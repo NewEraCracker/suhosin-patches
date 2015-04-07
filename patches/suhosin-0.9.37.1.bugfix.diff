@@ -1,6 +1,6 @@
 diff -uNra suhosin-0.9.37.1/execute.c suhosin-0.9.37.1/execute.c
 --- suhosin-0.9.37.1/execute.c	Fri Dec 12 14:46:19 2014
-+++ suhosin-0.9.37.1/execute.c	Sat Feb 28 00:00:00 2015
++++ suhosin-0.9.37.1/execute.c	Tue Apr  7 16:58:06 2015
 @@ -390,9 +390,9 @@
  	return SUHOSIN_CODE_TYPE_UNKNOWN;
  }
@@ -174,7 +174,20 @@ diff -uNra suhosin-0.9.37.1/execute.c suhosin-0.9.37.1/execute.c
  		    retval = 0;
  		}
  	}
-@@ -1471,41 +1484,45 @@
+@@ -1365,10 +1378,11 @@
+     suhosin_SHA256_CTX   context;
+     int fd;
+     
++#if SIZEOF_LONG==8
+     code_value ^= code_value >> 32;
+     stack_value ^= stack_value >> 32;
+     heap_value ^= heap_value >> 32;
+-    
++#endif
+     seedbuf[0] = code_value;
+     seedbuf[1] = stack_value;
+     seedbuf[2] = heap_value;
+@@ -1471,41 +1485,45 @@
  
  static int ih_srand(IH_HANDLER_PARAMS)
  {
@@ -192,16 +205,16 @@ diff -uNra suhosin-0.9.37.1/execute.c suhosin-0.9.37.1/execute.c
 +		SUHOSIN_G(r_is_seeded) = 0;
 +		return 1;
 +	}
-+
-+	if (zend_parse_parameters(argc TSRMLS_CC, "|l", &seed) == FAILURE) {
-+		return 1;
-+	}
  
 -    if (argc == 0) {
 -        suhosin_srand_auto(TSRMLS_C);
 -    } else {
 -        suhosin_srand(seed TSRMLS_CC);
 -    }
++	if (zend_parse_parameters(argc TSRMLS_CC, "|l", &seed) == FAILURE) {
++		return 1;
++	}
++
 +	if (argc) {
 +		suhosin_srand(seed TSRMLS_CC);
 +	} else {
@@ -245,7 +258,7 @@ diff -uNra suhosin-0.9.37.1/execute.c suhosin-0.9.37.1/execute.c
  	return (1);
  }
  
-@@ -1561,7 +1578,7 @@
+@@ -1561,7 +1579,7 @@
  {
  #ifdef PHP_ATLEAST_5_3
  	if (zend_parse_parameters_none() == FAILURE) {
@@ -254,7 +267,7 @@ diff -uNra suhosin-0.9.37.1/execute.c suhosin-0.9.37.1/execute.c
  	}
  #else
          int argc = ZEND_NUM_ARGS();
-@@ -1687,30 +1704,14 @@
+@@ -1687,30 +1705,14 @@
  
  static void suhosin_execute_internal(zend_execute_data *execute_data_ptr, zend_fcall_info *fci, int return_value_used TSRMLS_DC)
  {
@@ -287,7 +300,7 @@ diff -uNra suhosin-0.9.37.1/execute.c suhosin-0.9.37.1/execute.c
  	char *lcname;
  	int function_name_strlen, free_lcname = 0;
  	zend_class_entry *ce = NULL;
-@@ -1735,18 +1736,6 @@
+@@ -1735,18 +1737,6 @@
  		zend_str_tolower(lcname, function_name_strlen);
  	}
  
@@ -306,7 +319,7 @@ diff -uNra suhosin-0.9.37.1/execute.c suhosin-0.9.37.1/execute.c
  	SDEBUG("function: %s", lcname);
  
  	if (SUHOSIN_G(in_code_type) == SUHOSIN_EVAL) {
-@@ -1797,6 +1786,31 @@
+@@ -1797,6 +1787,31 @@
  		int retval = 0;
  		void *handler = ((zend_internal_function *) execute_data_ptr->function_state.function)->handler;
  		
@@ -338,7 +351,7 @@ diff -uNra suhosin-0.9.37.1/execute.c suhosin-0.9.37.1/execute.c
  		if (handler != ZEND_FN(display_disabled_function)) {
  		    retval = ih->handler(IH_HANDLER_PARAM_PASSTHRU);
  		}
-@@ -1829,6 +1843,7 @@
+@@ -1829,6 +1844,7 @@
  /* }}} */
  
  
@@ -346,7 +359,7 @@ diff -uNra suhosin-0.9.37.1/execute.c suhosin-0.9.37.1/execute.c
  /* {{{ int function_lookup(zend_extension *extension)
   */
  static int function_lookup(zend_extension *extension)
-@@ -1846,6 +1861,7 @@
+@@ -1846,6 +1862,7 @@
  	return 0;
  }
  /* }}} */
@@ -354,7 +367,7 @@ diff -uNra suhosin-0.9.37.1/execute.c suhosin-0.9.37.1/execute.c
  
  
  /* {{{ void suhosin_hook_execute()
-@@ -1860,12 +1876,10 @@
+@@ -1860,12 +1877,10 @@
  #else	
  	old_execute = zend_execute;
  	zend_execute = suhosin_execute;
@@ -367,7 +380,7 @@ diff -uNra suhosin-0.9.37.1/execute.c suhosin-0.9.37.1/execute.c
  	if (zo_set_oe_ex == NULL) {	
  		zo_set_oe_ex = (void *)DL_FETCH_SYMBOL(NULL, "zend_optimizer_set_oe_ex");
  	}
-@@ -1911,15 +1925,13 @@
+@@ -1911,15 +1926,13 @@
   */
  void suhosin_unhook_execute()
  {
@@ -388,7 +401,7 @@ diff -uNra suhosin-0.9.37.1/execute.c suhosin-0.9.37.1/execute.c
  		
 diff -uNra suhosin-0.9.37.1/rfc1867.c suhosin-0.9.37.1/rfc1867.c
 --- suhosin-0.9.37.1/rfc1867.c	Fri Dec 12 14:46:19 2014
-+++ suhosin-0.9.37.1/rfc1867.c	Sat Feb 28 00:00:00 2015
++++ suhosin-0.9.37.1/rfc1867.c	Tue Apr  7 16:58:06 2015
 @@ -2,7 +2,7 @@
     +----------------------------------------------------------------------+
     | PHP Version 5                                                        |
@@ -956,7 +969,7 @@ diff -uNra suhosin-0.9.37.1/rfc1867.c suhosin-0.9.37.1/rfc1867.c
  			}
 diff -uNra suhosin-0.9.37.1/session.c suhosin-0.9.37.1/session.c
 --- suhosin-0.9.37.1/session.c	Fri Dec 12 14:46:19 2014
-+++ suhosin-0.9.37.1/session.c	Sat Feb 28 00:00:00 2015
++++ suhosin-0.9.37.1/session.c	Tue Apr  7 16:58:06 2015
 @@ -302,13 +302,14 @@
  static PHP_INI_MH(suhosin_OnUpdateSaveHandler)
  {
@@ -994,7 +1007,7 @@ diff -uNra suhosin-0.9.37.1/session.c suhosin-0.9.37.1/session.c
  
 diff -uNra suhosin-0.9.37.1/suhosin.c suhosin-0.9.37.1/suhosin.c
 --- suhosin-0.9.37.1/suhosin.c	Fri Dec 12 14:46:19 2014
-+++ suhosin-0.9.37.1/suhosin.c	Sat Feb 28 00:00:00 2015
++++ suhosin-0.9.37.1/suhosin.c	Tue Apr  7 16:58:06 2015
 @@ -47,18 +47,19 @@
  static int (*old_startup)(zend_extension *extension) = NULL;
  static zend_extension *ze = NULL;
@@ -1175,7 +1188,7 @@ diff -uNra suhosin-0.9.37.1/suhosin.c suhosin-0.9.37.1/suhosin.c
  }
 diff -uNra suhosin-0.9.37.1/suhosin.ini suhosin-0.9.37.1/suhosin.ini
 --- suhosin-0.9.37.1/suhosin.ini	Fri Dec 12 14:46:19 2014
-+++ suhosin-0.9.37.1/suhosin.ini	Sat Feb 28 00:00:00 2015
++++ suhosin-0.9.37.1/suhosin.ini	Tue Apr  7 16:58:06 2015
 @@ -282,10 +282,6 @@
  ;suhosin.log.phpscript.is_safe = Off
  ;
@@ -1296,7 +1309,7 @@ diff -uNra suhosin-0.9.37.1/suhosin.ini suhosin-0.9.37.1/suhosin.ini
  ; ---------------------
 diff -uNra suhosin-0.9.37.1/suhosin_rfc1867.h suhosin-0.9.37.1/suhosin_rfc1867.h
 --- suhosin-0.9.37.1/suhosin_rfc1867.h	Fri Dec 12 14:46:19 2014
-+++ suhosin-0.9.37.1/suhosin_rfc1867.h	Sat Feb 28 00:00:00 2015
++++ suhosin-0.9.37.1/suhosin_rfc1867.h	Tue Apr  7 16:58:06 2015
 @@ -78,7 +78,6 @@
  
  SAPI_POST_HANDLER_FUNC(suhosin_rfc1867_post_handler);
@@ -1305,3 +1318,51 @@ diff -uNra suhosin-0.9.37.1/suhosin_rfc1867.h suhosin-0.9.37.1/suhosin_rfc1867.h
  #if !HAVE_RFC1867_CALLBACK
  extern PHP_SUHOSIN_API int (*php_rfc1867_callback)(unsigned int event, void *event_data, void **extra TSRMLS_DC);
  #else
+diff -uNra suhosin-0.9.37.1/tests/filter/input_filter_request_array_index_blacklist.phpt suhosin-0.9.37.1/tests/filter/input_filter_request_array_index_blacklist.phpt
+--- suhosin-0.9.37.1/tests/filter/input_filter_request_array_index_blacklist.phpt	Fri Dec 12 14:46:19 2014
++++ suhosin-0.9.37.1/tests/filter/input_filter_request_array_index_blacklist.phpt	Tue Apr  7 16:58:06 2015
+@@ -10,7 +10,7 @@
+ auto_append_file={PWD}/suhosintest.$$.log.tmp
+ suhosin.request.array_index_blacklist="=ABC%{}\\$;"
+ --SKIPIF--
+-<?php include('skipif.inc'); ?>
++<?php include('../skipif.inc'); ?>
+ --COOKIE--
+ var1[aaa]=1;var2[bbB]=1;var3[ccc][ccC]=1
+ --GET--
+diff -uNra suhosin-0.9.37.1/tests/filter/input_filter_request_array_index_whitelist.phpt suhosin-0.9.37.1/tests/filter/input_filter_request_array_index_whitelist.phpt
+--- suhosin-0.9.37.1/tests/filter/input_filter_request_array_index_whitelist.phpt	Fri Dec 12 14:46:19 2014
++++ suhosin-0.9.37.1/tests/filter/input_filter_request_array_index_whitelist.phpt	Tue Apr  7 16:58:06 2015
+@@ -10,7 +10,7 @@
+ auto_append_file={PWD}/suhosintest.$$.log.tmp
+ suhosin.request.array_index_whitelist=abcdefghijklmnopqrstuvwxyz
+ --SKIPIF--
+-<?php include('skipif.inc'); ?>
++<?php include('../skipif.inc'); ?>
+ --COOKIE--
+ var1[aaa]=1;var2[bbB]=1;var3[ccc][ccC]=1
+ --GET--
+diff -uNra suhosin-0.9.37.1/tests/filter/post_fileupload_array_index_blacklist.phpt suhosin-0.9.37.1/tests/filter/post_fileupload_array_index_blacklist.phpt
+--- suhosin-0.9.37.1/tests/filter/post_fileupload_array_index_blacklist.phpt	Fri Dec 12 14:46:19 2014
++++ suhosin-0.9.37.1/tests/filter/post_fileupload_array_index_blacklist.phpt	Tue Apr  7 16:58:06 2015
+@@ -11,7 +11,7 @@
+ file_uploads=1
+ suhosin.request.array_index_blacklist=ABC
+ --SKIPIF--
+-<?php include('skipif.inc'); ?>
++<?php include('../skipif.inc'); ?>
+ --COOKIE--
+ --GET--
+ --POST_RAW--
+diff -uNra suhosin-0.9.37.1/tests/filter/post_fileupload_array_index_whitelist.phpt suhosin-0.9.37.1/tests/filter/post_fileupload_array_index_whitelist.phpt
+--- suhosin-0.9.37.1/tests/filter/post_fileupload_array_index_whitelist.phpt	Fri Dec 12 14:46:19 2014
++++ suhosin-0.9.37.1/tests/filter/post_fileupload_array_index_whitelist.phpt	Tue Apr  7 16:58:06 2015
+@@ -11,7 +11,7 @@
+ file_uploads=1
+ suhosin.request.array_index_whitelist=abcdefghijklmnopqrstuvwxyz
+ --SKIPIF--
+-<?php include('skipif.inc'); ?>
++<?php include('../skipif.inc'); ?>
+ --COOKIE--
+ --GET--
+ --POST_RAW--
