@@ -1,6 +1,39 @@
+diff -uNra suhosin-0.9.37.1/crypt.c suhosin-0.9.37.1/crypt.c
+--- suhosin-0.9.37.1/crypt.c	Fri Dec 12 14:46:19 2014
++++ suhosin-0.9.37.1/crypt.c	Wed Apr 15 16:52:48 2015
+@@ -3,7 +3,7 @@
+   | Suhosin Version 1                                                    |
+   +----------------------------------------------------------------------+
+   | Copyright (c) 2006-2007 The Hardened-PHP Project                     |
+-  | Copyright (c) 2007-2014 SektionEins GmbH                             |
++  | Copyright (c) 2007-2015 SektionEins GmbH                             |
+   +----------------------------------------------------------------------+
+   | This source file is subject to version 3.01 of the PHP license,      |
+   | that is bundled with this package in the file LICENSE, and is        |
+diff -uNra suhosin-0.9.37.1/ex_imp.c suhosin-0.9.37.1/ex_imp.c
+--- suhosin-0.9.37.1/ex_imp.c	Fri Dec 12 14:46:19 2014
++++ suhosin-0.9.37.1/ex_imp.c	Wed Apr 15 16:52:48 2015
+@@ -3,7 +3,7 @@
+   | Suhosin Version 1                                                    |
+   +----------------------------------------------------------------------+
+   | Copyright (c) 2006-2007 The Hardened-PHP Project                     |
+-  | Copyright (c) 2007-2014 SektionEins GmbH                             |
++  | Copyright (c) 2007-2015 SektionEins GmbH                             |
+   +----------------------------------------------------------------------+
+   | This source file is subject to version 3.01 of the PHP license,      |
+   | that is bundled with this package in the file LICENSE, and is        |
 diff -uNra suhosin-0.9.37.1/execute.c suhosin-0.9.37.1/execute.c
 --- suhosin-0.9.37.1/execute.c	Fri Dec 12 14:46:19 2014
-+++ suhosin-0.9.37.1/execute.c	Tue Apr  7 16:58:06 2015
++++ suhosin-0.9.37.1/execute.c	Wed Apr 15 16:52:48 2015
+@@ -3,7 +3,7 @@
+   | Suhosin Version 1                                                    |
+   +----------------------------------------------------------------------+
+   | Copyright (c) 2006-2007 The Hardened-PHP Project                     |
+-  | Copyright (c) 2007-2014 SektionEins GmbH                             |
++  | Copyright (c) 2007-2015 SektionEins GmbH                             |
+   +----------------------------------------------------------------------+
+   | This source file is subject to version 3.01 of the PHP license,      |
+   | that is bundled with this package in the file LICENSE, and is        |
 @@ -390,9 +390,9 @@
  	return SUHOSIN_CODE_TYPE_UNKNOWN;
  }
@@ -399,9 +432,93 @@ diff -uNra suhosin-0.9.37.1/execute.c suhosin-0.9.37.1/execute.c
  	zend_execute = old_execute;
  #endif
  		
+diff -uNra suhosin-0.9.37.1/header.c suhosin-0.9.37.1/header.c
+--- suhosin-0.9.37.1/header.c	Fri Dec 12 14:46:19 2014
++++ suhosin-0.9.37.1/header.c	Wed Apr 15 16:52:48 2015
+@@ -3,7 +3,7 @@
+   | Suhosin Version 1                                                    |
+   +----------------------------------------------------------------------+
+   | Copyright (c) 2006-2007 The Hardened-PHP Project                     |
+-  | Copyright (c) 2007-2014 SektionEins GmbH                             |
++  | Copyright (c) 2007-2015 SektionEins GmbH                             |
+   +----------------------------------------------------------------------+
+   | This source file is subject to version 3.01 of the PHP license,      |
+   | that is bundled with this package in the file LICENSE, and is        |
+diff -uNra suhosin-0.9.37.1/ifilter.c suhosin-0.9.37.1/ifilter.c
+--- suhosin-0.9.37.1/ifilter.c	Fri Dec 12 14:46:19 2014
++++ suhosin-0.9.37.1/ifilter.c	Wed Apr 15 16:52:48 2015
+@@ -3,7 +3,7 @@
+   | Suhosin Version 1                                                    |
+   +----------------------------------------------------------------------+
+   | Copyright (c) 2006-2007 The Hardened-PHP Project                     |
+-  | Copyright (c) 2007-2014 SektionEins GmbH                             |
++  | Copyright (c) 2007-2015 SektionEins GmbH                             |
+   +----------------------------------------------------------------------+
+   | This source file is subject to version 3.01 of the PHP license,      |
+   | that is bundled with this package in the file LICENSE, and is        |
+diff -uNra suhosin-0.9.37.1/log.c suhosin-0.9.37.1/log.c
+--- suhosin-0.9.37.1/log.c	Fri Dec 12 14:46:19 2014
++++ suhosin-0.9.37.1/log.c	Wed Apr 15 16:52:48 2015
+@@ -3,7 +3,7 @@
+   | Suhosin Version 1                                                    |
+   +----------------------------------------------------------------------+
+   | Copyright (c) 2006-2007 The Hardened-PHP Project                     |
+-  | Copyright (c) 2007-2014 SektionEins GmbH                             |
++  | Copyright (c) 2007-2015 SektionEins GmbH                             |
+   +----------------------------------------------------------------------+
+   | This source file is subject to version 3.01 of the PHP license,      |
+   | that is bundled with this package in the file LICENSE, and is        |
+diff -uNra suhosin-0.9.37.1/mbregex.h suhosin-0.9.37.1/mbregex.h
+--- suhosin-0.9.37.1/mbregex.h	Fri Dec 12 14:46:19 2014
++++ suhosin-0.9.37.1/mbregex.h	Wed Apr 15 16:52:48 2015
+@@ -3,7 +3,7 @@
+   | Suhosin Version 1                                                    |
+   +----------------------------------------------------------------------+
+   | Copyright (c) 2006-2007 The Hardened-PHP Project                     |
+-  | Copyright (c) 2007-2014 SektionEins GmbH                             |
++  | Copyright (c) 2007-2015 SektionEins GmbH                             |
+   +----------------------------------------------------------------------+
+   | This source file is subject to version 3.01 of the PHP license,      |
+   | that is bundled with this package in the file LICENSE, and is        |
+diff -uNra suhosin-0.9.37.1/memory_limit.c suhosin-0.9.37.1/memory_limit.c
+--- suhosin-0.9.37.1/memory_limit.c	Fri Dec 12 14:46:19 2014
++++ suhosin-0.9.37.1/memory_limit.c	Wed Apr 15 16:52:48 2015
+@@ -3,7 +3,7 @@
+   | Suhosin Version 1                                                    |
+   +----------------------------------------------------------------------+
+   | Copyright (c) 2006-2007 The Hardened-PHP Project                     |
+-  | Copyright (c) 2007-2014 SektionEins GmbH                             |
++  | Copyright (c) 2007-2015 SektionEins GmbH                             |
+   +----------------------------------------------------------------------+
+   | This source file is subject to version 3.01 of the PHP license,      |
+   | that is bundled with this package in the file LICENSE, and is        |
+diff -uNra suhosin-0.9.37.1/php_suhosin.h suhosin-0.9.37.1/php_suhosin.h
+--- suhosin-0.9.37.1/php_suhosin.h	Fri Dec 12 14:46:19 2014
++++ suhosin-0.9.37.1/php_suhosin.h	Wed Apr 15 16:52:48 2015
+@@ -3,7 +3,7 @@
+   | Suhosin Version 1                                                    |
+   +----------------------------------------------------------------------+
+   | Copyright (c) 2006-2007 The Hardened-PHP Project                     |
+-  | Copyright (c) 2007-2014 SektionEins GmbH                             |
++  | Copyright (c) 2007-2015 SektionEins GmbH                             |
+   +----------------------------------------------------------------------+
+   | This source file is subject to version 3.01 of the PHP license,      |
+   | that is bundled with this package in the file LICENSE, and is        |
+diff -uNra suhosin-0.9.37.1/post_handler.c suhosin-0.9.37.1/post_handler.c
+--- suhosin-0.9.37.1/post_handler.c	Fri Dec 12 14:46:19 2014
++++ suhosin-0.9.37.1/post_handler.c	Wed Apr 15 16:52:49 2015
+@@ -3,7 +3,7 @@
+   | Suhosin Version 1                                                    |
+   +----------------------------------------------------------------------+
+   | Copyright (c) 2006-2007 The Hardened-PHP Project                     |
+-  | Copyright (c) 2007-2014 SektionEins GmbH                             |
++  | Copyright (c) 2007-2015 SektionEins GmbH                             |
+   +----------------------------------------------------------------------+
+   | This source file is subject to version 3.01 of the PHP license,      |
+   | that is bundled with this package in the file LICENSE, and is        |
 diff -uNra suhosin-0.9.37.1/rfc1867.c suhosin-0.9.37.1/rfc1867.c
 --- suhosin-0.9.37.1/rfc1867.c	Fri Dec 12 14:46:19 2014
-+++ suhosin-0.9.37.1/rfc1867.c	Tue Apr  7 16:58:06 2015
++++ suhosin-0.9.37.1/rfc1867.c	Wed Apr 15 16:52:49 2015
 @@ -2,7 +2,7 @@
     +----------------------------------------------------------------------+
     | PHP Version 5                                                        |
@@ -969,7 +1086,16 @@ diff -uNra suhosin-0.9.37.1/rfc1867.c suhosin-0.9.37.1/rfc1867.c
  			}
 diff -uNra suhosin-0.9.37.1/session.c suhosin-0.9.37.1/session.c
 --- suhosin-0.9.37.1/session.c	Fri Dec 12 14:46:19 2014
-+++ suhosin-0.9.37.1/session.c	Tue Apr  7 16:58:06 2015
++++ suhosin-0.9.37.1/session.c	Wed Apr 15 16:52:49 2015
+@@ -3,7 +3,7 @@
+   | Suhosin Version 1                                                    |
+   +----------------------------------------------------------------------+
+   | Copyright (c) 2006-2007 The Hardened-PHP Project                     |
+-  | Copyright (c) 2007-2014 SektionEins GmbH                             |
++  | Copyright (c) 2007-2015 SektionEins GmbH                             |
+   +----------------------------------------------------------------------+
+   | This source file is subject to version 3.01 of the PHP license,      |
+   | that is bundled with this package in the file LICENSE, and is        |
 @@ -302,13 +302,14 @@
  static PHP_INI_MH(suhosin_OnUpdateSaveHandler)
  {
@@ -1005,10 +1131,43 @@ diff -uNra suhosin-0.9.37.1/session.c suhosin-0.9.37.1/session.c
      }
  }
  
+diff -uNra suhosin-0.9.37.1/sha256.c suhosin-0.9.37.1/sha256.c
+--- suhosin-0.9.37.1/sha256.c	Fri Dec 12 14:46:19 2014
++++ suhosin-0.9.37.1/sha256.c	Wed Apr 15 16:52:49 2015
+@@ -3,7 +3,7 @@
+   | Suhosin Version 1                                                    |
+   +----------------------------------------------------------------------+
+   | Copyright (c) 2006-2007 The Hardened-PHP Project                     |
+-  | Copyright (c) 2007-2014 SektionEins GmbH                             |
++  | Copyright (c) 2007-2015 SektionEins GmbH                             |
+   +----------------------------------------------------------------------+
+   | This source file is subject to version 3.01 of the PHP license,      |
+   | that is bundled with this package in the file LICENSE, and is        |
+diff -uNra suhosin-0.9.37.1/sha256.h suhosin-0.9.37.1/sha256.h
+--- suhosin-0.9.37.1/sha256.h	Fri Dec 12 14:46:19 2014
++++ suhosin-0.9.37.1/sha256.h	Wed Apr 15 16:52:49 2015
+@@ -3,7 +3,7 @@
+   | Suhosin Version 1                                                    |
+   +----------------------------------------------------------------------+
+   | Copyright (c) 2006-2007 The Hardened-PHP Project                     |
+-  | Copyright (c) 2007-2014 SektionEins GmbH                             |
++  | Copyright (c) 2007-2015 SektionEins GmbH                             |
+   +----------------------------------------------------------------------+
+   | This source file is subject to version 3.01 of the PHP license,      |
+   | that is bundled with this package in the file LICENSE, and is        |
 diff -uNra suhosin-0.9.37.1/suhosin.c suhosin-0.9.37.1/suhosin.c
 --- suhosin-0.9.37.1/suhosin.c	Fri Dec 12 14:46:19 2014
-+++ suhosin-0.9.37.1/suhosin.c	Tue Apr  7 16:58:06 2015
-@@ -47,18 +47,19 @@
++++ suhosin-0.9.37.1/suhosin.c	Wed Apr 15 16:52:49 2015
+@@ -3,7 +3,7 @@
+   | Suhosin Version 1                                                    |
+   +----------------------------------------------------------------------+
+   | Copyright (c) 2006-2007 The Hardened-PHP Project                     |
+-  | Copyright (c) 2007-2014 SektionEins GmbH                             |
++  | Copyright (c) 2007-2015 SektionEins GmbH                             |
+   +----------------------------------------------------------------------+
+   | This source file is subject to version 3.01 of the PHP license,      |
+   | that is bundled with this package in the file LICENSE, and is        |
+@@ -47,29 +47,30 @@
  static int (*old_startup)(zend_extension *extension) = NULL;
  static zend_extension *ze = NULL;
  
@@ -1033,8 +1192,11 @@ diff -uNra suhosin-0.9.37.1/suhosin.c suhosin-0.9.37.1/suhosin.c
  
  STATIC zend_extension suhosin_zend_extension_entry = {
  	"Suhosin",
-@@ -68,8 +69,8 @@
- 	"Copyright (c) 2007-2014",
+ 	SUHOSIN_EXT_VERSION,
+ 	"SektionEins GmbH",
+ 	"http://www.suhosin.org",
+-	"Copyright (c) 2007-2014",
++	"Copyright (c) 2007-2015",
  	suhosin_module_startup,
  	suhosin_shutdown,
 -	NULL,
@@ -1186,9 +1348,22 @@ diff -uNra suhosin-0.9.37.1/suhosin.c suhosin-0.9.37.1/suhosin.c
  	
  	return res;
  }
+@@ -1177,10 +1193,10 @@
+ 	PUTS(!sapi_module.phpinfo_as_text?"<br /><br />":"\n\n");
+ 	if (sapi_module.phpinfo_as_text) {
+ 		PUTS("Copyright (c) 2006-2007 Hardened-PHP Project\n");
+-		PUTS("Copyright (c) 2007-2014 SektionEins GmbH\n");
++		PUTS("Copyright (c) 2007-2015 SektionEins GmbH\n");
+ 	} else {
+ 		PUTS("Copyright (c) 2006-2007 <a href=\"http://www.hardened-php.net/\">Hardened-PHP Project</a><br />\n");
+-		PUTS("Copyright (c) 2007-2014 <a href=\"http://www.sektioneins.de/\">SektionEins GmbH</a>\n");
++		PUTS("Copyright (c) 2007-2015 <a href=\"http://www.sektioneins.de/\">SektionEins GmbH</a>\n");
+ 	}
+ 	php_info_print_box_end();
+ 
 diff -uNra suhosin-0.9.37.1/suhosin.ini suhosin-0.9.37.1/suhosin.ini
 --- suhosin-0.9.37.1/suhosin.ini	Fri Dec 12 14:46:19 2014
-+++ suhosin-0.9.37.1/suhosin.ini	Tue Apr  7 16:58:06 2015
++++ suhosin-0.9.37.1/suhosin.ini	Wed Apr 15 16:52:49 2015
 @@ -282,10 +282,6 @@
  ;suhosin.log.phpscript.is_safe = Off
  ;
@@ -1309,7 +1484,16 @@ diff -uNra suhosin-0.9.37.1/suhosin.ini suhosin-0.9.37.1/suhosin.ini
  ; ---------------------
 diff -uNra suhosin-0.9.37.1/suhosin_rfc1867.h suhosin-0.9.37.1/suhosin_rfc1867.h
 --- suhosin-0.9.37.1/suhosin_rfc1867.h	Fri Dec 12 14:46:19 2014
-+++ suhosin-0.9.37.1/suhosin_rfc1867.h	Tue Apr  7 16:58:06 2015
++++ suhosin-0.9.37.1/suhosin_rfc1867.h	Wed Apr 15 16:52:49 2015
+@@ -3,7 +3,7 @@
+   | Suhosin Version 1                                                    |
+   +----------------------------------------------------------------------+
+   | Copyright (c) 2006-2007 The Hardened-PHP Project                     |
+-  | Copyright (c) 2007-2014 SektionEins GmbH                             |
++  | Copyright (c) 2007-2015 SektionEins GmbH                             |
+   +----------------------------------------------------------------------+
+   | This source file is subject to version 3.01 of the PHP license,      |
+   | that is bundled with this package in the file LICENSE, and is        |
 @@ -78,7 +78,6 @@
  
  SAPI_POST_HANDLER_FUNC(suhosin_rfc1867_post_handler);
@@ -1320,7 +1504,7 @@ diff -uNra suhosin-0.9.37.1/suhosin_rfc1867.h suhosin-0.9.37.1/suhosin_rfc1867.h
  #else
 diff -uNra suhosin-0.9.37.1/tests/filter/input_filter_request_array_index_blacklist.phpt suhosin-0.9.37.1/tests/filter/input_filter_request_array_index_blacklist.phpt
 --- suhosin-0.9.37.1/tests/filter/input_filter_request_array_index_blacklist.phpt	Fri Dec 12 14:46:19 2014
-+++ suhosin-0.9.37.1/tests/filter/input_filter_request_array_index_blacklist.phpt	Tue Apr  7 16:58:06 2015
++++ suhosin-0.9.37.1/tests/filter/input_filter_request_array_index_blacklist.phpt	Wed Apr 15 16:52:51 2015
 @@ -10,7 +10,7 @@
  auto_append_file={PWD}/suhosintest.$$.log.tmp
  suhosin.request.array_index_blacklist="=ABC%{}\\$;"
@@ -1332,7 +1516,7 @@ diff -uNra suhosin-0.9.37.1/tests/filter/input_filter_request_array_index_blackl
  --GET--
 diff -uNra suhosin-0.9.37.1/tests/filter/input_filter_request_array_index_whitelist.phpt suhosin-0.9.37.1/tests/filter/input_filter_request_array_index_whitelist.phpt
 --- suhosin-0.9.37.1/tests/filter/input_filter_request_array_index_whitelist.phpt	Fri Dec 12 14:46:19 2014
-+++ suhosin-0.9.37.1/tests/filter/input_filter_request_array_index_whitelist.phpt	Tue Apr  7 16:58:06 2015
++++ suhosin-0.9.37.1/tests/filter/input_filter_request_array_index_whitelist.phpt	Wed Apr 15 16:52:51 2015
 @@ -10,7 +10,7 @@
  auto_append_file={PWD}/suhosintest.$$.log.tmp
  suhosin.request.array_index_whitelist=abcdefghijklmnopqrstuvwxyz
@@ -1344,7 +1528,7 @@ diff -uNra suhosin-0.9.37.1/tests/filter/input_filter_request_array_index_whitel
  --GET--
 diff -uNra suhosin-0.9.37.1/tests/filter/post_fileupload_array_index_blacklist.phpt suhosin-0.9.37.1/tests/filter/post_fileupload_array_index_blacklist.phpt
 --- suhosin-0.9.37.1/tests/filter/post_fileupload_array_index_blacklist.phpt	Fri Dec 12 14:46:19 2014
-+++ suhosin-0.9.37.1/tests/filter/post_fileupload_array_index_blacklist.phpt	Tue Apr  7 16:58:06 2015
++++ suhosin-0.9.37.1/tests/filter/post_fileupload_array_index_blacklist.phpt	Wed Apr 15 16:52:51 2015
 @@ -11,7 +11,7 @@
  file_uploads=1
  suhosin.request.array_index_blacklist=ABC
@@ -1356,7 +1540,7 @@ diff -uNra suhosin-0.9.37.1/tests/filter/post_fileupload_array_index_blacklist.p
  --POST_RAW--
 diff -uNra suhosin-0.9.37.1/tests/filter/post_fileupload_array_index_whitelist.phpt suhosin-0.9.37.1/tests/filter/post_fileupload_array_index_whitelist.phpt
 --- suhosin-0.9.37.1/tests/filter/post_fileupload_array_index_whitelist.phpt	Fri Dec 12 14:46:19 2014
-+++ suhosin-0.9.37.1/tests/filter/post_fileupload_array_index_whitelist.phpt	Tue Apr  7 16:58:06 2015
++++ suhosin-0.9.37.1/tests/filter/post_fileupload_array_index_whitelist.phpt	Wed Apr 15 16:52:51 2015
 @@ -11,7 +11,7 @@
  file_uploads=1
  suhosin.request.array_index_whitelist=abcdefghijklmnopqrstuvwxyz
@@ -1366,3 +1550,27 @@ diff -uNra suhosin-0.9.37.1/tests/filter/post_fileupload_array_index_whitelist.p
  --COOKIE--
  --GET--
  --POST_RAW--
+diff -uNra suhosin-0.9.37.1/treat_data.c suhosin-0.9.37.1/treat_data.c
+--- suhosin-0.9.37.1/treat_data.c	Fri Dec 12 14:46:19 2014
++++ suhosin-0.9.37.1/treat_data.c	Wed Apr 15 16:52:54 2015
+@@ -3,7 +3,7 @@
+   | Suhosin Version 1                                                    |
+   +----------------------------------------------------------------------+
+   | Copyright (c) 2006-2007 The Hardened-PHP Project                     |
+-  | Copyright (c) 2007-2014 SektionEins GmbH                             |
++  | Copyright (c) 2007-2015 SektionEins GmbH                             |
+   +----------------------------------------------------------------------+
+   | This source file is subject to version 3.01 of the PHP license,      |
+   | that is bundled with this package in the file LICENSE, and is        |
+diff -uNra suhosin-0.9.37.1/ufilter.c suhosin-0.9.37.1/ufilter.c
+--- suhosin-0.9.37.1/ufilter.c	Fri Dec 12 14:46:19 2014
++++ suhosin-0.9.37.1/ufilter.c	Wed Apr 15 16:52:54 2015
+@@ -3,7 +3,7 @@
+   | Suhosin Version 1                                                    |
+   +----------------------------------------------------------------------+
+   | Copyright (c) 2006-2007 The Hardened-PHP Project                     |
+-  | Copyright (c) 2007-2014 SektionEins GmbH                             |
++  | Copyright (c) 2007-2015 SektionEins GmbH                             |
+   +----------------------------------------------------------------------+
+   | This source file is subject to version 3.01 of the PHP license,      |
+   | that is bundled with this package in the file LICENSE, and is        |

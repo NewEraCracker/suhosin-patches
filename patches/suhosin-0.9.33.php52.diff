@@ -1793,7 +1793,7 @@ diff -uNra suhosin-0.9.33/ex_imp.c suhosin-0.9.33.php52/ex_imp.c
    +----------------------------------------------------------------------+
    | Copyright (c) 2006-2007 The Hardened-PHP Project                     |
 -  | Copyright (c) 2007-2012 SektionEins GmbH                             |
-+  | Copyright (c) 2007-2014 SektionEins GmbH                             |
++  | Copyright (c) 2007-2015 SektionEins GmbH                             |
    +----------------------------------------------------------------------+
    | This source file is subject to version 3.01 of the PHP license,      |
    | that is bundled with this package in the file LICENSE, and is        |
@@ -1858,7 +1858,7 @@ diff -uNra suhosin-0.9.33/execute.c suhosin-0.9.33.php52/execute.c
    +----------------------------------------------------------------------+
    | Copyright (c) 2006-2007 The Hardened-PHP Project                     |
 -  | Copyright (c) 2007-2012 SektionEins GmbH                             |
-+  | Copyright (c) 2007-2014 SektionEins GmbH                             |
++  | Copyright (c) 2007-2015 SektionEins GmbH                             |
    +----------------------------------------------------------------------+
    | This source file is subject to version 3.01 of the PHP license,      |
    | that is bundled with this package in the file LICENSE, and is        |
@@ -2265,7 +2265,7 @@ diff -uNra suhosin-0.9.33/header.c suhosin-0.9.33.php52/header.c
    +----------------------------------------------------------------------+
    | Copyright (c) 2006-2007 The Hardened-PHP Project                     |
 -  | Copyright (c) 2007-2012 SektionEins GmbH                             |
-+  | Copyright (c) 2007-2014 SektionEins GmbH                             |
++  | Copyright (c) 2007-2015 SektionEins GmbH                             |
    +----------------------------------------------------------------------+
    | This source file is subject to version 3.01 of the PHP license,      |
    | that is bundled with this package in the file LICENSE, and is        |
@@ -2295,7 +2295,7 @@ diff -uNra suhosin-0.9.33/ifilter.c suhosin-0.9.33.php52/ifilter.c
    +----------------------------------------------------------------------+
    | Copyright (c) 2006-2007 The Hardened-PHP Project                     |
 -  | Copyright (c) 2007-2012 SektionEins GmbH                             |
-+  | Copyright (c) 2007-2014 SektionEins GmbH                             |
++  | Copyright (c) 2007-2015 SektionEins GmbH                             |
    +----------------------------------------------------------------------+
    | This source file is subject to version 3.01 of the PHP license,      |
    | that is bundled with this package in the file LICENSE, and is        |
@@ -2520,7 +2520,7 @@ diff -uNra suhosin-0.9.33/log.c suhosin-0.9.33.php52/log.c
    +----------------------------------------------------------------------+
    | Copyright (c) 2006-2007 The Hardened-PHP Project                     |
 -  | Copyright (c) 2007-2012 SektionEins GmbH                             |
-+  | Copyright (c) 2007-2014 SektionEins GmbH                             |
++  | Copyright (c) 2007-2015 SektionEins GmbH                             |
    +----------------------------------------------------------------------+
    | This source file is subject to version 3.01 of the PHP license,      |
    | that is bundled with this package in the file LICENSE, and is        |
@@ -2593,7 +2593,7 @@ diff -uNra suhosin-0.9.33/mbregex.h suhosin-0.9.33.php52/mbregex.h
    +----------------------------------------------------------------------+
    | Copyright (c) 2006-2007 The Hardened-PHP Project                     |
 -  | Copyright (c) 2007-2012 SektionEins GmbH                             |
-+  | Copyright (c) 2007-2014 SektionEins GmbH                             |
++  | Copyright (c) 2007-2015 SektionEins GmbH                             |
    +----------------------------------------------------------------------+
    | This source file is subject to version 3.01 of the PHP license,      |
    | that is bundled with this package in the file LICENSE, and is        |
@@ -2605,7 +2605,7 @@ diff -uNra suhosin-0.9.33/memory_limit.c suhosin-0.9.33.php52/memory_limit.c
    +----------------------------------------------------------------------+
    | Copyright (c) 2006-2007 The Hardened-PHP Project                     |
 -  | Copyright (c) 2007-2012 SektionEins GmbH                             |
-+  | Copyright (c) 2007-2014 SektionEins GmbH                             |
++  | Copyright (c) 2007-2015 SektionEins GmbH                             |
    +----------------------------------------------------------------------+
    | This source file is subject to version 3.01 of the PHP license,      |
    | that is bundled with this package in the file LICENSE, and is        |
@@ -2666,7 +2666,7 @@ diff -uNra suhosin-0.9.33/php_suhosin.h suhosin-0.9.33.php52/php_suhosin.h
    +----------------------------------------------------------------------+
    | Copyright (c) 2006-2007 The Hardened-PHP Project                     |
 -  | Copyright (c) 2007-2012 SektionEins GmbH                             |
-+  | Copyright (c) 2007-2014 SektionEins GmbH                             |
++  | Copyright (c) 2007-2015 SektionEins GmbH                             |
    +----------------------------------------------------------------------+
    | This source file is subject to version 3.01 of the PHP license,      |
    | that is bundled with this package in the file LICENSE, and is        |
@@ -2711,7 +2711,7 @@ diff -uNra suhosin-0.9.33/post_handler.c suhosin-0.9.33.php52/post_handler.c
    +----------------------------------------------------------------------+
    | Copyright (c) 2006-2007 The Hardened-PHP Project                     |
 -  | Copyright (c) 2007-2012 SektionEins GmbH                             |
-+  | Copyright (c) 2007-2014 SektionEins GmbH                             |
++  | Copyright (c) 2007-2015 SektionEins GmbH                             |
    +----------------------------------------------------------------------+
    | This source file is subject to version 3.01 of the PHP license,      |
    | that is bundled with this package in the file LICENSE, and is        |
@@ -3426,7 +3426,7 @@ diff -uNra suhosin-0.9.33/session.c suhosin-0.9.33.php52/session.c
 -  | Copyright (c) 2006-2007 The Hardened-PHP Project             |
 -  | Copyright (c) 2007-2012 SektionEins GmbH                 |
 +  | Copyright (c) 2006-2007 The Hardened-PHP Project                     |
-+  | Copyright (c) 2007-2014 SektionEins GmbH                             |
++  | Copyright (c) 2007-2015 SektionEins GmbH                             |
    +----------------------------------------------------------------------+
 -  | This source file is subject to version 3.01 of the PHP license,  |
 -  | that is bundled with this package in the file LICENSE, and is    |
@@ -3510,7 +3510,7 @@ diff -uNra suhosin-0.9.33/sha256.c suhosin-0.9.33.php52/sha256.c
    +----------------------------------------------------------------------+
    | Copyright (c) 2006-2007 The Hardened-PHP Project                     |
 -  | Copyright (c) 2007-2012 SektionEins GmbH                             |
-+  | Copyright (c) 2007-2014 SektionEins GmbH                             |
++  | Copyright (c) 2007-2015 SektionEins GmbH                             |
    +----------------------------------------------------------------------+
    | This source file is subject to version 3.01 of the PHP license,      |
    | that is bundled with this package in the file LICENSE, and is        |
@@ -3552,7 +3552,7 @@ diff -uNra suhosin-0.9.33/sha256.h suhosin-0.9.33.php52/sha256.h
    +----------------------------------------------------------------------+
    | Copyright (c) 2006-2007 The Hardened-PHP Project                     |
 -  | Copyright (c) 2007-2012 SektionEins GmbH                             |
-+  | Copyright (c) 2007-2014 SektionEins GmbH                             |
++  | Copyright (c) 2007-2015 SektionEins GmbH                             |
    +----------------------------------------------------------------------+
    | This source file is subject to version 3.01 of the PHP license,      |
    | that is bundled with this package in the file LICENSE, and is        |
@@ -3564,7 +3564,7 @@ diff -uNra suhosin-0.9.33/suhosin.c suhosin-0.9.33.php52/suhosin.c
    +----------------------------------------------------------------------+
    | Copyright (c) 2006-2007 The Hardened-PHP Project                     |
 -  | Copyright (c) 2007-2012 SektionEins GmbH                             |
-+  | Copyright (c) 2007-2014 SektionEins GmbH                             |
++  | Copyright (c) 2007-2015 SektionEins GmbH                             |
    +----------------------------------------------------------------------+
    | This source file is subject to version 3.01 of the PHP license,      |
    | that is bundled with this package in the file LICENSE, and is        |
@@ -3597,7 +3597,7 @@ diff -uNra suhosin-0.9.33/suhosin.c suhosin-0.9.33.php52/suhosin.c
  	"SektionEins GmbH",
  	"http://www.suhosin.org",
 -	"Copyright (c) 2007-2012",
-+	"Copyright (c) 2007-2014",
++	"Copyright (c) 2007-2015",
  	suhosin_module_startup,
  	suhosin_shutdown,
 -	NULL,
@@ -3857,11 +3857,11 @@ diff -uNra suhosin-0.9.33/suhosin.c suhosin-0.9.33.php52/suhosin.c
  	if (sapi_module.phpinfo_as_text) {
  		PUTS("Copyright (c) 2006-2007 Hardened-PHP Project\n");
 -		PUTS("Copyright (c) 2007-2012 SektionEins GmbH\n");
-+		PUTS("Copyright (c) 2007-2014 SektionEins GmbH\n");
++		PUTS("Copyright (c) 2007-2015 SektionEins GmbH\n");
  	} else {
  		PUTS("Copyright (c) 2006-2007 <a href=\"http://www.hardened-php.net/\">Hardened-PHP Project</a><br />\n");
 -		PUTS("Copyright (c) 2007-2012 <a href=\"http://www.sektioneins.de/\">SektionEins GmbH</a>\n");
-+		PUTS("Copyright (c) 2007-2014 <a href=\"http://www.sektioneins.de/\">SektionEins GmbH</a>\n");
++		PUTS("Copyright (c) 2007-2015 <a href=\"http://www.sektioneins.de/\">SektionEins GmbH</a>\n");
  	}
  	php_info_print_box_end();
  
@@ -3873,7 +3873,7 @@ diff -uNra suhosin-0.9.33/suhosin_rfc1867.h suhosin-0.9.33.php52/suhosin_rfc1867
    +----------------------------------------------------------------------+
    | Copyright (c) 2006-2007 The Hardened-PHP Project                     |
 -  | Copyright (c) 2007-2012 SektionEins GmbH                             |
-+  | Copyright (c) 2007-2014 SektionEins GmbH                             |
++  | Copyright (c) 2007-2015 SektionEins GmbH                             |
    +----------------------------------------------------------------------+
    | This source file is subject to version 3.01 of the PHP license,      |
    | that is bundled with this package in the file LICENSE, and is        |
@@ -4001,7 +4001,7 @@ diff -uNra suhosin-0.9.33/treat_data.c suhosin-0.9.33.php52/treat_data.c
    +----------------------------------------------------------------------+
    | Copyright (c) 2006-2007 The Hardened-PHP Project                     |
 -  | Copyright (c) 2007-2012 SektionEins GmbH                             |
-+  | Copyright (c) 2007-2014 SektionEins GmbH                             |
++  | Copyright (c) 2007-2015 SektionEins GmbH                             |
    +----------------------------------------------------------------------+
    | This source file is subject to version 3.01 of the PHP license,      |
    | that is bundled with this package in the file LICENSE, and is        |
@@ -4049,7 +4049,7 @@ diff -uNra suhosin-0.9.33/ufilter.c suhosin-0.9.33.php52/ufilter.c
    +----------------------------------------------------------------------+
    | Copyright (c) 2006-2007 The Hardened-PHP Project                     |
 -  | Copyright (c) 2007-2012 SektionEins GmbH                             |
-+  | Copyright (c) 2007-2014 SektionEins GmbH                             |
++  | Copyright (c) 2007-2015 SektionEins GmbH                             |
    +----------------------------------------------------------------------+
    | This source file is subject to version 3.01 of the PHP license,      |
    | that is bundled with this package in the file LICENSE, and is        |
