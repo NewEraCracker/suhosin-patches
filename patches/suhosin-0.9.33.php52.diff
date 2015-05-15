@@ -1,6 +1,6 @@
 diff -uNra suhosin-0.9.33/config.m4 suhosin-0.9.33.php52/config.m4
 --- suhosin-0.9.33/config.m4	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php52/config.m4	Tue Apr  7 16:58:03 2015
++++ suhosin-0.9.33.php52/config.m4	Fri May 15 00:00:00 2015
 @@ -5,5 +5,5 @@
  [  --enable-suhosin        Enable suhosin support])
  
@@ -10,7 +10,7 @@ diff -uNra suhosin-0.9.33/config.m4 suhosin-0.9.33.php52/config.m4
  fi
 diff -uNra suhosin-0.9.33/config.w32 suhosin-0.9.33.php52/config.w32
 --- suhosin-0.9.33/config.w32	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php52/config.w32	Tue Apr  7 16:58:03 2015
++++ suhosin-0.9.33.php52/config.w32	Fri May 15 00:00:00 2015
 @@ -1,8 +1,11 @@
  // $Id: config.w32,v 1.1.1.1 2007-11-28 01:15:35 sesser Exp $
  // vim:ft=javascript
@@ -27,7 +27,7 @@ diff -uNra suhosin-0.9.33/config.w32 suhosin-0.9.33.php52/config.w32
  }
 diff -uNra suhosin-0.9.33/crypt.c suhosin-0.9.33.php52/crypt.c
 --- suhosin-0.9.33/crypt.c	Thu Jan  1 00:00:00 1970
-+++ suhosin-0.9.33.php52/crypt.c	Tue Apr  7 16:58:03 2015
++++ suhosin-0.9.33.php52/crypt.c	Fri May 15 00:00:00 2015
 @@ -0,0 +1,211 @@
 +/*
 +  +----------------------------------------------------------------------+
@@ -242,7 +242,7 @@ diff -uNra suhosin-0.9.33/crypt.c suhosin-0.9.33.php52/crypt.c
 + */
 diff -uNra suhosin-0.9.33/crypt_blowfish.c suhosin-0.9.33.php52/crypt_blowfish.c
 --- suhosin-0.9.33/crypt_blowfish.c	Thu Jan  1 00:00:00 1970
-+++ suhosin-0.9.33.php52/crypt_blowfish.c	Tue Apr  7 16:58:03 2015
++++ suhosin-0.9.33.php52/crypt_blowfish.c	Fri May 15 00:00:00 2015
 @@ -0,0 +1,911 @@
 +/* $Id$ */
 +/*
@@ -1157,7 +1157,7 @@ diff -uNra suhosin-0.9.33/crypt_blowfish.c suhosin-0.9.33.php52/crypt_blowfish.c
 +#endif
 diff -uNra suhosin-0.9.33/crypt_md5.c suhosin-0.9.33.php52/crypt_md5.c
 --- suhosin-0.9.33/crypt_md5.c	Thu Jan  1 00:00:00 1970
-+++ suhosin-0.9.33.php52/crypt_md5.c	Tue Apr  7 16:58:03 2015
++++ suhosin-0.9.33.php52/crypt_md5.c	Fri May 15 00:00:00 2015
 @@ -0,0 +1,162 @@
 +/*
 +   +----------------------------------------------------------------------+
@@ -1323,7 +1323,7 @@ diff -uNra suhosin-0.9.33/crypt_md5.c suhosin-0.9.33.php52/crypt_md5.c
 +}
 diff -uNra suhosin-0.9.33/crypt_md5.h suhosin-0.9.33.php52/crypt_md5.h
 --- suhosin-0.9.33/crypt_md5.h	Thu Jan  1 00:00:00 1970
-+++ suhosin-0.9.33.php52/crypt_md5.h	Tue Apr  7 16:58:03 2015
++++ suhosin-0.9.33.php52/crypt_md5.h	Fri May 15 00:00:00 2015
 @@ -0,0 +1,37 @@
 +/*
 +   +----------------------------------------------------------------------+
@@ -1364,7 +1364,7 @@ diff -uNra suhosin-0.9.33/crypt_md5.h suhosin-0.9.33.php52/crypt_md5.h
 +#endif /* _MD5CRYPT_H_ */
 diff -uNra suhosin-0.9.33/crypt_win32.c suhosin-0.9.33.php52/crypt_win32.c
 --- suhosin-0.9.33/crypt_win32.c	Thu Jan  1 00:00:00 1970
-+++ suhosin-0.9.33.php52/crypt_win32.c	Tue Apr  7 16:58:03 2015
++++ suhosin-0.9.33.php52/crypt_win32.c	Fri May 15 00:00:00 2015
 @@ -0,0 +1,355 @@
 +/*
 +   +----------------------------------------------------------------------+
@@ -1723,7 +1723,7 @@ diff -uNra suhosin-0.9.33/crypt_win32.c suhosin-0.9.33.php52/crypt_win32.c
 +}
 diff -uNra suhosin-0.9.33/crypt_win32.h suhosin-0.9.33.php52/crypt_win32.h
 --- suhosin-0.9.33/crypt_win32.h	Thu Jan  1 00:00:00 1970
-+++ suhosin-0.9.33.php52/crypt_win32.h	Tue Apr  7 16:58:03 2015
++++ suhosin-0.9.33.php52/crypt_win32.h	Fri May 15 00:00:00 2015
 @@ -0,0 +1,60 @@
 +/*
 +   +----------------------------------------------------------------------+
@@ -1787,7 +1787,7 @@ diff -uNra suhosin-0.9.33/crypt_win32.h suhosin-0.9.33.php52/crypt_win32.h
 +#endif /* _ENCRYPT_H_ */
 diff -uNra suhosin-0.9.33/ex_imp.c suhosin-0.9.33.php52/ex_imp.c
 --- suhosin-0.9.33/ex_imp.c	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php52/ex_imp.c	Tue Apr  7 16:58:03 2015
++++ suhosin-0.9.33.php52/ex_imp.c	Fri May 15 00:00:00 2015
 @@ -3,7 +3,7 @@
    | Suhosin Version 1                                                    |
    +----------------------------------------------------------------------+
@@ -1852,7 +1852,7 @@ diff -uNra suhosin-0.9.33/ex_imp.c suhosin-0.9.33.php52/ex_imp.c
  
 diff -uNra suhosin-0.9.33/execute.c suhosin-0.9.33.php52/execute.c
 --- suhosin-0.9.33/execute.c	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php52/execute.c	Tue Apr  7 16:58:03 2015
++++ suhosin-0.9.33.php52/execute.c	Fri May 15 00:00:00 2015
 @@ -3,7 +3,7 @@
    | Suhosin Version 1                                                    |
    +----------------------------------------------------------------------+
@@ -2259,7 +2259,7 @@ diff -uNra suhosin-0.9.33/execute.c suhosin-0.9.33.php52/execute.c
  	/* handle methodcalls correctly */
 diff -uNra suhosin-0.9.33/header.c suhosin-0.9.33.php52/header.c
 --- suhosin-0.9.33/header.c	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php52/header.c	Tue Apr  7 16:58:03 2015
++++ suhosin-0.9.33.php52/header.c	Fri May 15 00:00:00 2015
 @@ -3,7 +3,7 @@
    | Suhosin Version 1                                                    |
    +----------------------------------------------------------------------+
@@ -2289,7 +2289,7 @@ diff -uNra suhosin-0.9.33/header.c suhosin-0.9.33.php52/header.c
  					fname = "unknown";
 diff -uNra suhosin-0.9.33/ifilter.c suhosin-0.9.33.php52/ifilter.c
 --- suhosin-0.9.33/ifilter.c	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php52/ifilter.c	Tue Apr  7 16:58:03 2015
++++ suhosin-0.9.33.php52/ifilter.c	Fri May 15 00:00:00 2015
 @@ -3,7 +3,7 @@
    | Suhosin Version 1                                                    |
    +----------------------------------------------------------------------+
@@ -2514,7 +2514,7 @@ diff -uNra suhosin-0.9.33/ifilter.c suhosin-0.9.33.php52/ifilter.c
  			suhosin_log(S_VARS, "ASCII-NUL chars not allowed within request variables - dropped variable '%s'", var);
 diff -uNra suhosin-0.9.33/log.c suhosin-0.9.33.php52/log.c
 --- suhosin-0.9.33/log.c	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php52/log.c	Tue Apr  7 16:58:03 2015
++++ suhosin-0.9.33.php52/log.c	Fri May 15 00:00:00 2015
 @@ -3,7 +3,7 @@
    | Suhosin Version 1                                                    |
    +----------------------------------------------------------------------+
@@ -2587,7 +2587,7 @@ diff -uNra suhosin-0.9.33/log.c suhosin-0.9.33.php52/log.c
  	wbuf = error;
 diff -uNra suhosin-0.9.33/mbregex.h suhosin-0.9.33.php52/mbregex.h
 --- suhosin-0.9.33/mbregex.h	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php52/mbregex.h	Tue Apr  7 16:58:03 2015
++++ suhosin-0.9.33.php52/mbregex.h	Fri May 15 00:00:00 2015
 @@ -3,7 +3,7 @@
    | Suhosin Version 1                                                    |
    +----------------------------------------------------------------------+
@@ -2599,7 +2599,7 @@ diff -uNra suhosin-0.9.33/mbregex.h suhosin-0.9.33.php52/mbregex.h
    | that is bundled with this package in the file LICENSE, and is        |
 diff -uNra suhosin-0.9.33/memory_limit.c suhosin-0.9.33.php52/memory_limit.c
 --- suhosin-0.9.33/memory_limit.c	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php52/memory_limit.c	Tue Apr  7 16:58:03 2015
++++ suhosin-0.9.33.php52/memory_limit.c	Fri May 15 00:00:00 2015
 @@ -3,7 +3,7 @@
    | Suhosin Version 1                                                    |
    +----------------------------------------------------------------------+
@@ -2660,7 +2660,7 @@ diff -uNra suhosin-0.9.33/memory_limit.c suhosin-0.9.33.php52/memory_limit.c
  	if (zend_hash_find(EG(ini_directives), "memory_limit", sizeof("memory_limit"), (void **) &ini_entry)==FAILURE) {
 diff -uNra suhosin-0.9.33/php_suhosin.h suhosin-0.9.33.php52/php_suhosin.h
 --- suhosin-0.9.33/php_suhosin.h	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php52/php_suhosin.h	Tue Apr  7 16:58:03 2015
++++ suhosin-0.9.33.php52/php_suhosin.h	Fri May 15 00:00:00 2015
 @@ -3,7 +3,7 @@
    | Suhosin Version 1                                                    |
    +----------------------------------------------------------------------+
@@ -2705,7 +2705,7 @@ diff -uNra suhosin-0.9.33/php_suhosin.h suhosin-0.9.33.php52/php_suhosin.h
  void suhosin_aes_gentables();
 diff -uNra suhosin-0.9.33/post_handler.c suhosin-0.9.33.php52/post_handler.c
 --- suhosin-0.9.33/post_handler.c	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php52/post_handler.c	Tue Apr  7 16:58:04 2015
++++ suhosin-0.9.33.php52/post_handler.c	Fri May 15 00:00:00 2015
 @@ -3,7 +3,7 @@
    | Suhosin Version 1                                                    |
    +----------------------------------------------------------------------+
@@ -2764,7 +2764,7 @@ diff -uNra suhosin-0.9.33/post_handler.c suhosin-0.9.33.php52/post_handler.c
  
 diff -uNra suhosin-0.9.33/rfc1867.c suhosin-0.9.33.php52/rfc1867.c
 --- suhosin-0.9.33/rfc1867.c	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php52/rfc1867.c	Tue Apr  7 16:58:04 2015
++++ suhosin-0.9.33.php52/rfc1867.c	Fri May 15 00:00:00 2015
 @@ -2,7 +2,7 @@
     +----------------------------------------------------------------------+
     | PHP Version 5                                                        |
@@ -2788,7 +2788,11 @@ diff -uNra suhosin-0.9.33/rfc1867.c suhosin-0.9.33.php52/rfc1867.c
  
  /*
   *  This product includes software developed by the Apache Group
-@@ -38,7 +38,7 @@
+@@ -35,10 +35,11 @@
+ #include "suhosin_rfc1867.h"
+ #include "php_ini.h"
+ #include "ext/standard/php_string.h"
++#include "ext/standard/php_smart_str.h"
  
  #define DEBUG_FILE_UPLOAD ZEND_DEBUG
  
@@ -2797,7 +2801,7 @@ diff -uNra suhosin-0.9.33/rfc1867.c suhosin-0.9.33.php52/rfc1867.c
  #include "ext/mbstring/mbstring.h"
  
  static void safe_php_register_variable(char *var, char *strval, zval *track_vars_array, zend_bool override_protection TSRMLS_DC);
-@@ -91,8 +91,7 @@
+@@ -91,8 +92,7 @@
  	int *len_list=*plen_list;
  
  	if (*num_vars>=*num_vars_max){	
@@ -2807,7 +2811,7 @@ diff -uNra suhosin-0.9.33/rfc1867.c suhosin-0.9.33.php52/rfc1867.c
  		/* in case realloc relocated the buffer */
  		val_list = *pval_list;
  		len_list = *plen_list;
-@@ -206,10 +205,9 @@
+@@ -206,10 +206,9 @@
  			index = NULL;
  		}	
  	}
@@ -2819,7 +2823,7 @@ diff -uNra suhosin-0.9.33/rfc1867.c suhosin-0.9.33.php52/rfc1867.c
  static void add_protected_variable(char *varname TSRMLS_DC)
  {
  	int dummy=1;
-@@ -244,21 +242,29 @@
+@@ -244,21 +243,29 @@
  
  static void register_http_post_files_variable(char *strvar, char *val, zval *http_post_files, zend_bool override_protection TSRMLS_DC)
  {
@@ -2849,7 +2853,7 @@ diff -uNra suhosin-0.9.33/rfc1867.c suhosin-0.9.33.php52/rfc1867.c
  }
  
  /*
-@@ -289,10 +295,9 @@
+@@ -289,10 +296,9 @@
  	char *value;
  } mime_header_entry;
  
@@ -2862,7 +2866,7 @@ diff -uNra suhosin-0.9.33/rfc1867.c suhosin-0.9.33.php52/rfc1867.c
  */
  static int fill_buffer(multipart_buffer *self TSRMLS_DC)
  {
-@@ -365,17 +370,16 @@
+@@ -365,17 +371,16 @@
  	return self;
  }
  
@@ -2889,7 +2893,7 @@ diff -uNra suhosin-0.9.33/rfc1867.c suhosin-0.9.33.php52/rfc1867.c
   */
  static char *next_line(multipart_buffer *self)
  {
-@@ -411,8 +415,7 @@
+@@ -411,8 +416,7 @@
  	return line;
  }
  
@@ -2899,7 +2903,19 @@ diff -uNra suhosin-0.9.33/rfc1867.c suhosin-0.9.33.php52/rfc1867.c
  static char *get_line(multipart_buffer *self TSRMLS_DC)
  {
  	char* ptr = next_line(self);
-@@ -471,10 +474,9 @@
+@@ -461,8 +465,9 @@
+ static int multipart_buffer_headers(multipart_buffer *self, zend_llist *header TSRMLS_DC)
+ {
+ 	char *line;
+-	mime_header_entry prev_entry, entry;
+-	int prev_len, cur_len;
++	mime_header_entry entry = {0};
++	smart_str buf_value = {0};
++	char *key = NULL;
+ 	
+ 	/* didn't find boundary, abort */
+ 	if (!find_boundary(self, self->boundary TSRMLS_CC)) {
+@@ -471,11 +476,9 @@
  
  	/* get lines of text, or CRLF_CRLF */
  
@@ -2908,10 +2924,64 @@ diff -uNra suhosin-0.9.33/rfc1867.c suhosin-0.9.33.php52/rfc1867.c
  	{
  		/* add header to table */
 -		
- 		char *key = line;
+-		char *key = line;
  		char *value = NULL;
  		
-@@ -541,7 +543,6 @@
+ 		/* space in the beginning means same header */
+@@ -484,31 +487,33 @@
+ 		}
+ 
+ 		if (value) {
+-			*value = 0;
+-			do { value++; } while(isspace(*value));
+-
+-			entry.value = estrdup(value);
+-			entry.key = estrdup(key);
+-
+-		} else if (zend_llist_count(header)) { /* If no ':' on the line, add to previous line */
+-
+-			prev_len = strlen(prev_entry.value);
+-			cur_len = strlen(line);
++			if(buf_value.c && key) {
++				/* new entry, add the old one to the list */
++				smart_str_0(&buf_value);
++				entry.key = key;
++				entry.value = buf_value.c;
++				zend_llist_add_element(header, &entry);
++				buf_value.c = NULL;
++				key = NULL;
++			}
+ 
+-			entry.value = emalloc(prev_len + cur_len + 1);
+-			memcpy(entry.value, prev_entry.value, prev_len);
+-			memcpy(entry.value + prev_len, line, cur_len);
+-			entry.value[cur_len + prev_len] = '\0';
++			*value = '\0';
++			do { value++; } while(isspace(*value));
+ 
+-			entry.key = estrdup(prev_entry.key);
+-			
+-			zend_llist_remove_tail(header);
++			key = estrdup(line);
++			smart_str_appends(&buf_value, value);
++		} else if (buf_value.c) { /* If no ':' on the line, add to previous line */
++			smart_str_appends(&buf_value, line);
+ 		} else {
+ 			continue;
+ 		}
+-
++	}
++	if(buf_value.c && key) {
++		/* add the last one to the list */
++		smart_str_0(&buf_value);
++		entry.key = key;
++		entry.value = buf_value.c;
+ 		zend_llist_add_element(header, &entry);
+-		prev_entry = entry;
+ 	}
+ 
+ 	return 1;
+@@ -541,7 +546,6 @@
  	char *res;
  
  	while (*pos && *pos != stop) {
@@ -2919,7 +2989,7 @@ diff -uNra suhosin-0.9.33/rfc1867.c suhosin-0.9.33.php52/rfc1867.c
  		if ((quote = *pos) == '"' || quote == '\'') {
  			++pos;
  			while (*pos && *pos != quote) {
-@@ -555,7 +556,6 @@
+@@ -555,7 +559,6 @@
  				++pos;
  			}
  		} else ++pos;
@@ -2927,7 +2997,7 @@ diff -uNra suhosin-0.9.33/rfc1867.c suhosin-0.9.33.php52/rfc1867.c
  	}
  	if (*pos == '\0') {
  		res = estrdup(*line);
-@@ -584,7 +584,7 @@
+@@ -584,7 +587,7 @@
  		if (start[i] == '\\' && (start[i + 1] == '\\' || (quote && start[i + 1] == quote))) {
  			*resp++ = start[++i];
  		} else {
@@ -2936,7 +3006,7 @@ diff -uNra suhosin-0.9.33/rfc1867.c suhosin-0.9.33.php52/rfc1867.c
  			if (php_mb_encoding_translation(TSRMLS_C)) {
  				size_t j = php_mb_gpc_mbchar_bytes(start+i TSRMLS_CC);
  				while (j-- > 0 && i < len) {
-@@ -600,7 +600,7 @@
+@@ -600,7 +603,7 @@
  		}
  	}
  
@@ -2945,7 +3015,7 @@ diff -uNra suhosin-0.9.33/rfc1867.c suhosin-0.9.33.php52/rfc1867.c
  	return result;
  }
  
-@@ -609,7 +609,7 @@
+@@ -609,7 +612,7 @@
  {
  	char *str = *line, *strend, *res, quote;
  
@@ -2954,7 +3024,7 @@ diff -uNra suhosin-0.9.33/rfc1867.c suhosin-0.9.33.php52/rfc1867.c
  	if (php_mb_encoding_translation(TSRMLS_C)) {
  		int len=strlen(str);
  		php_mb_gpc_encoding_detector(&str, &len, 1, NULL TSRMLS_CC);
-@@ -666,11 +666,10 @@
+@@ -666,11 +669,10 @@
  	return res;
  }
  
@@ -2969,7 +3039,7 @@ diff -uNra suhosin-0.9.33/rfc1867.c suhosin-0.9.33.php52/rfc1867.c
  */
  static void *php_ap_memstr(char *haystack, int haystacklen, char *needle, int needlen, int partial)
  {
-@@ -755,7 +754,9 @@
+@@ -755,7 +757,9 @@
  		total_bytes += read_bytes;
  	}
  
@@ -2980,7 +3050,7 @@ diff -uNra suhosin-0.9.33/rfc1867.c suhosin-0.9.33.php52/rfc1867.c
  	*len = total_bytes;
  
  	return out;
-@@ -773,8 +774,9 @@
+@@ -773,8 +777,9 @@
  	char *temp_filename=NULL, *lbuf=NULL, *abuf=NULL;
  	int boundary_len=0, total_bytes=0, cancel_upload=0, is_arr_upload=0, array_len=0;
  	int max_file_size=0, skip_upload=0, anonindex=0, is_anonymous;
@@ -2992,7 +3062,7 @@ diff -uNra suhosin-0.9.33/rfc1867.c suhosin-0.9.33.php52/rfc1867.c
  	int str_len = 0, num_vars = 0, num_vars_max = 2*10, *len_list = NULL;
  	char **val_list = NULL;
  #endif
-@@ -783,13 +785,17 @@
+@@ -783,13 +788,17 @@
  	int fd=-1;
  	zend_llist header;
  	void *event_extra_data = NULL;
@@ -3011,7 +3081,7 @@ diff -uNra suhosin-0.9.33/rfc1867.c suhosin-0.9.33.php52/rfc1867.c
  		sapi_module.sapi_error(E_WARNING, "POST Content-Length of %ld bytes exceeds the limit of %ld bytes", SG(request_info).content_length, SG(post_max_size));
  		return;
  	}
-@@ -825,7 +831,7 @@
+@@ -825,7 +834,7 @@
  		}
  	} else {
  		/* search for the end of the boundary */
@@ -3020,7 +3090,7 @@ diff -uNra suhosin-0.9.33/rfc1867.c suhosin-0.9.33.php52/rfc1867.c
  	}
  	if (boundary_end) {
  		boundary_end[0] = '\0';
-@@ -850,7 +856,7 @@
+@@ -850,7 +859,7 @@
  	INIT_PZVAL(http_post_files);
  	PG(http_globals)[TRACK_VARS_FILES] = http_post_files;
  
@@ -3029,7 +3099,7 @@ diff -uNra suhosin-0.9.33/rfc1867.c suhosin-0.9.33.php52/rfc1867.c
  	if (php_mb_encoding_translation(TSRMLS_C)) {
  		val_list = (char **)ecalloc(num_vars_max+2, sizeof(char *));
  		len_list = (int *)ecalloc(num_vars_max+2, sizeof(int));
-@@ -929,18 +935,23 @@
+@@ -929,18 +938,23 @@
  					value = estrdup("");
  				}
  SDEBUG("calling inputfilter");				
@@ -3055,7 +3125,7 @@ diff -uNra suhosin-0.9.33/rfc1867.c suhosin-0.9.33.php52/rfc1867.c
  
  						event_formdata.post_bytes_processed = SG(read_post_bytes);
  						event_formdata.name = param;
-@@ -955,10 +966,9 @@
+@@ -955,10 +969,9 @@
  						new_val_len = newlength;
  					}
  					
@@ -3068,7 +3138,7 @@ diff -uNra suhosin-0.9.33/rfc1867.c suhosin-0.9.33.php52/rfc1867.c
  					} else {
  						safe_php_register_variable(param, value, array_ptr, 0 TSRMLS_CC);
  					}
-@@ -967,6 +977,12 @@
+@@ -967,6 +980,12 @@
  #endif
  #ifdef ZEND_ENGINE_2
  				} else {
@@ -3081,7 +3151,7 @@ diff -uNra suhosin-0.9.33/rfc1867.c suhosin-0.9.33.php52/rfc1867.c
  					multipart_event_formdata event_formdata;
  
  					event_formdata.post_bytes_processed = SG(read_post_bytes);
-@@ -976,6 +992,7 @@
+@@ -976,6 +995,7 @@
  					event_formdata.newlength = NULL;
                      suhosin_rfc1867_filter(MULTIPART_EVENT_FORMDATA, &event_formdata, &event_extra_data TSRMLS_CC);			    
                  }
@@ -3089,7 +3159,7 @@ diff -uNra suhosin-0.9.33/rfc1867.c suhosin-0.9.33.php52/rfc1867.c
  #endif				
  				if (!strcasecmp(param, "MAX_FILE_SIZE")) {
  					max_file_size = atol(value);
-@@ -1013,8 +1030,8 @@
+@@ -1013,8 +1033,8 @@
  			
  			/* New Rule: never repair potential malicious user input */
  			if (!skip_upload) {
@@ -3099,7 +3169,7 @@ diff -uNra suhosin-0.9.33/rfc1867.c suhosin-0.9.33.php52/rfc1867.c
  				
  				while (*tmp) {
  					if (*tmp == '[') {
-@@ -1032,49 +1049,37 @@
+@@ -1032,49 +1052,37 @@
  					}
  					tmp++;				
  				}
@@ -3157,7 +3227,7 @@ diff -uNra suhosin-0.9.33/rfc1867.c suhosin-0.9.33.php52/rfc1867.c
  #if DEBUG_FILE_UPLOAD
  				sapi_module.sapi_error(E_NOTICE, "No file uploaded");
  #endif
-@@ -1083,7 +1088,28 @@
+@@ -1083,7 +1091,28 @@
  
  			offset = 0;
  			end = 0;
@@ -3187,7 +3257,7 @@ diff -uNra suhosin-0.9.33/rfc1867.c suhosin-0.9.33.php52/rfc1867.c
  			{
  				{
  					multipart_event_file_data event_file_data;
-@@ -1099,22 +1125,26 @@
+@@ -1099,22 +1128,26 @@
  					}
  				}
  				
@@ -3219,7 +3289,7 @@ diff -uNra suhosin-0.9.33/rfc1867.c suhosin-0.9.33.php52/rfc1867.c
  #if DEBUG_FILE_UPLOAD
  						sapi_module.sapi_error(E_NOTICE, "Only %d bytes were written, expected to write %d", wlen, blen);
  #endif
-@@ -1122,21 +1152,24 @@
+@@ -1122,21 +1155,24 @@
  					} else {
  						total_bytes += wlen;
  					}
@@ -3247,7 +3317,7 @@ diff -uNra suhosin-0.9.33/rfc1867.c suhosin-0.9.33.php52/rfc1867.c
  				sapi_module.sapi_error(E_WARNING, "Uploaded file size 0 - file [%s=%s] not saved", param, filename);
  				cancel_upload = 5;
  			}
-@@ -1167,8 +1200,7 @@
+@@ -1167,8 +1203,7 @@
  
  			/* is_arr_upload is true when name of file upload field
  			 * ends in [.*]
@@ -3257,7 +3327,7 @@ diff -uNra suhosin-0.9.33/rfc1867.c suhosin-0.9.33.php52/rfc1867.c
  			is_arr_upload =	(start_arr = strchr(param,'[')) && (param[strlen(param)-1] == ']');
  
  			if (is_arr_upload) {
-@@ -1180,24 +1212,24 @@
+@@ -1180,24 +1215,24 @@
  			}
  			
  			/* Add $foo_name */
@@ -3290,7 +3360,7 @@ diff -uNra suhosin-0.9.33/rfc1867.c suhosin-0.9.33.php52/rfc1867.c
  				}
  				val_list[num_vars] = filename;
  				len_list[num_vars] = strlen(filename);
-@@ -1218,28 +1250,28 @@
+@@ -1218,28 +1253,28 @@
  			 * it is a valid path separator. However, IE in all it's wisdom always sends
  			 * the full path of the file on the user's filesystem, which means that unless
  			 * the user does basename() they get a bogus file name. Until IE's user base drops 
@@ -3329,7 +3399,7 @@ diff -uNra suhosin-0.9.33/rfc1867.c suhosin-0.9.33.php52/rfc1867.c
  					safe_php_register_variable(lbuf, s+1, NULL, 0 TSRMLS_CC);
  				} else {
  					safe_php_register_variable(lbuf, filename, NULL, 0 TSRMLS_CC);
-@@ -1248,11 +1280,11 @@
+@@ -1248,11 +1283,11 @@
  
  			/* Add $foo[name] */
  			if (is_arr_upload) {
@@ -3344,7 +3414,7 @@ diff -uNra suhosin-0.9.33/rfc1867.c suhosin-0.9.33.php52/rfc1867.c
  				register_http_post_files_variable(lbuf, s+1, http_post_files, 0 TSRMLS_CC);
  			} else {
  				register_http_post_files_variable(lbuf, filename, http_post_files, 0 TSRMLS_CC);
-@@ -1273,9 +1305,9 @@
+@@ -1273,9 +1308,9 @@
  
  			/* Add $foo_type */
  			if (is_arr_upload) {
@@ -3356,7 +3426,7 @@ diff -uNra suhosin-0.9.33/rfc1867.c suhosin-0.9.33.php52/rfc1867.c
  			}
  			if (!is_anonymous) {
  				safe_php_register_variable(lbuf, cd, NULL, 0 TSRMLS_CC);
-@@ -1283,9 +1315,9 @@
+@@ -1283,9 +1318,9 @@
  
  			/* Add $foo[type] */
  			if (is_arr_upload) {
@@ -3368,7 +3438,7 @@ diff -uNra suhosin-0.9.33/rfc1867.c suhosin-0.9.33.php52/rfc1867.c
  			}
  			register_http_post_files_variable(lbuf, cd, http_post_files, 0 TSRMLS_CC);
  
-@@ -1311,9 +1343,9 @@
+@@ -1311,9 +1346,9 @@
  
  				/* Add $foo[tmp_name] */
  				if (is_arr_upload) {
@@ -3380,7 +3450,7 @@ diff -uNra suhosin-0.9.33/rfc1867.c suhosin-0.9.33.php52/rfc1867.c
  				}
  				add_protected_variable(lbuf TSRMLS_CC);
  				ZVAL_STRING(&zfilename, temp_filename, 1);
-@@ -1336,17 +1368,17 @@
+@@ -1336,17 +1371,17 @@
  				}	
  	
  				if (is_arr_upload) {
@@ -3402,7 +3472,7 @@ diff -uNra suhosin-0.9.33/rfc1867.c suhosin-0.9.33.php52/rfc1867.c
  				}
  				if (!is_anonymous) {
  					safe_php_register_variable_ex(lbuf, &file_size, NULL, 0 TSRMLS_CC);
-@@ -1354,9 +1386,9 @@
+@@ -1354,9 +1389,9 @@
  
  				/* Add $foo[size] */
  				if (is_arr_upload) {
@@ -3416,7 +3486,7 @@ diff -uNra suhosin-0.9.33/rfc1867.c suhosin-0.9.33.php52/rfc1867.c
  			}
 diff -uNra suhosin-0.9.33/session.c suhosin-0.9.33.php52/session.c
 --- suhosin-0.9.33/session.c	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php52/session.c	Tue Apr  7 16:58:04 2015
++++ suhosin-0.9.33.php52/session.c	Fri May 15 00:00:00 2015
 @@ -1,19 +1,19 @@
  /*
    +----------------------------------------------------------------------+
@@ -3504,7 +3574,7 @@ diff -uNra suhosin-0.9.33/session.c suhosin-0.9.33.php52/session.c
  
 diff -uNra suhosin-0.9.33/sha256.c suhosin-0.9.33.php52/sha256.c
 --- suhosin-0.9.33/sha256.c	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php52/sha256.c	Tue Apr  7 16:58:04 2015
++++ suhosin-0.9.33.php52/sha256.c	Fri May 15 00:00:00 2015
 @@ -3,7 +3,7 @@
    | Suhosin Version 1                                                    |
    +----------------------------------------------------------------------+
@@ -3546,7 +3616,7 @@ diff -uNra suhosin-0.9.33/sha256.c suhosin-0.9.33.php52/sha256.c
  
 diff -uNra suhosin-0.9.33/sha256.h suhosin-0.9.33.php52/sha256.h
 --- suhosin-0.9.33/sha256.h	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php52/sha256.h	Tue Apr  7 16:58:04 2015
++++ suhosin-0.9.33.php52/sha256.h	Fri May 15 00:00:00 2015
 @@ -3,7 +3,7 @@
    | Suhosin Version 1                                                    |
    +----------------------------------------------------------------------+
@@ -3558,7 +3628,7 @@ diff -uNra suhosin-0.9.33/sha256.h suhosin-0.9.33.php52/sha256.h
    | that is bundled with this package in the file LICENSE, and is        |
 diff -uNra suhosin-0.9.33/suhosin.c suhosin-0.9.33.php52/suhosin.c
 --- suhosin-0.9.33/suhosin.c	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php52/suhosin.c	Tue Apr  7 16:58:04 2015
++++ suhosin-0.9.33.php52/suhosin.c	Fri May 15 00:00:00 2015
 @@ -3,7 +3,7 @@
    | Suhosin Version 1                                                    |
    +----------------------------------------------------------------------+
@@ -3867,7 +3937,7 @@ diff -uNra suhosin-0.9.33/suhosin.c suhosin-0.9.33.php52/suhosin.c
  
 diff -uNra suhosin-0.9.33/suhosin_rfc1867.h suhosin-0.9.33.php52/suhosin_rfc1867.h
 --- suhosin-0.9.33/suhosin_rfc1867.h	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php52/suhosin_rfc1867.h	Tue Apr  7 16:58:04 2015
++++ suhosin-0.9.33.php52/suhosin_rfc1867.h	Fri May 15 00:00:00 2015
 @@ -3,7 +3,7 @@
    | Suhosin Version 1                                                    |
    +----------------------------------------------------------------------+
@@ -3887,7 +3957,7 @@ diff -uNra suhosin-0.9.33/suhosin_rfc1867.h suhosin-0.9.33.php52/suhosin_rfc1867
  #else
 diff -uNra suhosin-0.9.33/tests/include/include_constant.phpt suhosin-0.9.33.php52/tests/include/include_constant.phpt
 --- suhosin-0.9.33/tests/include/include_constant.phpt	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php52/tests/include/include_constant.phpt	Tue Apr  7 16:58:04 2015
++++ suhosin-0.9.33.php52/tests/include/include_constant.phpt	Fri May 15 00:00:00 2015
 @@ -14,4 +14,4 @@
      include "http://127.0.0.1/";
  ?>
@@ -3896,7 +3966,7 @@ diff -uNra suhosin-0.9.33/tests/include/include_constant.phpt suhosin-0.9.33.php
 +ALERT - Include filename ('http://127.0.0.1/') is a URL that is not allowed (attacker 'REMOTE_ADDR not set', file '%s', line 2)
 diff -uNra suhosin-0.9.33/tests/include/include_once_constant.phpt suhosin-0.9.33.php52/tests/include/include_once_constant.phpt
 --- suhosin-0.9.33/tests/include/include_once_constant.phpt	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php52/tests/include/include_once_constant.phpt	Tue Apr  7 16:58:04 2015
++++ suhosin-0.9.33.php52/tests/include/include_once_constant.phpt	Fri May 15 00:00:00 2015
 @@ -14,4 +14,4 @@
      include_once "http://127.0.0.1/";
  ?>
@@ -3905,7 +3975,7 @@ diff -uNra suhosin-0.9.33/tests/include/include_once_constant.phpt suhosin-0.9.3
 +ALERT - Include filename ('http://127.0.0.1/') is a URL that is not allowed (attacker 'REMOTE_ADDR not set', file '%s', line 2)
 diff -uNra suhosin-0.9.33/tests/include/include_once_tmpvar.phpt suhosin-0.9.33.php52/tests/include/include_once_tmpvar.phpt
 --- suhosin-0.9.33/tests/include/include_once_tmpvar.phpt	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php52/tests/include/include_once_tmpvar.phpt	Tue Apr  7 16:58:04 2015
++++ suhosin-0.9.33.php52/tests/include/include_once_tmpvar.phpt	Fri May 15 00:00:00 2015
 @@ -16,4 +16,4 @@
      include_once $var.$app;
  ?>
@@ -3914,7 +3984,7 @@ diff -uNra suhosin-0.9.33/tests/include/include_once_tmpvar.phpt suhosin-0.9.33.
 +ALERT - Include filename ('http://127.0.0.1/?') is a URL that is not allowed (attacker 'REMOTE_ADDR not set', file '%s', line 4)
 diff -uNra suhosin-0.9.33/tests/include/include_once_var.phpt suhosin-0.9.33.php52/tests/include/include_once_var.phpt
 --- suhosin-0.9.33/tests/include/include_once_var.phpt	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php52/tests/include/include_once_var.phpt	Tue Apr  7 16:58:04 2015
++++ suhosin-0.9.33.php52/tests/include/include_once_var.phpt	Fri May 15 00:00:00 2015
 @@ -15,4 +15,4 @@
      include_once $var;
  ?>
@@ -3923,7 +3993,7 @@ diff -uNra suhosin-0.9.33/tests/include/include_once_var.phpt suhosin-0.9.33.php
 +ALERT - Include filename ('http://127.0.0.1/') is a URL that is not allowed (attacker 'REMOTE_ADDR not set', file '%s', line 3)
 diff -uNra suhosin-0.9.33/tests/include/include_tmpvar.phpt suhosin-0.9.33.php52/tests/include/include_tmpvar.phpt
 --- suhosin-0.9.33/tests/include/include_tmpvar.phpt	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php52/tests/include/include_tmpvar.phpt	Tue Apr  7 16:58:04 2015
++++ suhosin-0.9.33.php52/tests/include/include_tmpvar.phpt	Fri May 15 00:00:00 2015
 @@ -16,4 +16,4 @@
      include $var.$app;
  ?>
@@ -3932,7 +4002,7 @@ diff -uNra suhosin-0.9.33/tests/include/include_tmpvar.phpt suhosin-0.9.33.php52
 +ALERT - Include filename ('http://127.0.0.1/?') is a URL that is not allowed (attacker 'REMOTE_ADDR not set', file '%s', line 4)
 diff -uNra suhosin-0.9.33/tests/include/include_var.phpt suhosin-0.9.33.php52/tests/include/include_var.phpt
 --- suhosin-0.9.33/tests/include/include_var.phpt	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php52/tests/include/include_var.phpt	Tue Apr  7 16:58:04 2015
++++ suhosin-0.9.33.php52/tests/include/include_var.phpt	Fri May 15 00:00:00 2015
 @@ -15,4 +15,4 @@
      include $var;
  ?>
@@ -3941,7 +4011,7 @@ diff -uNra suhosin-0.9.33/tests/include/include_var.phpt suhosin-0.9.33.php52/te
 +ALERT - Include filename ('http://127.0.0.1/') is a URL that is not allowed (attacker 'REMOTE_ADDR not set', file '%s', line 3)
 diff -uNra suhosin-0.9.33/tests/include/require_constant.phpt suhosin-0.9.33.php52/tests/include/require_constant.phpt
 --- suhosin-0.9.33/tests/include/require_constant.phpt	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php52/tests/include/require_constant.phpt	Tue Apr  7 16:58:04 2015
++++ suhosin-0.9.33.php52/tests/include/require_constant.phpt	Fri May 15 00:00:00 2015
 @@ -14,4 +14,4 @@
      require "http://127.0.0.1/";
  ?>
@@ -3950,7 +4020,7 @@ diff -uNra suhosin-0.9.33/tests/include/require_constant.phpt suhosin-0.9.33.php
 +ALERT - Include filename ('http://127.0.0.1/') is a URL that is not allowed (attacker 'REMOTE_ADDR not set', file '%s', line 2)
 diff -uNra suhosin-0.9.33/tests/include/require_once_constant.phpt suhosin-0.9.33.php52/tests/include/require_once_constant.phpt
 --- suhosin-0.9.33/tests/include/require_once_constant.phpt	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php52/tests/include/require_once_constant.phpt	Tue Apr  7 16:58:04 2015
++++ suhosin-0.9.33.php52/tests/include/require_once_constant.phpt	Fri May 15 00:00:00 2015
 @@ -14,4 +14,4 @@
      require_once "http://127.0.0.1/";
  ?>
@@ -3959,7 +4029,7 @@ diff -uNra suhosin-0.9.33/tests/include/require_once_constant.phpt suhosin-0.9.3
 +ALERT - Include filename ('http://127.0.0.1/') is a URL that is not allowed (attacker 'REMOTE_ADDR not set', file '%s', line 2)
 diff -uNra suhosin-0.9.33/tests/include/require_once_tmpvar.phpt suhosin-0.9.33.php52/tests/include/require_once_tmpvar.phpt
 --- suhosin-0.9.33/tests/include/require_once_tmpvar.phpt	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php52/tests/include/require_once_tmpvar.phpt	Tue Apr  7 16:58:04 2015
++++ suhosin-0.9.33.php52/tests/include/require_once_tmpvar.phpt	Fri May 15 00:00:00 2015
 @@ -16,4 +16,4 @@
      require_once $var.$app;
  ?>
@@ -3968,7 +4038,7 @@ diff -uNra suhosin-0.9.33/tests/include/require_once_tmpvar.phpt suhosin-0.9.33.
 +ALERT - Include filename ('http://127.0.0.1/?') is a URL that is not allowed (attacker 'REMOTE_ADDR not set', file '%s', line 4)
 diff -uNra suhosin-0.9.33/tests/include/require_once_var.phpt suhosin-0.9.33.php52/tests/include/require_once_var.phpt
 --- suhosin-0.9.33/tests/include/require_once_var.phpt	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php52/tests/include/require_once_var.phpt	Tue Apr  7 16:58:04 2015
++++ suhosin-0.9.33.php52/tests/include/require_once_var.phpt	Fri May 15 00:00:00 2015
 @@ -15,4 +15,4 @@
      require_once $var;
  ?>
@@ -3977,7 +4047,7 @@ diff -uNra suhosin-0.9.33/tests/include/require_once_var.phpt suhosin-0.9.33.php
 +ALERT - Include filename ('http://127.0.0.1/') is a URL that is not allowed (attacker 'REMOTE_ADDR not set', file '%s', line 3)
 diff -uNra suhosin-0.9.33/tests/include/require_tmpvar.phpt suhosin-0.9.33.php52/tests/include/require_tmpvar.phpt
 --- suhosin-0.9.33/tests/include/require_tmpvar.phpt	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php52/tests/include/require_tmpvar.phpt	Tue Apr  7 16:58:04 2015
++++ suhosin-0.9.33.php52/tests/include/require_tmpvar.phpt	Fri May 15 00:00:00 2015
 @@ -16,4 +16,4 @@
      require $var.$app;
  ?>
@@ -3986,7 +4056,7 @@ diff -uNra suhosin-0.9.33/tests/include/require_tmpvar.phpt suhosin-0.9.33.php52
 +ALERT - Include filename ('http://127.0.0.1/?') is a URL that is not allowed (attacker 'REMOTE_ADDR not set', file '%s', line 4)
 diff -uNra suhosin-0.9.33/tests/include/require_var.phpt suhosin-0.9.33.php52/tests/include/require_var.phpt
 --- suhosin-0.9.33/tests/include/require_var.phpt	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php52/tests/include/require_var.phpt	Tue Apr  7 16:58:04 2015
++++ suhosin-0.9.33.php52/tests/include/require_var.phpt	Fri May 15 00:00:00 2015
 @@ -15,4 +15,4 @@
      require $var;
  ?>
@@ -3995,7 +4065,7 @@ diff -uNra suhosin-0.9.33/tests/include/require_var.phpt suhosin-0.9.33.php52/te
 +ALERT - Include filename ('http://127.0.0.1/') is a URL that is not allowed (attacker 'REMOTE_ADDR not set', file '%s', line 3)
 diff -uNra suhosin-0.9.33/treat_data.c suhosin-0.9.33.php52/treat_data.c
 --- suhosin-0.9.33/treat_data.c	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php52/treat_data.c	Tue Apr  7 16:58:04 2015
++++ suhosin-0.9.33.php52/treat_data.c	Fri May 15 00:00:00 2015
 @@ -3,7 +3,7 @@
    | Suhosin Version 1                                                    |
    +----------------------------------------------------------------------+
@@ -4043,7 +4113,7 @@ diff -uNra suhosin-0.9.33/treat_data.c suhosin-0.9.33.php52/treat_data.c
  			unsigned int new_val_len;
 diff -uNra suhosin-0.9.33/ufilter.c suhosin-0.9.33.php52/ufilter.c
 --- suhosin-0.9.33/ufilter.c	Thu Jan 19 15:49:18 2012
-+++ suhosin-0.9.33.php52/ufilter.c	Tue Apr  7 16:58:04 2015
++++ suhosin-0.9.33.php52/ufilter.c	Fri May 15 00:00:00 2015
 @@ -3,7 +3,7 @@
    | Suhosin Version 1                                                    |
    +----------------------------------------------------------------------+
