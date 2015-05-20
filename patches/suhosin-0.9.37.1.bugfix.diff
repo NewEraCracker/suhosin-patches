@@ -1,6 +1,6 @@
 diff -uNra suhosin-0.9.37.1/crypt.c suhosin-0.9.37.1/crypt.c
 --- suhosin-0.9.37.1/crypt.c	Fri Dec 12 14:46:19 2014
-+++ suhosin-0.9.37.1/crypt.c	Wed May 20 15:00:00 2015
++++ suhosin-0.9.37.1/crypt.c	Wed May 20 23:00:00 2015
 @@ -3,7 +3,7 @@
    | Suhosin Version 1                                                    |
    +----------------------------------------------------------------------+
@@ -12,7 +12,7 @@ diff -uNra suhosin-0.9.37.1/crypt.c suhosin-0.9.37.1/crypt.c
    | that is bundled with this package in the file LICENSE, and is        |
 diff -uNra suhosin-0.9.37.1/ex_imp.c suhosin-0.9.37.1/ex_imp.c
 --- suhosin-0.9.37.1/ex_imp.c	Fri Dec 12 14:46:19 2014
-+++ suhosin-0.9.37.1/ex_imp.c	Wed May 20 15:00:00 2015
++++ suhosin-0.9.37.1/ex_imp.c	Wed May 20 23:00:00 2015
 @@ -3,7 +3,7 @@
    | Suhosin Version 1                                                    |
    +----------------------------------------------------------------------+
@@ -24,7 +24,7 @@ diff -uNra suhosin-0.9.37.1/ex_imp.c suhosin-0.9.37.1/ex_imp.c
    | that is bundled with this package in the file LICENSE, and is        |
 diff -uNra suhosin-0.9.37.1/execute.c suhosin-0.9.37.1/execute.c
 --- suhosin-0.9.37.1/execute.c	Fri Dec 12 14:46:19 2014
-+++ suhosin-0.9.37.1/execute.c	Wed May 20 15:00:00 2015
++++ suhosin-0.9.37.1/execute.c	Wed May 20 23:00:00 2015
 @@ -3,7 +3,7 @@
    | Suhosin Version 1                                                    |
    +----------------------------------------------------------------------+
@@ -434,7 +434,7 @@ diff -uNra suhosin-0.9.37.1/execute.c suhosin-0.9.37.1/execute.c
  		
 diff -uNra suhosin-0.9.37.1/header.c suhosin-0.9.37.1/header.c
 --- suhosin-0.9.37.1/header.c	Fri Dec 12 14:46:19 2014
-+++ suhosin-0.9.37.1/header.c	Wed May 20 15:00:00 2015
++++ suhosin-0.9.37.1/header.c	Wed May 20 23:00:00 2015
 @@ -3,7 +3,7 @@
    | Suhosin Version 1                                                    |
    +----------------------------------------------------------------------+
@@ -446,7 +446,7 @@ diff -uNra suhosin-0.9.37.1/header.c suhosin-0.9.37.1/header.c
    | that is bundled with this package in the file LICENSE, and is        |
 diff -uNra suhosin-0.9.37.1/ifilter.c suhosin-0.9.37.1/ifilter.c
 --- suhosin-0.9.37.1/ifilter.c	Fri Dec 12 14:46:19 2014
-+++ suhosin-0.9.37.1/ifilter.c	Wed May 20 15:00:00 2015
++++ suhosin-0.9.37.1/ifilter.c	Wed May 20 23:00:00 2015
 @@ -3,7 +3,7 @@
    | Suhosin Version 1                                                    |
    +----------------------------------------------------------------------+
@@ -458,7 +458,7 @@ diff -uNra suhosin-0.9.37.1/ifilter.c suhosin-0.9.37.1/ifilter.c
    | that is bundled with this package in the file LICENSE, and is        |
 diff -uNra suhosin-0.9.37.1/log.c suhosin-0.9.37.1/log.c
 --- suhosin-0.9.37.1/log.c	Fri Dec 12 14:46:19 2014
-+++ suhosin-0.9.37.1/log.c	Wed May 20 15:00:00 2015
++++ suhosin-0.9.37.1/log.c	Wed May 20 23:00:00 2015
 @@ -3,7 +3,7 @@
    | Suhosin Version 1                                                    |
    +----------------------------------------------------------------------+
@@ -470,7 +470,7 @@ diff -uNra suhosin-0.9.37.1/log.c suhosin-0.9.37.1/log.c
    | that is bundled with this package in the file LICENSE, and is        |
 diff -uNra suhosin-0.9.37.1/mbregex.h suhosin-0.9.37.1/mbregex.h
 --- suhosin-0.9.37.1/mbregex.h	Fri Dec 12 14:46:19 2014
-+++ suhosin-0.9.37.1/mbregex.h	Wed May 20 15:00:00 2015
++++ suhosin-0.9.37.1/mbregex.h	Wed May 20 23:00:00 2015
 @@ -3,7 +3,7 @@
    | Suhosin Version 1                                                    |
    +----------------------------------------------------------------------+
@@ -482,7 +482,7 @@ diff -uNra suhosin-0.9.37.1/mbregex.h suhosin-0.9.37.1/mbregex.h
    | that is bundled with this package in the file LICENSE, and is        |
 diff -uNra suhosin-0.9.37.1/memory_limit.c suhosin-0.9.37.1/memory_limit.c
 --- suhosin-0.9.37.1/memory_limit.c	Fri Dec 12 14:46:19 2014
-+++ suhosin-0.9.37.1/memory_limit.c	Wed May 20 15:00:00 2015
++++ suhosin-0.9.37.1/memory_limit.c	Wed May 20 23:00:00 2015
 @@ -3,7 +3,7 @@
    | Suhosin Version 1                                                    |
    +----------------------------------------------------------------------+
@@ -494,7 +494,7 @@ diff -uNra suhosin-0.9.37.1/memory_limit.c suhosin-0.9.37.1/memory_limit.c
    | that is bundled with this package in the file LICENSE, and is        |
 diff -uNra suhosin-0.9.37.1/php_suhosin.h suhosin-0.9.37.1/php_suhosin.h
 --- suhosin-0.9.37.1/php_suhosin.h	Fri Dec 12 14:46:19 2014
-+++ suhosin-0.9.37.1/php_suhosin.h	Wed May 20 15:00:00 2015
++++ suhosin-0.9.37.1/php_suhosin.h	Wed May 20 23:00:00 2015
 @@ -3,7 +3,7 @@
    | Suhosin Version 1                                                    |
    +----------------------------------------------------------------------+
@@ -523,7 +523,7 @@ diff -uNra suhosin-0.9.37.1/php_suhosin.h suhosin-0.9.37.1/php_suhosin.h
  	zend_bool  upload_disallow_binary;
 diff -uNra suhosin-0.9.37.1/post_handler.c suhosin-0.9.37.1/post_handler.c
 --- suhosin-0.9.37.1/post_handler.c	Fri Dec 12 14:46:19 2014
-+++ suhosin-0.9.37.1/post_handler.c	Wed May 20 15:00:00 2015
++++ suhosin-0.9.37.1/post_handler.c	Wed May 20 23:00:00 2015
 @@ -3,7 +3,7 @@
    | Suhosin Version 1                                                    |
    +----------------------------------------------------------------------+
@@ -535,7 +535,7 @@ diff -uNra suhosin-0.9.37.1/post_handler.c suhosin-0.9.37.1/post_handler.c
    | that is bundled with this package in the file LICENSE, and is        |
 diff -uNra suhosin-0.9.37.1/rfc1867.c suhosin-0.9.37.1/rfc1867.c
 --- suhosin-0.9.37.1/rfc1867.c	Fri Dec 12 14:46:19 2014
-+++ suhosin-0.9.37.1/rfc1867.c	Wed May 20 15:00:00 2015
++++ suhosin-0.9.37.1/rfc1867.c	Wed May 20 23:00:00 2015
 @@ -2,7 +2,7 @@
     +----------------------------------------------------------------------+
     | PHP Version 5                                                        |
@@ -567,6 +567,24 @@ diff -uNra suhosin-0.9.37.1/rfc1867.c suhosin-0.9.37.1/rfc1867.c
  
  #if PHP_VERSION_ID < 50400
  
+@@ -43,7 +44,7 @@
+ #if HAVE_MBSTRING && !defined(COMPILE_DL_MBSTRING)
+ #include "ext/mbstring/mbstring.h"
+ 
+-static void safe_php_register_variable(char *var, char *strval, zval *track_vars_array, zend_bool override_protection TSRMLS_DC);
++static void safe_php_register_variable(char *var, char *strval, int val_len, zval *track_vars_array, zend_bool override_protection TSRMLS_DC);
+ 
+ #define SAFE_RETURN { \
+     php_mb_flush_gpc_variables(num_vars, val_list, len_list, array_ptr TSRMLS_CC); \
+@@ -67,7 +68,7 @@
+ 			php_mb_gpc_encoding_converter(val_list, len_list, num_vars, NULL, NULL TSRMLS_CC);
+ 		}
+ 		for (i=0; i<num_vars; i+=2){
+-			safe_php_register_variable(val_list[i], val_list[i+1], array_ptr, 0 TSRMLS_CC);
++			safe_php_register_variable(val_list[i], val_list[i+1], len_list[i+1], array_ptr, 0 TSRMLS_CC);
+ 			efree(val_list[i]);
+ 			efree(val_list[i+1]);
+ 		} 
 @@ -93,8 +94,7 @@
  	int *len_list=*plen_list;
  
@@ -589,6 +607,28 @@ diff -uNra suhosin-0.9.37.1/rfc1867.c suhosin-0.9.37.1/rfc1867.c
  static void add_protected_variable(char *varname TSRMLS_DC)
  {
  	int dummy=1;
+@@ -228,10 +227,10 @@
+ }
+ 
+ 
+-static void safe_php_register_variable(char *var, char *strval, zval *track_vars_array, zend_bool override_protection TSRMLS_DC)
++static void safe_php_register_variable(char *var, char *strval, int val_len, zval *track_vars_array, zend_bool override_protection TSRMLS_DC) /* {{{ */
+ {
+ 	if (override_protection || !is_protected_variable(var TSRMLS_CC)) {
+-		php_register_variable(var, strval, track_vars_array TSRMLS_CC);
++		php_register_variable_safe(var, strval, val_len, track_vars_array TSRMLS_CC);
+ 	}
+ }
+ 
+@@ -251,7 +250,7 @@
+ 
+ 	PG(register_globals) = 0;
+ #endif
+-	safe_php_register_variable(strvar, val, http_post_files, override_protection TSRMLS_CC);
++	safe_php_register_variable(strvar, val, strlen(val), http_post_files, override_protection TSRMLS_CC);
+ #if PHP_VERSION_ID < 50400
+ 	PG(register_globals) = register_globals;
+ #endif
 @@ -299,10 +298,9 @@
  	char *value;
  } mime_header_entry;
@@ -665,7 +705,7 @@ diff -uNra suhosin-0.9.37.1/rfc1867.c suhosin-0.9.37.1/rfc1867.c
  		char *value = NULL;
  		
  		/* space in the beginning means same header */
-@@ -494,31 +490,41 @@
+@@ -494,31 +490,40 @@
  		}
  
  		if (value) {
@@ -681,10 +721,10 @@ diff -uNra suhosin-0.9.37.1/rfc1867.c suhosin-0.9.37.1/rfc1867.c
 -			cur_len = strlen(line);
 +			if(buf_value.c && key) {
 +				/* new entry, add the old one to the list */
++				newlines = 0;
 +				smart_str_0(&buf_value);
 +				entry.key = key;
 +				entry.value = buf_value.c;
-+				newlines = 0;
 +				zend_llist_add_element(header, &entry);
 +				buf_value.c = NULL;
 +				key = NULL;
@@ -720,13 +760,12 @@ diff -uNra suhosin-0.9.37.1/rfc1867.c suhosin-0.9.37.1/rfc1867.c
 +		smart_str_0(&buf_value);
 +		entry.key = key;
 +		entry.value = buf_value.c;
-+		newlines = 0;
  		zend_llist_add_element(header, &entry);
 -		prev_entry = entry;
  	}
  
  	return 1;
-@@ -551,7 +557,6 @@
+@@ -551,7 +556,6 @@
  	char *res;
  
  	while (*pos && *pos != stop) {
@@ -734,7 +773,7 @@ diff -uNra suhosin-0.9.37.1/rfc1867.c suhosin-0.9.37.1/rfc1867.c
  		if ((quote = *pos) == '"' || quote == '\'') {
  			++pos;
  			while (*pos && *pos != quote) {
-@@ -565,7 +570,6 @@
+@@ -565,7 +569,6 @@
  				++pos;
  			}
  		} else ++pos;
@@ -742,7 +781,7 @@ diff -uNra suhosin-0.9.37.1/rfc1867.c suhosin-0.9.37.1/rfc1867.c
  	}
  	if (*pos == '\0') {
  		res = estrdup(*line);
-@@ -610,7 +614,7 @@
+@@ -610,7 +613,7 @@
  		}
  	}
  
@@ -751,7 +790,7 @@ diff -uNra suhosin-0.9.37.1/rfc1867.c suhosin-0.9.37.1/rfc1867.c
  	return result;
  }
  
-@@ -676,11 +680,10 @@
+@@ -676,11 +679,10 @@
  	return res;
  }
  
@@ -766,7 +805,7 @@ diff -uNra suhosin-0.9.37.1/rfc1867.c suhosin-0.9.37.1/rfc1867.c
  */
  static void *php_ap_memstr(char *haystack, int haystacklen, char *needle, int needlen, int partial)
  {
-@@ -765,7 +768,9 @@
+@@ -765,7 +767,9 @@
  		total_bytes += read_bytes;
  	}
  
@@ -777,7 +816,7 @@ diff -uNra suhosin-0.9.37.1/rfc1867.c suhosin-0.9.37.1/rfc1867.c
  	*len = total_bytes;
  
  	return out;
-@@ -783,7 +788,8 @@
+@@ -783,7 +787,8 @@
  	char *temp_filename=NULL, *lbuf=NULL, *abuf=NULL;
  	int boundary_len=0, total_bytes=0, cancel_upload=0, is_arr_upload=0, array_len=0;
  	int max_file_size=0, skip_upload=0, anonindex=0, is_anonymous;
@@ -787,7 +826,7 @@ diff -uNra suhosin-0.9.37.1/rfc1867.c suhosin-0.9.37.1/rfc1867.c
  #if HAVE_MBSTRING && !defined(COMPILE_DL_MBSTRING)
  	int str_len = 0, num_vars = 0, num_vars_max = 2*10, *len_list = NULL;
  	char **val_list = NULL;
-@@ -793,13 +799,17 @@
+@@ -793,13 +798,17 @@
  	int fd=-1;
  	zend_llist header;
  	void *event_extra_data = NULL;
@@ -806,7 +845,7 @@ diff -uNra suhosin-0.9.37.1/rfc1867.c suhosin-0.9.37.1/rfc1867.c
  		sapi_module.sapi_error(E_WARNING, "POST Content-Length of %ld bytes exceeds the limit of %ld bytes", SG(request_info).content_length, SG(post_max_size));
  		return;
  	}
-@@ -835,7 +845,7 @@
+@@ -835,7 +844,7 @@
  		}
  	} else {
  		/* search for the end of the boundary */
@@ -815,7 +854,7 @@ diff -uNra suhosin-0.9.37.1/rfc1867.c suhosin-0.9.37.1/rfc1867.c
  	}
  	if (boundary_end) {
  		boundary_end[0] = '\0';
-@@ -947,11 +957,15 @@
+@@ -947,11 +956,15 @@
  				}
  
  #ifdef ZEND_ENGINE_2
@@ -832,7 +871,7 @@ diff -uNra suhosin-0.9.37.1/rfc1867.c suhosin-0.9.37.1/rfc1867.c
  
  						event_formdata.post_bytes_processed = SG(read_post_bytes);
  						event_formdata.name = param;
-@@ -968,8 +982,7 @@
+@@ -968,16 +981,21 @@
  					
  #if HAVE_MBSTRING && !defined(COMPILE_DL_MBSTRING)
  					if (php_mb_encoding_translation(TSRMLS_C)) {
@@ -840,9 +879,12 @@ diff -uNra suhosin-0.9.37.1/rfc1867.c suhosin-0.9.37.1/rfc1867.c
 -												  &num_vars, &num_vars_max TSRMLS_CC);
 +						php_mb_gpc_stack_variable(param, value, &val_list, &len_list, &num_vars, &num_vars_max TSRMLS_CC);
  					} else {
- 						safe_php_register_variable(param, value, array_ptr, 0 TSRMLS_CC);
+-						safe_php_register_variable(param, value, array_ptr, 0 TSRMLS_CC);
++						safe_php_register_variable(param, value, new_val_len, array_ptr, 0 TSRMLS_CC);
  					}
-@@ -978,6 +991,12 @@
+ #else
+-					safe_php_register_variable(param, value, array_ptr, 0 TSRMLS_CC);
++					safe_php_register_variable(param, value, new_val_len, array_ptr, 0 TSRMLS_CC);
  #endif
  #ifdef ZEND_ENGINE_2
  				} else {
@@ -855,7 +897,7 @@ diff -uNra suhosin-0.9.37.1/rfc1867.c suhosin-0.9.37.1/rfc1867.c
  					multipart_event_formdata event_formdata;
  
  					event_formdata.post_bytes_processed = SG(read_post_bytes);
-@@ -987,6 +1006,7 @@
+@@ -987,6 +1005,7 @@
  					event_formdata.newlength = NULL;
                      suhosin_rfc1867_filter(MULTIPART_EVENT_FORMDATA, &event_formdata, &event_extra_data TSRMLS_CC);			    
                  }
@@ -863,7 +905,7 @@ diff -uNra suhosin-0.9.37.1/rfc1867.c suhosin-0.9.37.1/rfc1867.c
  #endif				
  				if (!strcasecmp(param, "MAX_FILE_SIZE")) {
  					max_file_size = atol(value);
-@@ -1024,8 +1044,8 @@
+@@ -1024,8 +1043,8 @@
  			
  			/* New Rule: never repair potential malicious user input */
  			if (!skip_upload) {
@@ -873,7 +915,7 @@ diff -uNra suhosin-0.9.37.1/rfc1867.c suhosin-0.9.37.1/rfc1867.c
  				
  				while (*tmp) {
  					if (*tmp == '[') {
-@@ -1043,49 +1063,37 @@
+@@ -1043,49 +1062,37 @@
  					}
  					tmp++;				
  				}
@@ -931,7 +973,7 @@ diff -uNra suhosin-0.9.37.1/rfc1867.c suhosin-0.9.37.1/rfc1867.c
  #if DEBUG_FILE_UPLOAD
  				sapi_module.sapi_error(E_NOTICE, "No file uploaded");
  #endif
-@@ -1094,7 +1102,28 @@
+@@ -1094,7 +1101,28 @@
  
  			offset = 0;
  			end = 0;
@@ -961,7 +1003,7 @@ diff -uNra suhosin-0.9.37.1/rfc1867.c suhosin-0.9.37.1/rfc1867.c
  			{
  				{
  					multipart_event_file_data event_file_data;
-@@ -1110,22 +1139,26 @@
+@@ -1110,22 +1138,26 @@
  					}
  				}
  				
@@ -993,7 +1035,7 @@ diff -uNra suhosin-0.9.37.1/rfc1867.c suhosin-0.9.37.1/rfc1867.c
  #if DEBUG_FILE_UPLOAD
  						sapi_module.sapi_error(E_NOTICE, "Only %d bytes were written, expected to write %d", wlen, blen);
  #endif
-@@ -1133,21 +1166,24 @@
+@@ -1133,21 +1165,24 @@
  					} else {
  						total_bytes += wlen;
  					}
@@ -1021,7 +1063,7 @@ diff -uNra suhosin-0.9.37.1/rfc1867.c suhosin-0.9.37.1/rfc1867.c
  				sapi_module.sapi_error(E_WARNING, "Uploaded file size 0 - file [%s=%s] not saved", param, filename);
  				cancel_upload = 5;
  			}
-@@ -1178,8 +1214,7 @@
+@@ -1178,8 +1213,7 @@
  
  			/* is_arr_upload is true when name of file upload field
  			 * ends in [.*]
@@ -1031,7 +1073,7 @@ diff -uNra suhosin-0.9.37.1/rfc1867.c suhosin-0.9.37.1/rfc1867.c
  			is_arr_upload =	(start_arr = strchr(param,'[')) && (param[strlen(param)-1] == ']');
  
  			if (is_arr_upload) {
-@@ -1191,24 +1226,24 @@
+@@ -1191,24 +1225,24 @@
  			}
  			
  			/* Add $foo_name */
@@ -1063,7 +1105,7 @@ diff -uNra suhosin-0.9.37.1/rfc1867.c suhosin-0.9.37.1/rfc1867.c
  				}
  				val_list[num_vars] = filename;
  				len_list[num_vars] = strlen(filename);
-@@ -1229,19 +1264,19 @@
+@@ -1229,19 +1263,19 @@
  			 * it is a valid path separator. However, IE in all it's wisdom always sends
  			 * the full path of the file on the user's filesystem, which means that unless
  			 * the user does basename() they get a bogus file name. Until IE's user base drops 
@@ -1090,16 +1132,19 @@ diff -uNra suhosin-0.9.37.1/rfc1867.c suhosin-0.9.37.1/rfc1867.c
  			}
  #endif
  
-@@ -1250,7 +1285,7 @@
+@@ -1250,20 +1284,20 @@
  #endif
  			
  			if (!is_anonymous) {
 -				if (s && s > filename) {
+-					safe_php_register_variable(lbuf, s+1, NULL, 0 TSRMLS_CC);
 +				if (s && s >= filename) {
- 					safe_php_register_variable(lbuf, s+1, NULL, 0 TSRMLS_CC);
++					safe_php_register_variable(lbuf, s+1, strlen(s+1), NULL, 0 TSRMLS_CC);
  				} else {
- 					safe_php_register_variable(lbuf, filename, NULL, 0 TSRMLS_CC);
-@@ -1259,11 +1294,11 @@
+-					safe_php_register_variable(lbuf, filename, NULL, 0 TSRMLS_CC);
++					safe_php_register_variable(lbuf, filename, strlen(filename), NULL, 0 TSRMLS_CC);
+ 				}
+ 			}
  
  			/* Add $foo[name] */
  			if (is_arr_upload) {
@@ -1114,7 +1159,7 @@ diff -uNra suhosin-0.9.37.1/rfc1867.c suhosin-0.9.37.1/rfc1867.c
  				register_http_post_files_variable(lbuf, s+1, http_post_files, 0 TSRMLS_CC);
  			} else {
  				register_http_post_files_variable(lbuf, filename, http_post_files, 0 TSRMLS_CC);
-@@ -1284,9 +1319,9 @@
+@@ -1284,19 +1318,19 @@
  
  			/* Add $foo_type */
  			if (is_arr_upload) {
@@ -1125,8 +1170,9 @@ diff -uNra suhosin-0.9.37.1/rfc1867.c suhosin-0.9.37.1/rfc1867.c
 +				snprintf(lbuf, llen, "%s_type", param);
  			}
  			if (!is_anonymous) {
- 				safe_php_register_variable(lbuf, cd, NULL, 0 TSRMLS_CC);
-@@ -1294,9 +1329,9 @@
+-				safe_php_register_variable(lbuf, cd, NULL, 0 TSRMLS_CC);
++				safe_php_register_variable(lbuf, cd, strlen(cd), NULL, 0 TSRMLS_CC);
+ 			}
  
  			/* Add $foo[type] */
  			if (is_arr_upload) {
@@ -1138,7 +1184,7 @@ diff -uNra suhosin-0.9.37.1/rfc1867.c suhosin-0.9.37.1/rfc1867.c
  			}
  			register_http_post_files_variable(lbuf, cd, http_post_files, 0 TSRMLS_CC);
  
-@@ -1322,9 +1357,9 @@
+@@ -1322,9 +1356,9 @@
  
  				/* Add $foo[tmp_name] */
  				if (is_arr_upload) {
@@ -1150,7 +1196,7 @@ diff -uNra suhosin-0.9.37.1/rfc1867.c suhosin-0.9.37.1/rfc1867.c
  				}
  				add_protected_variable(lbuf TSRMLS_CC);
  				ZVAL_STRING(&zfilename, temp_filename, 1);
-@@ -1347,17 +1382,17 @@
+@@ -1347,17 +1381,17 @@
  				}	
  	
  				if (is_arr_upload) {
@@ -1172,7 +1218,7 @@ diff -uNra suhosin-0.9.37.1/rfc1867.c suhosin-0.9.37.1/rfc1867.c
  				}
  				if (!is_anonymous) {
  					safe_php_register_variable_ex(lbuf, &file_size, NULL, 0 TSRMLS_CC);
-@@ -1365,9 +1400,9 @@
+@@ -1365,9 +1399,9 @@
  
  				/* Add $foo[size] */
  				if (is_arr_upload) {
@@ -1186,7 +1232,7 @@ diff -uNra suhosin-0.9.37.1/rfc1867.c suhosin-0.9.37.1/rfc1867.c
  			}
 diff -uNra suhosin-0.9.37.1/rfc1867_new.c suhosin-0.9.37.1/rfc1867_new.c
 --- suhosin-0.9.37.1/rfc1867_new.c	Fri Dec 12 14:46:19 2014
-+++ suhosin-0.9.37.1/rfc1867_new.c	Wed May 20 15:00:00 2015
++++ suhosin-0.9.37.1/rfc1867_new.c	Wed May 20 23:00:00 2015
 @@ -34,6 +34,7 @@
  #include "php_suhosin.h"
  #include "suhosin_rfc1867.h"
@@ -1221,7 +1267,7 @@ diff -uNra suhosin-0.9.37.1/rfc1867_new.c suhosin-0.9.37.1/rfc1867_new.c
  		}
  
  		/* space in the beginning means same header */
-@@ -412,31 +414,41 @@
+@@ -412,31 +414,40 @@
  		}
  
  		if (value) {
@@ -1237,10 +1283,10 @@ diff -uNra suhosin-0.9.37.1/rfc1867_new.c suhosin-0.9.37.1/rfc1867_new.c
 -			cur_len = strlen(line);
 +			if(buf_value.c && key) {
 +				/* new entry, add the old one to the list */
++				newlines = 0;
 +				smart_str_0(&buf_value);
 +				entry.key = key;
 +				entry.value = buf_value.c;
-+				newlines = 0;
 +				zend_llist_add_element(header, &entry);
 +				buf_value.c = NULL;
 +				key = NULL;
@@ -1276,7 +1322,6 @@ diff -uNra suhosin-0.9.37.1/rfc1867_new.c suhosin-0.9.37.1/rfc1867_new.c
 +		smart_str_0(&buf_value);
 +		entry.key = key;
 +		entry.value = buf_value.c;
-+		newlines = 0;
  		zend_llist_add_element(header, &entry);
 -		prev_entry = entry;
  	}
@@ -1284,7 +1329,7 @@ diff -uNra suhosin-0.9.37.1/rfc1867_new.c suhosin-0.9.37.1/rfc1867_new.c
  	return 1;
 diff -uNra suhosin-0.9.37.1/session.c suhosin-0.9.37.1/session.c
 --- suhosin-0.9.37.1/session.c	Fri Dec 12 14:46:19 2014
-+++ suhosin-0.9.37.1/session.c	Wed May 20 15:00:00 2015
++++ suhosin-0.9.37.1/session.c	Wed May 20 23:00:00 2015
 @@ -3,7 +3,7 @@
    | Suhosin Version 1                                                    |
    +----------------------------------------------------------------------+
@@ -1331,7 +1376,7 @@ diff -uNra suhosin-0.9.37.1/session.c suhosin-0.9.37.1/session.c
  
 diff -uNra suhosin-0.9.37.1/sha256.c suhosin-0.9.37.1/sha256.c
 --- suhosin-0.9.37.1/sha256.c	Fri Dec 12 14:46:19 2014
-+++ suhosin-0.9.37.1/sha256.c	Wed May 20 15:00:00 2015
++++ suhosin-0.9.37.1/sha256.c	Wed May 20 23:00:00 2015
 @@ -3,7 +3,7 @@
    | Suhosin Version 1                                                    |
    +----------------------------------------------------------------------+
@@ -1343,7 +1388,7 @@ diff -uNra suhosin-0.9.37.1/sha256.c suhosin-0.9.37.1/sha256.c
    | that is bundled with this package in the file LICENSE, and is        |
 diff -uNra suhosin-0.9.37.1/sha256.h suhosin-0.9.37.1/sha256.h
 --- suhosin-0.9.37.1/sha256.h	Fri Dec 12 14:46:19 2014
-+++ suhosin-0.9.37.1/sha256.h	Wed May 20 15:00:00 2015
++++ suhosin-0.9.37.1/sha256.h	Wed May 20 23:00:00 2015
 @@ -3,7 +3,7 @@
    | Suhosin Version 1                                                    |
    +----------------------------------------------------------------------+
@@ -1355,7 +1400,7 @@ diff -uNra suhosin-0.9.37.1/sha256.h suhosin-0.9.37.1/sha256.h
    | that is bundled with this package in the file LICENSE, and is        |
 diff -uNra suhosin-0.9.37.1/suhosin.c suhosin-0.9.37.1/suhosin.c
 --- suhosin-0.9.37.1/suhosin.c	Fri Dec 12 14:46:19 2014
-+++ suhosin-0.9.37.1/suhosin.c	Wed May 20 15:00:00 2015
++++ suhosin-0.9.37.1/suhosin.c	Wed May 20 23:00:00 2015
 @@ -3,7 +3,7 @@
    | Suhosin Version 1                                                    |
    +----------------------------------------------------------------------+
@@ -1569,7 +1614,7 @@ diff -uNra suhosin-0.9.37.1/suhosin.c suhosin-0.9.37.1/suhosin.c
  
 diff -uNra suhosin-0.9.37.1/suhosin.ini suhosin-0.9.37.1/suhosin.ini
 --- suhosin-0.9.37.1/suhosin.ini	Fri Dec 12 14:46:19 2014
-+++ suhosin-0.9.37.1/suhosin.ini	Wed May 20 15:00:00 2015
++++ suhosin-0.9.37.1/suhosin.ini	Wed May 20 23:00:00 2015
 @@ -282,10 +282,6 @@
  ;suhosin.log.phpscript.is_safe = Off
  ;
@@ -1707,7 +1752,7 @@ diff -uNra suhosin-0.9.37.1/suhosin.ini suhosin-0.9.37.1/suhosin.ini
  ; suhosin.upload.disallow_elf
 diff -uNra suhosin-0.9.37.1/suhosin_rfc1867.h suhosin-0.9.37.1/suhosin_rfc1867.h
 --- suhosin-0.9.37.1/suhosin_rfc1867.h	Fri Dec 12 14:46:19 2014
-+++ suhosin-0.9.37.1/suhosin_rfc1867.h	Wed May 20 15:00:00 2015
++++ suhosin-0.9.37.1/suhosin_rfc1867.h	Wed May 20 23:00:00 2015
 @@ -3,7 +3,7 @@
    | Suhosin Version 1                                                    |
    +----------------------------------------------------------------------+
@@ -1727,7 +1772,7 @@ diff -uNra suhosin-0.9.37.1/suhosin_rfc1867.h suhosin-0.9.37.1/suhosin_rfc1867.h
  #else
 diff -uNra suhosin-0.9.37.1/tests/filter/input_filter_request_array_index_blacklist.phpt suhosin-0.9.37.1/tests/filter/input_filter_request_array_index_blacklist.phpt
 --- suhosin-0.9.37.1/tests/filter/input_filter_request_array_index_blacklist.phpt	Fri Dec 12 14:46:19 2014
-+++ suhosin-0.9.37.1/tests/filter/input_filter_request_array_index_blacklist.phpt	Wed May 20 15:00:00 2015
++++ suhosin-0.9.37.1/tests/filter/input_filter_request_array_index_blacklist.phpt	Wed May 20 23:00:00 2015
 @@ -10,7 +10,7 @@
  auto_append_file={PWD}/suhosintest.$$.log.tmp
  suhosin.request.array_index_blacklist="=ABC%{}\\$;"
@@ -1739,7 +1784,7 @@ diff -uNra suhosin-0.9.37.1/tests/filter/input_filter_request_array_index_blackl
  --GET--
 diff -uNra suhosin-0.9.37.1/tests/filter/input_filter_request_array_index_whitelist.phpt suhosin-0.9.37.1/tests/filter/input_filter_request_array_index_whitelist.phpt
 --- suhosin-0.9.37.1/tests/filter/input_filter_request_array_index_whitelist.phpt	Fri Dec 12 14:46:19 2014
-+++ suhosin-0.9.37.1/tests/filter/input_filter_request_array_index_whitelist.phpt	Wed May 20 15:00:00 2015
++++ suhosin-0.9.37.1/tests/filter/input_filter_request_array_index_whitelist.phpt	Wed May 20 23:00:00 2015
 @@ -10,7 +10,7 @@
  auto_append_file={PWD}/suhosintest.$$.log.tmp
  suhosin.request.array_index_whitelist=abcdefghijklmnopqrstuvwxyz
@@ -1751,7 +1796,7 @@ diff -uNra suhosin-0.9.37.1/tests/filter/input_filter_request_array_index_whitel
  --GET--
 diff -uNra suhosin-0.9.37.1/tests/filter/post_fileupload_array_index_blacklist.phpt suhosin-0.9.37.1/tests/filter/post_fileupload_array_index_blacklist.phpt
 --- suhosin-0.9.37.1/tests/filter/post_fileupload_array_index_blacklist.phpt	Fri Dec 12 14:46:19 2014
-+++ suhosin-0.9.37.1/tests/filter/post_fileupload_array_index_blacklist.phpt	Wed May 20 15:00:00 2015
++++ suhosin-0.9.37.1/tests/filter/post_fileupload_array_index_blacklist.phpt	Wed May 20 23:00:00 2015
 @@ -11,7 +11,7 @@
  file_uploads=1
  suhosin.request.array_index_blacklist=ABC
@@ -1763,7 +1808,7 @@ diff -uNra suhosin-0.9.37.1/tests/filter/post_fileupload_array_index_blacklist.p
  --POST_RAW--
 diff -uNra suhosin-0.9.37.1/tests/filter/post_fileupload_array_index_whitelist.phpt suhosin-0.9.37.1/tests/filter/post_fileupload_array_index_whitelist.phpt
 --- suhosin-0.9.37.1/tests/filter/post_fileupload_array_index_whitelist.phpt	Fri Dec 12 14:46:19 2014
-+++ suhosin-0.9.37.1/tests/filter/post_fileupload_array_index_whitelist.phpt	Wed May 20 15:00:00 2015
++++ suhosin-0.9.37.1/tests/filter/post_fileupload_array_index_whitelist.phpt	Wed May 20 23:00:00 2015
 @@ -11,7 +11,7 @@
  file_uploads=1
  suhosin.request.array_index_whitelist=abcdefghijklmnopqrstuvwxyz
@@ -1775,7 +1820,7 @@ diff -uNra suhosin-0.9.37.1/tests/filter/post_fileupload_array_index_whitelist.p
  --POST_RAW--
 diff -uNra suhosin-0.9.37.1/treat_data.c suhosin-0.9.37.1/treat_data.c
 --- suhosin-0.9.37.1/treat_data.c	Fri Dec 12 14:46:19 2014
-+++ suhosin-0.9.37.1/treat_data.c	Wed May 20 15:00:00 2015
++++ suhosin-0.9.37.1/treat_data.c	Wed May 20 23:00:00 2015
 @@ -3,7 +3,7 @@
    | Suhosin Version 1                                                    |
    +----------------------------------------------------------------------+
@@ -1787,7 +1832,7 @@ diff -uNra suhosin-0.9.37.1/treat_data.c suhosin-0.9.37.1/treat_data.c
    | that is bundled with this package in the file LICENSE, and is        |
 diff -uNra suhosin-0.9.37.1/ufilter.c suhosin-0.9.37.1/ufilter.c
 --- suhosin-0.9.37.1/ufilter.c	Fri Dec 12 14:46:19 2014
-+++ suhosin-0.9.37.1/ufilter.c	Wed May 20 15:00:00 2015
++++ suhosin-0.9.37.1/ufilter.c	Wed May 20 23:00:00 2015
 @@ -3,7 +3,7 @@
    | Suhosin Version 1                                                    |
    +----------------------------------------------------------------------+
