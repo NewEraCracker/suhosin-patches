@@ -1,6 +1,6 @@
 diff -uNra suhosin-0.9.37.1/crypt.c suhosin-0.9.37.1/crypt.c
 --- suhosin-0.9.37.1/crypt.c	Fri Dec 12 14:46:19 2014
-+++ suhosin-0.9.37.1/crypt.c	Wed May 20 23:00:00 2015
++++ suhosin-0.9.37.1/crypt.c	Thu May 21 18:00:00 2015
 @@ -3,7 +3,7 @@
    | Suhosin Version 1                                                    |
    +----------------------------------------------------------------------+
@@ -12,7 +12,7 @@ diff -uNra suhosin-0.9.37.1/crypt.c suhosin-0.9.37.1/crypt.c
    | that is bundled with this package in the file LICENSE, and is        |
 diff -uNra suhosin-0.9.37.1/ex_imp.c suhosin-0.9.37.1/ex_imp.c
 --- suhosin-0.9.37.1/ex_imp.c	Fri Dec 12 14:46:19 2014
-+++ suhosin-0.9.37.1/ex_imp.c	Wed May 20 23:00:00 2015
++++ suhosin-0.9.37.1/ex_imp.c	Thu May 21 18:00:00 2015
 @@ -3,7 +3,7 @@
    | Suhosin Version 1                                                    |
    +----------------------------------------------------------------------+
@@ -24,7 +24,7 @@ diff -uNra suhosin-0.9.37.1/ex_imp.c suhosin-0.9.37.1/ex_imp.c
    | that is bundled with this package in the file LICENSE, and is        |
 diff -uNra suhosin-0.9.37.1/execute.c suhosin-0.9.37.1/execute.c
 --- suhosin-0.9.37.1/execute.c	Fri Dec 12 14:46:19 2014
-+++ suhosin-0.9.37.1/execute.c	Wed May 20 23:00:00 2015
++++ suhosin-0.9.37.1/execute.c	Thu May 21 18:00:00 2015
 @@ -3,7 +3,7 @@
    | Suhosin Version 1                                                    |
    +----------------------------------------------------------------------+
@@ -434,7 +434,7 @@ diff -uNra suhosin-0.9.37.1/execute.c suhosin-0.9.37.1/execute.c
  		
 diff -uNra suhosin-0.9.37.1/header.c suhosin-0.9.37.1/header.c
 --- suhosin-0.9.37.1/header.c	Fri Dec 12 14:46:19 2014
-+++ suhosin-0.9.37.1/header.c	Wed May 20 23:00:00 2015
++++ suhosin-0.9.37.1/header.c	Thu May 21 18:00:00 2015
 @@ -3,7 +3,7 @@
    | Suhosin Version 1                                                    |
    +----------------------------------------------------------------------+
@@ -446,7 +446,7 @@ diff -uNra suhosin-0.9.37.1/header.c suhosin-0.9.37.1/header.c
    | that is bundled with this package in the file LICENSE, and is        |
 diff -uNra suhosin-0.9.37.1/ifilter.c suhosin-0.9.37.1/ifilter.c
 --- suhosin-0.9.37.1/ifilter.c	Fri Dec 12 14:46:19 2014
-+++ suhosin-0.9.37.1/ifilter.c	Wed May 20 23:00:00 2015
++++ suhosin-0.9.37.1/ifilter.c	Thu May 21 18:00:00 2015
 @@ -3,7 +3,7 @@
    | Suhosin Version 1                                                    |
    +----------------------------------------------------------------------+
@@ -458,7 +458,7 @@ diff -uNra suhosin-0.9.37.1/ifilter.c suhosin-0.9.37.1/ifilter.c
    | that is bundled with this package in the file LICENSE, and is        |
 diff -uNra suhosin-0.9.37.1/log.c suhosin-0.9.37.1/log.c
 --- suhosin-0.9.37.1/log.c	Fri Dec 12 14:46:19 2014
-+++ suhosin-0.9.37.1/log.c	Wed May 20 23:00:00 2015
++++ suhosin-0.9.37.1/log.c	Thu May 21 18:00:00 2015
 @@ -3,7 +3,7 @@
    | Suhosin Version 1                                                    |
    +----------------------------------------------------------------------+
@@ -470,7 +470,7 @@ diff -uNra suhosin-0.9.37.1/log.c suhosin-0.9.37.1/log.c
    | that is bundled with this package in the file LICENSE, and is        |
 diff -uNra suhosin-0.9.37.1/mbregex.h suhosin-0.9.37.1/mbregex.h
 --- suhosin-0.9.37.1/mbregex.h	Fri Dec 12 14:46:19 2014
-+++ suhosin-0.9.37.1/mbregex.h	Wed May 20 23:00:00 2015
++++ suhosin-0.9.37.1/mbregex.h	Thu May 21 18:00:00 2015
 @@ -3,7 +3,7 @@
    | Suhosin Version 1                                                    |
    +----------------------------------------------------------------------+
@@ -482,7 +482,7 @@ diff -uNra suhosin-0.9.37.1/mbregex.h suhosin-0.9.37.1/mbregex.h
    | that is bundled with this package in the file LICENSE, and is        |
 diff -uNra suhosin-0.9.37.1/memory_limit.c suhosin-0.9.37.1/memory_limit.c
 --- suhosin-0.9.37.1/memory_limit.c	Fri Dec 12 14:46:19 2014
-+++ suhosin-0.9.37.1/memory_limit.c	Wed May 20 23:00:00 2015
++++ suhosin-0.9.37.1/memory_limit.c	Thu May 21 18:00:00 2015
 @@ -3,7 +3,7 @@
    | Suhosin Version 1                                                    |
    +----------------------------------------------------------------------+
@@ -494,7 +494,7 @@ diff -uNra suhosin-0.9.37.1/memory_limit.c suhosin-0.9.37.1/memory_limit.c
    | that is bundled with this package in the file LICENSE, and is        |
 diff -uNra suhosin-0.9.37.1/php_suhosin.h suhosin-0.9.37.1/php_suhosin.h
 --- suhosin-0.9.37.1/php_suhosin.h	Fri Dec 12 14:46:19 2014
-+++ suhosin-0.9.37.1/php_suhosin.h	Wed May 20 23:00:00 2015
++++ suhosin-0.9.37.1/php_suhosin.h	Thu May 21 18:00:00 2015
 @@ -3,7 +3,7 @@
    | Suhosin Version 1                                                    |
    +----------------------------------------------------------------------+
@@ -523,7 +523,7 @@ diff -uNra suhosin-0.9.37.1/php_suhosin.h suhosin-0.9.37.1/php_suhosin.h
  	zend_bool  upload_disallow_binary;
 diff -uNra suhosin-0.9.37.1/post_handler.c suhosin-0.9.37.1/post_handler.c
 --- suhosin-0.9.37.1/post_handler.c	Fri Dec 12 14:46:19 2014
-+++ suhosin-0.9.37.1/post_handler.c	Wed May 20 23:00:00 2015
++++ suhosin-0.9.37.1/post_handler.c	Thu May 21 18:00:00 2015
 @@ -3,7 +3,7 @@
    | Suhosin Version 1                                                    |
    +----------------------------------------------------------------------+
@@ -533,9 +533,29 @@ diff -uNra suhosin-0.9.37.1/post_handler.c suhosin-0.9.37.1/post_handler.c
    +----------------------------------------------------------------------+
    | This source file is subject to version 3.01 of the PHP license,      |
    | that is bundled with this package in the file LICENSE, and is        |
+@@ -183,8 +183,8 @@
+ 		memset(&post_data, 0, sizeof(post_data));
+ 
+ 		while (!php_stream_eof(s)) {
+-			char buf[BUFSIZ] = {0};
+-			size_t len = php_stream_read(s, buf, BUFSIZ);
++			char buf[SAPI_POST_BLOCK_SIZE] = {0};
++			size_t len = php_stream_read(s, buf, SAPI_POST_BLOCK_SIZE);
+ 
+ 			if (len && len != (size_t) -1) {
+ 				smart_str_appendl(&post_data.str, buf, len);
+@@ -197,7 +197,7 @@
+ 				}
+ 			}
+ 
+-			if (len != BUFSIZ){
++			if (len != SAPI_POST_BLOCK_SIZE){
+ 				break;
+ 			}
+ 		}
 diff -uNra suhosin-0.9.37.1/rfc1867.c suhosin-0.9.37.1/rfc1867.c
 --- suhosin-0.9.37.1/rfc1867.c	Fri Dec 12 14:46:19 2014
-+++ suhosin-0.9.37.1/rfc1867.c	Wed May 20 23:00:00 2015
++++ suhosin-0.9.37.1/rfc1867.c	Thu May 21 18:00:00 2015
 @@ -2,7 +2,7 @@
     +----------------------------------------------------------------------+
     | PHP Version 5                                                        |
@@ -1232,7 +1252,7 @@ diff -uNra suhosin-0.9.37.1/rfc1867.c suhosin-0.9.37.1/rfc1867.c
  			}
 diff -uNra suhosin-0.9.37.1/rfc1867_new.c suhosin-0.9.37.1/rfc1867_new.c
 --- suhosin-0.9.37.1/rfc1867_new.c	Fri Dec 12 14:46:19 2014
-+++ suhosin-0.9.37.1/rfc1867_new.c	Wed May 20 23:00:00 2015
++++ suhosin-0.9.37.1/rfc1867_new.c	Thu May 21 18:00:00 2015
 @@ -34,6 +34,7 @@
  #include "php_suhosin.h"
  #include "suhosin_rfc1867.h"
@@ -1329,7 +1349,7 @@ diff -uNra suhosin-0.9.37.1/rfc1867_new.c suhosin-0.9.37.1/rfc1867_new.c
  	return 1;
 diff -uNra suhosin-0.9.37.1/session.c suhosin-0.9.37.1/session.c
 --- suhosin-0.9.37.1/session.c	Fri Dec 12 14:46:19 2014
-+++ suhosin-0.9.37.1/session.c	Wed May 20 23:00:00 2015
++++ suhosin-0.9.37.1/session.c	Thu May 21 18:00:00 2015
 @@ -3,7 +3,7 @@
    | Suhosin Version 1                                                    |
    +----------------------------------------------------------------------+
@@ -1376,7 +1396,7 @@ diff -uNra suhosin-0.9.37.1/session.c suhosin-0.9.37.1/session.c
  
 diff -uNra suhosin-0.9.37.1/sha256.c suhosin-0.9.37.1/sha256.c
 --- suhosin-0.9.37.1/sha256.c	Fri Dec 12 14:46:19 2014
-+++ suhosin-0.9.37.1/sha256.c	Wed May 20 23:00:00 2015
++++ suhosin-0.9.37.1/sha256.c	Thu May 21 18:00:00 2015
 @@ -3,7 +3,7 @@
    | Suhosin Version 1                                                    |
    +----------------------------------------------------------------------+
@@ -1388,7 +1408,7 @@ diff -uNra suhosin-0.9.37.1/sha256.c suhosin-0.9.37.1/sha256.c
    | that is bundled with this package in the file LICENSE, and is        |
 diff -uNra suhosin-0.9.37.1/sha256.h suhosin-0.9.37.1/sha256.h
 --- suhosin-0.9.37.1/sha256.h	Fri Dec 12 14:46:19 2014
-+++ suhosin-0.9.37.1/sha256.h	Wed May 20 23:00:00 2015
++++ suhosin-0.9.37.1/sha256.h	Thu May 21 18:00:00 2015
 @@ -3,7 +3,7 @@
    | Suhosin Version 1                                                    |
    +----------------------------------------------------------------------+
@@ -1400,7 +1420,7 @@ diff -uNra suhosin-0.9.37.1/sha256.h suhosin-0.9.37.1/sha256.h
    | that is bundled with this package in the file LICENSE, and is        |
 diff -uNra suhosin-0.9.37.1/suhosin.c suhosin-0.9.37.1/suhosin.c
 --- suhosin-0.9.37.1/suhosin.c	Fri Dec 12 14:46:19 2014
-+++ suhosin-0.9.37.1/suhosin.c	Wed May 20 23:00:00 2015
++++ suhosin-0.9.37.1/suhosin.c	Thu May 21 18:00:00 2015
 @@ -3,7 +3,7 @@
    | Suhosin Version 1                                                    |
    +----------------------------------------------------------------------+
@@ -1614,7 +1634,7 @@ diff -uNra suhosin-0.9.37.1/suhosin.c suhosin-0.9.37.1/suhosin.c
  
 diff -uNra suhosin-0.9.37.1/suhosin.ini suhosin-0.9.37.1/suhosin.ini
 --- suhosin-0.9.37.1/suhosin.ini	Fri Dec 12 14:46:19 2014
-+++ suhosin-0.9.37.1/suhosin.ini	Wed May 20 23:00:00 2015
++++ suhosin-0.9.37.1/suhosin.ini	Thu May 21 18:00:00 2015
 @@ -282,10 +282,6 @@
  ;suhosin.log.phpscript.is_safe = Off
  ;
@@ -1752,7 +1772,7 @@ diff -uNra suhosin-0.9.37.1/suhosin.ini suhosin-0.9.37.1/suhosin.ini
  ; suhosin.upload.disallow_elf
 diff -uNra suhosin-0.9.37.1/suhosin_rfc1867.h suhosin-0.9.37.1/suhosin_rfc1867.h
 --- suhosin-0.9.37.1/suhosin_rfc1867.h	Fri Dec 12 14:46:19 2014
-+++ suhosin-0.9.37.1/suhosin_rfc1867.h	Wed May 20 23:00:00 2015
++++ suhosin-0.9.37.1/suhosin_rfc1867.h	Thu May 21 18:00:00 2015
 @@ -3,7 +3,7 @@
    | Suhosin Version 1                                                    |
    +----------------------------------------------------------------------+
@@ -1772,7 +1792,7 @@ diff -uNra suhosin-0.9.37.1/suhosin_rfc1867.h suhosin-0.9.37.1/suhosin_rfc1867.h
  #else
 diff -uNra suhosin-0.9.37.1/tests/filter/input_filter_request_array_index_blacklist.phpt suhosin-0.9.37.1/tests/filter/input_filter_request_array_index_blacklist.phpt
 --- suhosin-0.9.37.1/tests/filter/input_filter_request_array_index_blacklist.phpt	Fri Dec 12 14:46:19 2014
-+++ suhosin-0.9.37.1/tests/filter/input_filter_request_array_index_blacklist.phpt	Wed May 20 23:00:00 2015
++++ suhosin-0.9.37.1/tests/filter/input_filter_request_array_index_blacklist.phpt	Thu May 21 18:00:00 2015
 @@ -10,7 +10,7 @@
  auto_append_file={PWD}/suhosintest.$$.log.tmp
  suhosin.request.array_index_blacklist="=ABC%{}\\$;"
@@ -1784,7 +1804,7 @@ diff -uNra suhosin-0.9.37.1/tests/filter/input_filter_request_array_index_blackl
  --GET--
 diff -uNra suhosin-0.9.37.1/tests/filter/input_filter_request_array_index_whitelist.phpt suhosin-0.9.37.1/tests/filter/input_filter_request_array_index_whitelist.phpt
 --- suhosin-0.9.37.1/tests/filter/input_filter_request_array_index_whitelist.phpt	Fri Dec 12 14:46:19 2014
-+++ suhosin-0.9.37.1/tests/filter/input_filter_request_array_index_whitelist.phpt	Wed May 20 23:00:00 2015
++++ suhosin-0.9.37.1/tests/filter/input_filter_request_array_index_whitelist.phpt	Thu May 21 18:00:00 2015
 @@ -10,7 +10,7 @@
  auto_append_file={PWD}/suhosintest.$$.log.tmp
  suhosin.request.array_index_whitelist=abcdefghijklmnopqrstuvwxyz
@@ -1796,7 +1816,7 @@ diff -uNra suhosin-0.9.37.1/tests/filter/input_filter_request_array_index_whitel
  --GET--
 diff -uNra suhosin-0.9.37.1/tests/filter/post_fileupload_array_index_blacklist.phpt suhosin-0.9.37.1/tests/filter/post_fileupload_array_index_blacklist.phpt
 --- suhosin-0.9.37.1/tests/filter/post_fileupload_array_index_blacklist.phpt	Fri Dec 12 14:46:19 2014
-+++ suhosin-0.9.37.1/tests/filter/post_fileupload_array_index_blacklist.phpt	Wed May 20 23:00:00 2015
++++ suhosin-0.9.37.1/tests/filter/post_fileupload_array_index_blacklist.phpt	Thu May 21 18:00:00 2015
 @@ -11,7 +11,7 @@
  file_uploads=1
  suhosin.request.array_index_blacklist=ABC
@@ -1808,7 +1828,7 @@ diff -uNra suhosin-0.9.37.1/tests/filter/post_fileupload_array_index_blacklist.p
  --POST_RAW--
 diff -uNra suhosin-0.9.37.1/tests/filter/post_fileupload_array_index_whitelist.phpt suhosin-0.9.37.1/tests/filter/post_fileupload_array_index_whitelist.phpt
 --- suhosin-0.9.37.1/tests/filter/post_fileupload_array_index_whitelist.phpt	Fri Dec 12 14:46:19 2014
-+++ suhosin-0.9.37.1/tests/filter/post_fileupload_array_index_whitelist.phpt	Wed May 20 23:00:00 2015
++++ suhosin-0.9.37.1/tests/filter/post_fileupload_array_index_whitelist.phpt	Thu May 21 18:00:00 2015
 @@ -11,7 +11,7 @@
  file_uploads=1
  suhosin.request.array_index_whitelist=abcdefghijklmnopqrstuvwxyz
@@ -1820,7 +1840,7 @@ diff -uNra suhosin-0.9.37.1/tests/filter/post_fileupload_array_index_whitelist.p
  --POST_RAW--
 diff -uNra suhosin-0.9.37.1/treat_data.c suhosin-0.9.37.1/treat_data.c
 --- suhosin-0.9.37.1/treat_data.c	Fri Dec 12 14:46:19 2014
-+++ suhosin-0.9.37.1/treat_data.c	Wed May 20 23:00:00 2015
++++ suhosin-0.9.37.1/treat_data.c	Thu May 21 18:00:00 2015
 @@ -3,7 +3,7 @@
    | Suhosin Version 1                                                    |
    +----------------------------------------------------------------------+
@@ -1832,7 +1852,7 @@ diff -uNra suhosin-0.9.37.1/treat_data.c suhosin-0.9.37.1/treat_data.c
    | that is bundled with this package in the file LICENSE, and is        |
 diff -uNra suhosin-0.9.37.1/ufilter.c suhosin-0.9.37.1/ufilter.c
 --- suhosin-0.9.37.1/ufilter.c	Fri Dec 12 14:46:19 2014
-+++ suhosin-0.9.37.1/ufilter.c	Wed May 20 23:00:00 2015
++++ suhosin-0.9.37.1/ufilter.c	Thu May 21 18:00:00 2015
 @@ -3,7 +3,7 @@
    | Suhosin Version 1                                                    |
    +----------------------------------------------------------------------+
