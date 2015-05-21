@@ -1740,7 +1740,7 @@ diff -uNra suhosin-0.9.37.1/suhosin.ini suhosin-0.9.37.1/suhosin.ini
 +;
 +
 +; suhosin.upload.max_newlines
-+; --------------------------
++; ---------------------------
 +; * Type: Integer
 +; * Default: 100
 +; 
