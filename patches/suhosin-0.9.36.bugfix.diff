@@ -1,4 +1,3 @@
-diff -uNra suhosin-0.9.36/config.w32 suhosin-0.9.36/config.w32
 --- suhosin-0.9.36/config.w32	Tue Jun 10 09:58:36 2014
 +++ suhosin-0.9.36/config.w32	Thu May 21 18:00:00 2015
 @@ -1,8 +1,8 @@
@@ -12,7 +11,6 @@ diff -uNra suhosin-0.9.36/config.w32 suhosin-0.9.36/config.w32
 -	EXTENSION("suhosin", "suhosin.c sha256.c memory_limit.c treat_data.c ifilter.c post_handler.c ufilter.c rfc1867.c log.c header.c execute.c ex_imp.c session.c aes.c");
 +	EXTENSION("suhosin", "suhosin.c sha256.c memory_limit.c treat_data.c ifilter.c post_handler.c ufilter.c rfc1867.c rfc1867_new.c log.c header.c execute.c ex_imp.c session.c aes.c");
  }
-diff -uNra suhosin-0.9.36/ex_imp.c suhosin-0.9.36/ex_imp.c
 --- suhosin-0.9.36/ex_imp.c	Tue Jun 10 09:58:36 2014
 +++ suhosin-0.9.36/ex_imp.c	Thu May 21 18:00:00 2015
 @@ -3,7 +3,7 @@
@@ -54,7 +52,6 @@ diff -uNra suhosin-0.9.36/ex_imp.c suhosin-0.9.36/ex_imp.c
  }
  
  
-diff -uNra suhosin-0.9.36/execute.c suhosin-0.9.36/execute.c
 --- suhosin-0.9.36/execute.c	Tue Jun 10 09:58:36 2014
 +++ suhosin-0.9.36/execute.c	Thu May 21 18:00:00 2015
 @@ -3,7 +3,7 @@
@@ -544,7 +541,6 @@ diff -uNra suhosin-0.9.36/execute.c suhosin-0.9.36/execute.c
  	zend_execute = old_execute;
  #endif
  		
-diff -uNra suhosin-0.9.36/header.c suhosin-0.9.36/header.c
 --- suhosin-0.9.36/header.c	Tue Jun 10 09:58:36 2014
 +++ suhosin-0.9.36/header.c	Thu May 21 18:00:00 2015
 @@ -3,7 +3,7 @@
@@ -556,7 +552,6 @@ diff -uNra suhosin-0.9.36/header.c suhosin-0.9.36/header.c
    +----------------------------------------------------------------------+
    | This source file is subject to version 3.01 of the PHP license,      |
    | that is bundled with this package in the file LICENSE, and is        |
-diff -uNra suhosin-0.9.36/ifilter.c suhosin-0.9.36/ifilter.c
 --- suhosin-0.9.36/ifilter.c	Tue Jun 10 09:58:36 2014
 +++ suhosin-0.9.36/ifilter.c	Thu May 21 18:00:00 2015
 @@ -3,7 +3,7 @@
@@ -624,7 +619,6 @@ diff -uNra suhosin-0.9.36/ifilter.c suhosin-0.9.36/ifilter.c
  	
  		if (SUHOSIN_G(disallow_nul)) {
  			suhosin_log(S_VARS, "ASCII-NUL chars not allowed within request variables - dropped variable '%s'", var);
-diff -uNra suhosin-0.9.36/log.c suhosin-0.9.36/log.c
 --- suhosin-0.9.36/log.c	Tue Jun 10 09:58:36 2014
 +++ suhosin-0.9.36/log.c	Thu May 21 18:00:00 2015
 @@ -3,7 +3,7 @@
@@ -674,7 +668,6 @@ diff -uNra suhosin-0.9.36/log.c suhosin-0.9.36/log.c
  	ap_php_snprintf(error, sizeof(error), "%s %2d %02d:%02d:%02d [%u] %s\n", month_names[tm.tm_mon], tm.tm_mday, tm.tm_hour, tm.tm_min, tm.tm_sec, getpid(),buf);
  	towrite = strlen(error);
  	wbuf = error;
-diff -uNra suhosin-0.9.36/mbregex.h suhosin-0.9.36/mbregex.h
 --- suhosin-0.9.36/mbregex.h	Tue Jun 10 09:58:36 2014
 +++ suhosin-0.9.36/mbregex.h	Thu May 21 18:00:00 2015
 @@ -3,7 +3,7 @@
@@ -686,7 +679,6 @@ diff -uNra suhosin-0.9.36/mbregex.h suhosin-0.9.36/mbregex.h
    +----------------------------------------------------------------------+
    | This source file is subject to version 3.01 of the PHP license,      |
    | that is bundled with this package in the file LICENSE, and is        |
-diff -uNra suhosin-0.9.36/memory_limit.c suhosin-0.9.36/memory_limit.c
 --- suhosin-0.9.36/memory_limit.c	Tue Jun 10 09:58:36 2014
 +++ suhosin-0.9.36/memory_limit.c	Thu May 21 18:00:00 2015
 @@ -3,7 +3,7 @@
@@ -710,7 +702,6 @@ diff -uNra suhosin-0.9.36/memory_limit.c suhosin-0.9.36/memory_limit.c
  
  	/* check if we are compiled against memory_limit */
  	if (zend_hash_find(EG(ini_directives), "memory_limit", sizeof("memory_limit"), (void **) &ini_entry)==FAILURE) {
-diff -uNra suhosin-0.9.36/php_suhosin.h suhosin-0.9.36/php_suhosin.h
 --- suhosin-0.9.36/php_suhosin.h	Tue Jun 10 09:58:36 2014
 +++ suhosin-0.9.36/php_suhosin.h	Thu May 21 18:00:00 2015
 @@ -3,7 +3,7 @@
@@ -762,7 +753,6 @@ diff -uNra suhosin-0.9.36/php_suhosin.h suhosin-0.9.36/php_suhosin.h
  void suhosin_hook_execute(TSRMLS_D);
  void suhosin_unhook_execute();
  void suhosin_aes_gentables();
-diff -uNra suhosin-0.9.36/post_handler.c suhosin-0.9.36/post_handler.c
 --- suhosin-0.9.36/post_handler.c	Tue Jun 10 09:58:36 2014
 +++ suhosin-0.9.36/post_handler.c	Thu May 21 18:00:00 2015
 @@ -3,7 +3,7 @@
@@ -840,7 +830,6 @@ diff -uNra suhosin-0.9.36/post_handler.c suhosin-0.9.36/post_handler.c
  				break;
  			}
  		}
-diff -uNra suhosin-0.9.36/rfc1867.c suhosin-0.9.36/rfc1867.c
 --- suhosin-0.9.36/rfc1867.c	Tue Jun 10 09:58:36 2014
 +++ suhosin-0.9.36/rfc1867.c	Thu May 21 18:00:00 2015
 @@ -2,7 +2,7 @@
@@ -1529,7 +1518,6 @@ diff -uNra suhosin-0.9.36/rfc1867.c suhosin-0.9.36/rfc1867.c
  				}
  				register_http_post_files_variable_ex(lbuf, &file_size, http_post_files, 0 TSRMLS_CC);
  			}
-diff -uNra suhosin-0.9.36/rfc1867_new.c suhosin-0.9.36/rfc1867_new.c
 --- suhosin-0.9.36/rfc1867_new.c	Tue Jun 10 09:58:36 2014
 +++ suhosin-0.9.36/rfc1867_new.c	Thu May 21 18:00:00 2015
 @@ -34,6 +34,7 @@
@@ -1637,7 +1625,6 @@ diff -uNra suhosin-0.9.36/rfc1867_new.c suhosin-0.9.36/rfc1867_new.c
  	}
  
  	return 1;
-diff -uNra suhosin-0.9.36/session.c suhosin-0.9.36/session.c
 --- suhosin-0.9.36/session.c	Tue Jun 10 09:58:36 2014
 +++ suhosin-0.9.36/session.c	Thu May 21 18:00:00 2015
 @@ -1,19 +1,19 @@
@@ -1761,7 +1748,6 @@ diff -uNra suhosin-0.9.36/session.c suhosin-0.9.36/session.c
      }
  }
  
-diff -uNra suhosin-0.9.36/sha256.c suhosin-0.9.36/sha256.c
 --- suhosin-0.9.36/sha256.c	Tue Jun 10 09:58:36 2014
 +++ suhosin-0.9.36/sha256.c	Thu May 21 18:00:00 2015
 @@ -3,7 +3,7 @@
@@ -1794,7 +1780,6 @@ diff -uNra suhosin-0.9.36/sha256.c suhosin-0.9.36/sha256.c
  }
  
  
-diff -uNra suhosin-0.9.36/sha256.h suhosin-0.9.36/sha256.h
 --- suhosin-0.9.36/sha256.h	Tue Jun 10 09:58:36 2014
 +++ suhosin-0.9.36/sha256.h	Thu May 21 18:00:00 2015
 @@ -3,7 +3,7 @@
@@ -1806,7 +1791,6 @@ diff -uNra suhosin-0.9.36/sha256.h suhosin-0.9.36/sha256.h
    +----------------------------------------------------------------------+
    | This source file is subject to version 3.01 of the PHP license,      |
    | that is bundled with this package in the file LICENSE, and is        |
-diff -uNra suhosin-0.9.36/suhosin.c suhosin-0.9.36/suhosin.c
 --- suhosin-0.9.36/suhosin.c	Tue Jun 10 09:58:36 2014
 +++ suhosin-0.9.36/suhosin.c	Thu May 21 18:00:00 2015
 @@ -3,7 +3,7 @@
@@ -2046,7 +2030,6 @@ diff -uNra suhosin-0.9.36/suhosin.c suhosin-0.9.36/suhosin.c
  	}
  	php_info_print_box_end();
  
-diff -uNra suhosin-0.9.36/suhosin_rfc1867.h suhosin-0.9.36/suhosin_rfc1867.h
 --- suhosin-0.9.36/suhosin_rfc1867.h	Tue Jun 10 09:58:36 2014
 +++ suhosin-0.9.36/suhosin_rfc1867.h	Thu May 21 18:00:00 2015
 @@ -3,7 +3,7 @@
@@ -2067,7 +2050,6 @@ diff -uNra suhosin-0.9.36/suhosin_rfc1867.h suhosin-0.9.36/suhosin_rfc1867.h
  #if !HAVE_RFC1867_CALLBACK
  extern PHP_SUHOSIN_API int (*php_rfc1867_callback)(unsigned int event, void *event_data, void **extra TSRMLS_DC);
  #else
-diff -uNra suhosin-0.9.36/tests/filter/filter_logging_statistics.phpt suhosin-0.9.36/tests/filter/filter_logging_statistics.phpt
 --- suhosin-0.9.36/tests/filter/filter_logging_statistics.phpt	Tue Jun 10 09:58:36 2014
 +++ suhosin-0.9.36/tests/filter/filter_logging_statistics.phpt	Thu May 21 18:00:00 2015
 @@ -8,7 +8,7 @@
@@ -2079,7 +2061,6 @@ diff -uNra suhosin-0.9.36/tests/filter/filter_logging_statistics.phpt suhosin-0.
  --COOKIE--
  --GET--
  A=A&B=B&C=C&D=D&E=E&F=F&G=G&
-diff -uNra suhosin-0.9.36/tests/filter/get_filter_1.phpt suhosin-0.9.36/tests/filter/get_filter_1.phpt
 --- suhosin-0.9.36/tests/filter/get_filter_1.phpt	Tue Jun 10 09:58:36 2014
 +++ suhosin-0.9.36/tests/filter/get_filter_1.phpt	Thu May 21 18:00:00 2015
 @@ -6,7 +6,7 @@
@@ -2091,7 +2072,6 @@ diff -uNra suhosin-0.9.36/tests/filter/get_filter_1.phpt suhosin-0.9.36/tests/fi
  --COOKIE--
  --GET--
  HTTP_RAW_POST_DATA=HTTP_RAW_POST_DATA&HTTP_SESSION_VARS=HTTP_SESSION_VARS&harmless1=harmless1&HTTP_SERVER_VARS=HTTP_SERVER_VARS&HTTP_COOKIE_VARS=HTTP_COOKIE_VARS&HTTP_POST_FILES=HTTP_POST_FILES&HTTP_POST_VARS=HTTP_POST_VARS&HTTP_GET_VARS=HTTP_GET_VARS&HTTP_ENV_VARS=HTTP_ENV_VARS&_SESSION=_SESSION&_REQUEST=_REQUEST&GLOBALS=GLOBALS&_COOKIE=_COOKIE&_SERVER=_SERVER&_FILES=_FILES&_POST=_POST&_ENV=_ENV&_GET=_GET&harmless2=harmless2&
-diff -uNra suhosin-0.9.36/tests/filter/get_filter_2.phpt suhosin-0.9.36/tests/filter/get_filter_2.phpt
 --- suhosin-0.9.36/tests/filter/get_filter_2.phpt	Tue Jun 10 09:58:36 2014
 +++ suhosin-0.9.36/tests/filter/get_filter_2.phpt	Thu May 21 18:00:00 2015
 @@ -7,7 +7,7 @@
@@ -2103,7 +2083,6 @@ diff -uNra suhosin-0.9.36/tests/filter/get_filter_2.phpt suhosin-0.9.36/tests/fi
  --COOKIE--
  --GET--
  A=A&B=B&C=C&D=D&E=E&F=F&G=G&
-diff -uNra suhosin-0.9.36/tests/filter/get_filter_allow_ws.phpt suhosin-0.9.36/tests/filter/get_filter_allow_ws.phpt
 --- suhosin-0.9.36/tests/filter/get_filter_allow_ws.phpt	Tue Jun 10 09:58:36 2014
 +++ suhosin-0.9.36/tests/filter/get_filter_allow_ws.phpt	Thu May 21 18:00:00 2015
 @@ -10,7 +10,7 @@
@@ -2115,7 +2094,6 @@ diff -uNra suhosin-0.9.36/tests/filter/get_filter_allow_ws.phpt suhosin-0.9.36/t
  --COOKIE--
  +var1=1;var2=2;%20var3=3; var4=4;
  --GET--
-diff -uNra suhosin-0.9.36/tests/filter/get_filter_cookie_disallow_ws.phpt suhosin-0.9.36/tests/filter/get_filter_cookie_disallow_ws.phpt
 --- suhosin-0.9.36/tests/filter/get_filter_cookie_disallow_ws.phpt	Tue Jun 10 09:58:36 2014
 +++ suhosin-0.9.36/tests/filter/get_filter_cookie_disallow_ws.phpt	Thu May 21 18:00:00 2015
 @@ -7,7 +7,7 @@
@@ -2127,7 +2105,6 @@ diff -uNra suhosin-0.9.36/tests/filter/get_filter_cookie_disallow_ws.phpt suhosi
  --COOKIE--
  +var1=1;var2=2;%20var3=3; var4=4;
  --GET--
-diff -uNra suhosin-0.9.36/tests/filter/get_filter_get_disallow_ws.phpt suhosin-0.9.36/tests/filter/get_filter_get_disallow_ws.phpt
 --- suhosin-0.9.36/tests/filter/get_filter_get_disallow_ws.phpt	Tue Jun 10 09:58:36 2014
 +++ suhosin-0.9.36/tests/filter/get_filter_get_disallow_ws.phpt	Thu May 21 18:00:00 2015
 @@ -7,7 +7,7 @@
@@ -2139,7 +2116,6 @@ diff -uNra suhosin-0.9.36/tests/filter/get_filter_get_disallow_ws.phpt suhosin-0
  --COOKIE--
  --GET--
  +var1=1&var2=2&%20var3=3& var4=4&
-diff -uNra suhosin-0.9.36/tests/filter/get_filter_post_disallow_ws.phpt suhosin-0.9.36/tests/filter/get_filter_post_disallow_ws.phpt
 --- suhosin-0.9.36/tests/filter/get_filter_post_disallow_ws.phpt	Tue Jun 10 09:58:36 2014
 +++ suhosin-0.9.36/tests/filter/get_filter_post_disallow_ws.phpt	Thu May 21 18:00:00 2015
 @@ -7,7 +7,7 @@
@@ -2151,7 +2127,6 @@ diff -uNra suhosin-0.9.36/tests/filter/get_filter_post_disallow_ws.phpt suhosin-
  --COOKIE--
  --GET--
  --POST--
-diff -uNra suhosin-0.9.36/tests/filter/get_filter_request_disallow_ws.phpt suhosin-0.9.36/tests/filter/get_filter_request_disallow_ws.phpt
 --- suhosin-0.9.36/tests/filter/get_filter_request_disallow_ws.phpt	Tue Jun 10 09:58:36 2014
 +++ suhosin-0.9.36/tests/filter/get_filter_request_disallow_ws.phpt	Thu May 21 18:00:00 2015
 @@ -7,7 +7,7 @@
@@ -2163,7 +2138,6 @@ diff -uNra suhosin-0.9.36/tests/filter/get_filter_request_disallow_ws.phpt suhos
  --COOKIE--
  --GET--
  +var1=1&var2=2&%20var3=3& var4=4&
-diff -uNra suhosin-0.9.36/tests/filter/input_filter_allow_nul.phpt suhosin-0.9.36/tests/filter/input_filter_allow_nul.phpt
 --- suhosin-0.9.36/tests/filter/input_filter_allow_nul.phpt	Tue Jun 10 09:58:36 2014
 +++ suhosin-0.9.36/tests/filter/input_filter_allow_nul.phpt	Thu May 21 18:00:00 2015
 @@ -11,7 +11,7 @@
@@ -2175,7 +2149,6 @@ diff -uNra suhosin-0.9.36/tests/filter/input_filter_allow_nul.phpt suhosin-0.9.3
  --COOKIE--
  var1=xx%001;var2=2;var3=xx%003;var4=4;
  --GET--
-diff -uNra suhosin-0.9.36/tests/filter/input_filter_cookie_disallow_nul.phpt suhosin-0.9.36/tests/filter/input_filter_cookie_disallow_nul.phpt
 --- suhosin-0.9.36/tests/filter/input_filter_cookie_disallow_nul.phpt	Tue Jun 10 09:58:36 2014
 +++ suhosin-0.9.36/tests/filter/input_filter_cookie_disallow_nul.phpt	Thu May 21 18:00:00 2015
 @@ -8,7 +8,7 @@
@@ -2187,7 +2160,6 @@ diff -uNra suhosin-0.9.36/tests/filter/input_filter_cookie_disallow_nul.phpt suh
  --COOKIE--
  var1=xx%001;var2=2;var3=xx%003;var4=4;
  --GET--
-diff -uNra suhosin-0.9.36/tests/filter/input_filter_cookie_max_array_depth.phpt suhosin-0.9.36/tests/filter/input_filter_cookie_max_array_depth.phpt
 --- suhosin-0.9.36/tests/filter/input_filter_cookie_max_array_depth.phpt	Tue Jun 10 09:58:36 2014
 +++ suhosin-0.9.36/tests/filter/input_filter_cookie_max_array_depth.phpt	Thu May 21 18:00:00 2015
 @@ -8,7 +8,7 @@
@@ -2199,7 +2171,6 @@ diff -uNra suhosin-0.9.36/tests/filter/input_filter_cookie_max_array_depth.phpt 
  --COOKIE--
  var1[]=1;var2[][]=2;var3[][][]=3;var4[][][][]=4;var5[][][][][]=5;var6[][][][][][]=6;
  --GET--
-diff -uNra suhosin-0.9.36/tests/filter/input_filter_cookie_max_array_index_length.phpt suhosin-0.9.36/tests/filter/input_filter_cookie_max_array_index_length.phpt
 --- suhosin-0.9.36/tests/filter/input_filter_cookie_max_array_index_length.phpt	Tue Jun 10 09:58:36 2014
 +++ suhosin-0.9.36/tests/filter/input_filter_cookie_max_array_index_length.phpt	Thu May 21 18:00:00 2015
 @@ -8,7 +8,7 @@
@@ -2211,7 +2182,6 @@ diff -uNra suhosin-0.9.36/tests/filter/input_filter_cookie_max_array_index_lengt
  --COOKIE--
  var1[AAA]=1;var2[BBBB]=1;var3[AAA][BBB]=1;var4[AAA][BBBB]=4;var5[AAA][BBB][CCC]=1;var6[AAA][BBBB][CCC]=1;
  --GET--
-diff -uNra suhosin-0.9.36/tests/filter/input_filter_cookie_max_name_length.phpt suhosin-0.9.36/tests/filter/input_filter_cookie_max_name_length.phpt
 --- suhosin-0.9.36/tests/filter/input_filter_cookie_max_name_length.phpt	Tue Jun 10 09:58:36 2014
 +++ suhosin-0.9.36/tests/filter/input_filter_cookie_max_name_length.phpt	Thu May 21 18:00:00 2015
 @@ -8,7 +8,7 @@
@@ -2223,7 +2193,6 @@ diff -uNra suhosin-0.9.36/tests/filter/input_filter_cookie_max_name_length.phpt 
  --COOKIE--
  var=0;var1=1;var2[]=2;var3[xxx]=3;var04=4;var05[]=5;var06[xxx]=6;
  --GET--
-diff -uNra suhosin-0.9.36/tests/filter/input_filter_cookie_max_totalname_length.phpt suhosin-0.9.36/tests/filter/input_filter_cookie_max_totalname_length.phpt
 --- suhosin-0.9.36/tests/filter/input_filter_cookie_max_totalname_length.phpt	Tue Jun 10 09:58:36 2014
 +++ suhosin-0.9.36/tests/filter/input_filter_cookie_max_totalname_length.phpt	Thu May 21 18:00:00 2015
 @@ -8,7 +8,7 @@
@@ -2235,7 +2204,6 @@ diff -uNra suhosin-0.9.36/tests/filter/input_filter_cookie_max_totalname_length.
  --COOKIE--
  var=0;var1=1;var2[]=2;var3[xxx]=3;var04=4;var05[]=5;var06[xxx]=6;
  --GET--
-diff -uNra suhosin-0.9.36/tests/filter/input_filter_cookie_max_value_length.phpt suhosin-0.9.36/tests/filter/input_filter_cookie_max_value_length.phpt
 --- suhosin-0.9.36/tests/filter/input_filter_cookie_max_value_length.phpt	Tue Jun 10 09:58:36 2014
 +++ suhosin-0.9.36/tests/filter/input_filter_cookie_max_value_length.phpt	Thu May 21 18:00:00 2015
 @@ -8,7 +8,7 @@
@@ -2247,7 +2215,6 @@ diff -uNra suhosin-0.9.36/tests/filter/input_filter_cookie_max_value_length.phpt
  --COOKIE--
  var1=1;var2=22;var3=333;var4=4444;var5=55%00555;var6=666666;
  --GET--
-diff -uNra suhosin-0.9.36/tests/filter/input_filter_get_disallow_nul.phpt suhosin-0.9.36/tests/filter/input_filter_get_disallow_nul.phpt
 --- suhosin-0.9.36/tests/filter/input_filter_get_disallow_nul.phpt	Tue Jun 10 09:58:36 2014
 +++ suhosin-0.9.36/tests/filter/input_filter_get_disallow_nul.phpt	Thu May 21 18:00:00 2015
 @@ -8,7 +8,7 @@
@@ -2259,7 +2226,6 @@ diff -uNra suhosin-0.9.36/tests/filter/input_filter_get_disallow_nul.phpt suhosi
  --COOKIE--
  --GET--
  var1=xx%001&var2=2&var3=xx%003&var4=4&
-diff -uNra suhosin-0.9.36/tests/filter/input_filter_get_max_array_depth.phpt suhosin-0.9.36/tests/filter/input_filter_get_max_array_depth.phpt
 --- suhosin-0.9.36/tests/filter/input_filter_get_max_array_depth.phpt	Tue Jun 10 09:58:36 2014
 +++ suhosin-0.9.36/tests/filter/input_filter_get_max_array_depth.phpt	Thu May 21 18:00:00 2015
 @@ -8,7 +8,7 @@
@@ -2271,7 +2237,6 @@ diff -uNra suhosin-0.9.36/tests/filter/input_filter_get_max_array_depth.phpt suh
  --COOKIE--
  --GET--
  var1[]=1&var2[][]=2&var3[][][]=3&var4[][][][]=4&var5[][][][][]=5&var6[][][][][][]=6&
-diff -uNra suhosin-0.9.36/tests/filter/input_filter_get_max_array_index_length.phpt suhosin-0.9.36/tests/filter/input_filter_get_max_array_index_length.phpt
 --- suhosin-0.9.36/tests/filter/input_filter_get_max_array_index_length.phpt	Tue Jun 10 09:58:36 2014
 +++ suhosin-0.9.36/tests/filter/input_filter_get_max_array_index_length.phpt	Thu May 21 18:00:00 2015
 @@ -8,7 +8,7 @@
@@ -2283,7 +2248,6 @@ diff -uNra suhosin-0.9.36/tests/filter/input_filter_get_max_array_index_length.p
  --COOKIE--
  --GET--
  var1[AAA]=1&var2[BBBB]=1&var3[AAA][BBB]=1&var4[AAA][BBBB]=4&var5[AAA][BBB][CCC]=1&var6[AAA][BBBB][CCC]=1
-diff -uNra suhosin-0.9.36/tests/filter/input_filter_get_max_name_length.phpt suhosin-0.9.36/tests/filter/input_filter_get_max_name_length.phpt
 --- suhosin-0.9.36/tests/filter/input_filter_get_max_name_length.phpt	Tue Jun 10 09:58:36 2014
 +++ suhosin-0.9.36/tests/filter/input_filter_get_max_name_length.phpt	Thu May 21 18:00:00 2015
 @@ -8,7 +8,7 @@
@@ -2295,7 +2259,6 @@ diff -uNra suhosin-0.9.36/tests/filter/input_filter_get_max_name_length.phpt suh
  --COOKIE--
  --GET--
  var=0&var1=1&var2[]=2&var3[xxx]=3&var04=4&var05[]=5&var06[xxx]=6&
-diff -uNra suhosin-0.9.36/tests/filter/input_filter_get_max_totalname_length.phpt suhosin-0.9.36/tests/filter/input_filter_get_max_totalname_length.phpt
 --- suhosin-0.9.36/tests/filter/input_filter_get_max_totalname_length.phpt	Tue Jun 10 09:58:36 2014
 +++ suhosin-0.9.36/tests/filter/input_filter_get_max_totalname_length.phpt	Thu May 21 18:00:00 2015
 @@ -8,7 +8,7 @@
@@ -2307,7 +2270,6 @@ diff -uNra suhosin-0.9.36/tests/filter/input_filter_get_max_totalname_length.php
  --COOKIE--
  --GET--
  var=0&var1=1&var2[]=2&var3[xxx]=3&var04=4&var05[]=5&var06[xxx]=6&
-diff -uNra suhosin-0.9.36/tests/filter/input_filter_get_max_value_length.phpt suhosin-0.9.36/tests/filter/input_filter_get_max_value_length.phpt
 --- suhosin-0.9.36/tests/filter/input_filter_get_max_value_length.phpt	Tue Jun 10 09:58:36 2014
 +++ suhosin-0.9.36/tests/filter/input_filter_get_max_value_length.phpt	Thu May 21 18:00:00 2015
 @@ -8,7 +8,7 @@
@@ -2319,7 +2281,6 @@ diff -uNra suhosin-0.9.36/tests/filter/input_filter_get_max_value_length.phpt su
  --COOKIE--
  --GET--
  var1=1&var2=22&var3=333&var4=4444&var5=55%00555&var6=666666&
-diff -uNra suhosin-0.9.36/tests/filter/input_filter_post_disallow_nul.phpt suhosin-0.9.36/tests/filter/input_filter_post_disallow_nul.phpt
 --- suhosin-0.9.36/tests/filter/input_filter_post_disallow_nul.phpt	Tue Jun 10 09:58:36 2014
 +++ suhosin-0.9.36/tests/filter/input_filter_post_disallow_nul.phpt	Thu May 21 18:00:00 2015
 @@ -8,7 +8,7 @@
@@ -2331,7 +2292,6 @@ diff -uNra suhosin-0.9.36/tests/filter/input_filter_post_disallow_nul.phpt suhos
  --COOKIE--
  --GET--
  --POST--
-diff -uNra suhosin-0.9.36/tests/filter/input_filter_post_disallow_nul_rfc1867.phpt suhosin-0.9.36/tests/filter/input_filter_post_disallow_nul_rfc1867.phpt
 --- suhosin-0.9.36/tests/filter/input_filter_post_disallow_nul_rfc1867.phpt	Tue Jun 10 09:58:36 2014
 +++ suhosin-0.9.36/tests/filter/input_filter_post_disallow_nul_rfc1867.phpt	Thu May 21 18:00:00 2015
 @@ -8,7 +8,7 @@
@@ -2343,7 +2303,6 @@ diff -uNra suhosin-0.9.36/tests/filter/input_filter_post_disallow_nul_rfc1867.ph
  --COOKIE--
  --GET--
  --POST_RAW--
-diff -uNra suhosin-0.9.36/tests/filter/input_filter_post_max_array_depth.phpt suhosin-0.9.36/tests/filter/input_filter_post_max_array_depth.phpt
 --- suhosin-0.9.36/tests/filter/input_filter_post_max_array_depth.phpt	Tue Jun 10 09:58:36 2014
 +++ suhosin-0.9.36/tests/filter/input_filter_post_max_array_depth.phpt	Thu May 21 18:00:00 2015
 @@ -8,7 +8,7 @@
@@ -2355,7 +2314,6 @@ diff -uNra suhosin-0.9.36/tests/filter/input_filter_post_max_array_depth.phpt su
  --COOKIE--
  --GET--
  --POST--
-diff -uNra suhosin-0.9.36/tests/filter/input_filter_post_max_array_depth_rfc1867.phpt suhosin-0.9.36/tests/filter/input_filter_post_max_array_depth_rfc1867.phpt
 --- suhosin-0.9.36/tests/filter/input_filter_post_max_array_depth_rfc1867.phpt	Tue Jun 10 09:58:36 2014
 +++ suhosin-0.9.36/tests/filter/input_filter_post_max_array_depth_rfc1867.phpt	Thu May 21 18:00:00 2015
 @@ -8,7 +8,7 @@
@@ -2367,7 +2325,6 @@ diff -uNra suhosin-0.9.36/tests/filter/input_filter_post_max_array_depth_rfc1867
  --COOKIE--
  --GET--
  --POST_RAW--
-diff -uNra suhosin-0.9.36/tests/filter/input_filter_post_max_array_index_length.phpt suhosin-0.9.36/tests/filter/input_filter_post_max_array_index_length.phpt
 --- suhosin-0.9.36/tests/filter/input_filter_post_max_array_index_length.phpt	Tue Jun 10 09:58:36 2014
 +++ suhosin-0.9.36/tests/filter/input_filter_post_max_array_index_length.phpt	Thu May 21 18:00:00 2015
 @@ -8,7 +8,7 @@
@@ -2379,7 +2336,6 @@ diff -uNra suhosin-0.9.36/tests/filter/input_filter_post_max_array_index_length.
  --COOKIE--
  --GET--
  --POST--
-diff -uNra suhosin-0.9.36/tests/filter/input_filter_post_max_array_index_length_rfc1867.phpt suhosin-0.9.36/tests/filter/input_filter_post_max_array_index_length_rfc1867.phpt
 --- suhosin-0.9.36/tests/filter/input_filter_post_max_array_index_length_rfc1867.phpt	Tue Jun 10 09:58:36 2014
 +++ suhosin-0.9.36/tests/filter/input_filter_post_max_array_index_length_rfc1867.phpt	Thu May 21 18:00:00 2015
 @@ -8,7 +8,7 @@
@@ -2391,7 +2347,6 @@ diff -uNra suhosin-0.9.36/tests/filter/input_filter_post_max_array_index_length_
  --COOKIE--
  --GET--
  --POST--
-diff -uNra suhosin-0.9.36/tests/filter/input_filter_post_max_name_length.phpt suhosin-0.9.36/tests/filter/input_filter_post_max_name_length.phpt
 --- suhosin-0.9.36/tests/filter/input_filter_post_max_name_length.phpt	Tue Jun 10 09:58:36 2014
 +++ suhosin-0.9.36/tests/filter/input_filter_post_max_name_length.phpt	Thu May 21 18:00:00 2015
 @@ -8,7 +8,7 @@
@@ -2403,7 +2358,6 @@ diff -uNra suhosin-0.9.36/tests/filter/input_filter_post_max_name_length.phpt su
  --COOKIE--
  --GET--
  --POST--
-diff -uNra suhosin-0.9.36/tests/filter/input_filter_post_max_name_length_rfc1867.phpt suhosin-0.9.36/tests/filter/input_filter_post_max_name_length_rfc1867.phpt
 --- suhosin-0.9.36/tests/filter/input_filter_post_max_name_length_rfc1867.phpt	Tue Jun 10 09:58:36 2014
 +++ suhosin-0.9.36/tests/filter/input_filter_post_max_name_length_rfc1867.phpt	Thu May 21 18:00:00 2015
 @@ -8,7 +8,7 @@
@@ -2415,7 +2369,6 @@ diff -uNra suhosin-0.9.36/tests/filter/input_filter_post_max_name_length_rfc1867
  --COOKIE--
  --GET--
  --POST_RAW--
-diff -uNra suhosin-0.9.36/tests/filter/input_filter_post_max_totalname_length.phpt suhosin-0.9.36/tests/filter/input_filter_post_max_totalname_length.phpt
 --- suhosin-0.9.36/tests/filter/input_filter_post_max_totalname_length.phpt	Tue Jun 10 09:58:36 2014
 +++ suhosin-0.9.36/tests/filter/input_filter_post_max_totalname_length.phpt	Thu May 21 18:00:00 2015
 @@ -8,7 +8,7 @@
@@ -2427,7 +2380,6 @@ diff -uNra suhosin-0.9.36/tests/filter/input_filter_post_max_totalname_length.ph
  --COOKIE--
  --GET--
  --POST--
-diff -uNra suhosin-0.9.36/tests/filter/input_filter_post_max_totalname_length_rfc1867.phpt suhosin-0.9.36/tests/filter/input_filter_post_max_totalname_length_rfc1867.phpt
 --- suhosin-0.9.36/tests/filter/input_filter_post_max_totalname_length_rfc1867.phpt	Tue Jun 10 09:58:36 2014
 +++ suhosin-0.9.36/tests/filter/input_filter_post_max_totalname_length_rfc1867.phpt	Thu May 21 18:00:00 2015
 @@ -8,7 +8,7 @@
@@ -2439,7 +2391,6 @@ diff -uNra suhosin-0.9.36/tests/filter/input_filter_post_max_totalname_length_rf
  --COOKIE--
  --GET--
  --POST_RAW--
-diff -uNra suhosin-0.9.36/tests/filter/input_filter_post_max_value_length.phpt suhosin-0.9.36/tests/filter/input_filter_post_max_value_length.phpt
 --- suhosin-0.9.36/tests/filter/input_filter_post_max_value_length.phpt	Tue Jun 10 09:58:36 2014
 +++ suhosin-0.9.36/tests/filter/input_filter_post_max_value_length.phpt	Thu May 21 18:00:00 2015
 @@ -8,7 +8,7 @@
@@ -2451,7 +2402,6 @@ diff -uNra suhosin-0.9.36/tests/filter/input_filter_post_max_value_length.phpt s
  --COOKIE--
  --GET--
  --POST--
-diff -uNra suhosin-0.9.36/tests/filter/input_filter_post_max_value_length_rfc1867.phpt suhosin-0.9.36/tests/filter/input_filter_post_max_value_length_rfc1867.phpt
 --- suhosin-0.9.36/tests/filter/input_filter_post_max_value_length_rfc1867.phpt	Tue Jun 10 09:58:36 2014
 +++ suhosin-0.9.36/tests/filter/input_filter_post_max_value_length_rfc1867.phpt	Thu May 21 18:00:00 2015
 @@ -8,7 +8,7 @@
@@ -2463,7 +2413,6 @@ diff -uNra suhosin-0.9.36/tests/filter/input_filter_post_max_value_length_rfc186
  --COOKIE--
  --GET--
  --POST_RAW--
-diff -uNra suhosin-0.9.36/tests/filter/input_filter_request_disallow_nul.phpt suhosin-0.9.36/tests/filter/input_filter_request_disallow_nul.phpt
 --- suhosin-0.9.36/tests/filter/input_filter_request_disallow_nul.phpt	Tue Jun 10 09:58:36 2014
 +++ suhosin-0.9.36/tests/filter/input_filter_request_disallow_nul.phpt	Thu May 21 18:00:00 2015
 @@ -7,7 +7,7 @@
@@ -2475,7 +2424,6 @@ diff -uNra suhosin-0.9.36/tests/filter/input_filter_request_disallow_nul.phpt su
  --COOKIE--
  var1=xx%001;var2=2;var3=xx%003;var4=4;
  --GET--
-diff -uNra suhosin-0.9.36/tests/filter/input_filter_request_max_array_depth.phpt suhosin-0.9.36/tests/filter/input_filter_request_max_array_depth.phpt
 --- suhosin-0.9.36/tests/filter/input_filter_request_max_array_depth.phpt	Tue Jun 10 09:58:36 2014
 +++ suhosin-0.9.36/tests/filter/input_filter_request_max_array_depth.phpt	Thu May 21 18:00:00 2015
 @@ -7,7 +7,7 @@
@@ -2487,7 +2435,6 @@ diff -uNra suhosin-0.9.36/tests/filter/input_filter_request_max_array_depth.phpt
  --COOKIE--
  var1[]=1;var2[][]=2;var3[][][]=3;var4[][][][]=4;var5[][][][][]=5;var6[][][][][][]=6;
  --GET--
-diff -uNra suhosin-0.9.36/tests/filter/input_filter_request_max_array_index_length.phpt suhosin-0.9.36/tests/filter/input_filter_request_max_array_index_length.phpt
 --- suhosin-0.9.36/tests/filter/input_filter_request_max_array_index_length.phpt	Tue Jun 10 09:58:36 2014
 +++ suhosin-0.9.36/tests/filter/input_filter_request_max_array_index_length.phpt	Thu May 21 18:00:00 2015
 @@ -7,7 +7,7 @@
@@ -2499,7 +2446,6 @@ diff -uNra suhosin-0.9.36/tests/filter/input_filter_request_max_array_index_leng
  --COOKIE--
  var1[AAA]=1;var2[BBBB]=1;var3[AAA][BBB]=1;var4[AAA][BBBB]=4;var5[AAA][BBB][CCC]=1;var6[AAA][BBBB][CCC]=1;
  --GET--
-diff -uNra suhosin-0.9.36/tests/filter/input_filter_request_max_name_length.phpt suhosin-0.9.36/tests/filter/input_filter_request_max_name_length.phpt
 --- suhosin-0.9.36/tests/filter/input_filter_request_max_name_length.phpt	Tue Jun 10 09:58:36 2014
 +++ suhosin-0.9.36/tests/filter/input_filter_request_max_name_length.phpt	Thu May 21 18:00:00 2015
 @@ -7,7 +7,7 @@
@@ -2511,7 +2457,6 @@ diff -uNra suhosin-0.9.36/tests/filter/input_filter_request_max_name_length.phpt
  --COOKIE--
  var=0;var1=1;var2[]=2;var3[xxx]=3;var04=4;var05[]=5;var06[xxx]=6;
  --GET--
-diff -uNra suhosin-0.9.36/tests/filter/input_filter_request_max_totalname_length.phpt suhosin-0.9.36/tests/filter/input_filter_request_max_totalname_length.phpt
 --- suhosin-0.9.36/tests/filter/input_filter_request_max_totalname_length.phpt	Tue Jun 10 09:58:36 2014
 +++ suhosin-0.9.36/tests/filter/input_filter_request_max_totalname_length.phpt	Thu May 21 18:00:00 2015
 @@ -7,7 +7,7 @@
@@ -2523,7 +2468,6 @@ diff -uNra suhosin-0.9.36/tests/filter/input_filter_request_max_totalname_length
  --COOKIE--
  var=0;var1=1;var2[]=2;var3[xxx]=3;var04=4;var05[]=5;var06[xxx]=6;
  --GET--
-diff -uNra suhosin-0.9.36/tests/filter/input_filter_request_max_value_length.phpt suhosin-0.9.36/tests/filter/input_filter_request_max_value_length.phpt
 --- suhosin-0.9.36/tests/filter/input_filter_request_max_value_length.phpt	Tue Jun 10 09:58:36 2014
 +++ suhosin-0.9.36/tests/filter/input_filter_request_max_value_length.phpt	Thu May 21 18:00:00 2015
 @@ -7,7 +7,7 @@
@@ -2535,7 +2479,6 @@ diff -uNra suhosin-0.9.36/tests/filter/input_filter_request_max_value_length.php
  --COOKIE--
  var1=1;var2=22;var3=333;var4=4444;var5=55%00555;var6=666666;
  --GET--
-diff -uNra suhosin-0.9.36/tests/filter/post_fileupload_filter_1.phpt suhosin-0.9.36/tests/filter/post_fileupload_filter_1.phpt
 --- suhosin-0.9.36/tests/filter/post_fileupload_filter_1.phpt	Tue Jun 10 09:58:36 2014
 +++ suhosin-0.9.36/tests/filter/post_fileupload_filter_1.phpt	Thu May 21 18:00:00 2015
 @@ -8,7 +8,7 @@
@@ -2547,7 +2490,6 @@ diff -uNra suhosin-0.9.36/tests/filter/post_fileupload_filter_1.phpt suhosin-0.9
  --COOKIE--
  --GET--
  --POST_RAW--
-diff -uNra suhosin-0.9.36/tests/filter/post_fileupload_filter_2.phpt suhosin-0.9.36/tests/filter/post_fileupload_filter_2.phpt
 --- suhosin-0.9.36/tests/filter/post_fileupload_filter_2.phpt	Tue Jun 10 09:58:36 2014
 +++ suhosin-0.9.36/tests/filter/post_fileupload_filter_2.phpt	Thu May 21 18:00:00 2015
 @@ -9,7 +9,7 @@
@@ -2559,7 +2501,6 @@ diff -uNra suhosin-0.9.36/tests/filter/post_fileupload_filter_2.phpt suhosin-0.9
  --COOKIE--
  --GET--
  --POST_RAW--
-diff -uNra suhosin-0.9.36/tests/filter/post_filter_1.phpt suhosin-0.9.36/tests/filter/post_filter_1.phpt
 --- suhosin-0.9.36/tests/filter/post_filter_1.phpt	Tue Jun 10 09:58:36 2014
 +++ suhosin-0.9.36/tests/filter/post_filter_1.phpt	Thu May 21 18:00:00 2015
 @@ -6,7 +6,7 @@
@@ -2571,7 +2512,6 @@ diff -uNra suhosin-0.9.36/tests/filter/post_filter_1.phpt suhosin-0.9.36/tests/f
  --COOKIE--
  --GET--
  --POST--
-diff -uNra suhosin-0.9.36/tests/filter/post_filter_2.phpt suhosin-0.9.36/tests/filter/post_filter_2.phpt
 --- suhosin-0.9.36/tests/filter/post_filter_2.phpt	Tue Jun 10 09:58:36 2014
 +++ suhosin-0.9.36/tests/filter/post_filter_2.phpt	Thu May 21 18:00:00 2015
 @@ -7,7 +7,7 @@
@@ -2583,7 +2523,6 @@ diff -uNra suhosin-0.9.36/tests/filter/post_filter_2.phpt suhosin-0.9.36/tests/f
  --COOKIE--
  --GET--
  --POST--
-diff -uNra suhosin-0.9.36/tests/filter/server_encode_off.phpt suhosin-0.9.36/tests/filter/server_encode_off.phpt
 --- suhosin-0.9.36/tests/filter/server_encode_off.phpt	Tue Jun 10 09:58:36 2014
 +++ suhosin-0.9.36/tests/filter/server_encode_off.phpt	Thu May 21 18:00:00 2015
 @@ -9,7 +9,7 @@
@@ -2595,7 +2534,6 @@ diff -uNra suhosin-0.9.36/tests/filter/server_encode_off.phpt suhosin-0.9.36/tes
  --ENV--
  return <<<END
  REQUEST_URI=AAA<>"'`!AAA
-diff -uNra suhosin-0.9.36/tests/filter/server_encode_on.phpt suhosin-0.9.36/tests/filter/server_encode_on.phpt
 --- suhosin-0.9.36/tests/filter/server_encode_on.phpt	Tue Jun 10 09:58:36 2014
 +++ suhosin-0.9.36/tests/filter/server_encode_on.phpt	Thu May 21 18:00:00 2015
 @@ -9,7 +9,7 @@
@@ -2607,7 +2545,6 @@ diff -uNra suhosin-0.9.36/tests/filter/server_encode_on.phpt suhosin-0.9.36/test
  --ENV--
  return <<<END
  REQUEST_URI=AAA<>"'`!AAA
-diff -uNra suhosin-0.9.36/tests/filter/server_filter.phpt suhosin-0.9.36/tests/filter/server_filter.phpt
 --- suhosin-0.9.36/tests/filter/server_filter.phpt	Tue Jun 10 09:58:36 2014
 +++ suhosin-0.9.36/tests/filter/server_filter.phpt	Thu May 21 18:00:00 2015
 @@ -6,7 +6,7 @@
@@ -2619,7 +2556,6 @@ diff -uNra suhosin-0.9.36/tests/filter/server_filter.phpt suhosin-0.9.36/tests/f
  --ENV--
  return <<<END
  HTTP_POST_VARS=HTTP_POST_VARS
-diff -uNra suhosin-0.9.36/tests/filter/server_strip_off.phpt suhosin-0.9.36/tests/filter/server_strip_off.phpt
 --- suhosin-0.9.36/tests/filter/server_strip_off.phpt	Tue Jun 10 09:58:36 2014
 +++ suhosin-0.9.36/tests/filter/server_strip_off.phpt	Thu May 21 18:00:00 2015
 @@ -9,7 +9,7 @@
@@ -2631,7 +2567,6 @@ diff -uNra suhosin-0.9.36/tests/filter/server_strip_off.phpt suhosin-0.9.36/test
  --ENV--
  return <<<END
  SCRIPT_NAME=X/index.php/THIS_IS_A_FAKE_NAME<>"'`!AAA
-diff -uNra suhosin-0.9.36/tests/filter/server_strip_on.phpt suhosin-0.9.36/tests/filter/server_strip_on.phpt
 --- suhosin-0.9.36/tests/filter/server_strip_on.phpt	Tue Jun 10 09:58:36 2014
 +++ suhosin-0.9.36/tests/filter/server_strip_on.phpt	Thu May 21 18:00:00 2015
 @@ -9,7 +9,7 @@
@@ -2643,7 +2578,6 @@ diff -uNra suhosin-0.9.36/tests/filter/server_strip_on.phpt suhosin-0.9.36/tests
  --ENV--
  return <<<END
  SCRIPT_NAME=X/index.php/THIS_IS_A_FAKE_NAME<>"'`!AAA
-diff -uNra suhosin-0.9.36/tests/filter/server_user_agent_strip_off.phpt suhosin-0.9.36/tests/filter/server_user_agent_strip_off.phpt
 --- suhosin-0.9.36/tests/filter/server_user_agent_strip_off.phpt	Tue Jun 10 09:58:36 2014
 +++ suhosin-0.9.36/tests/filter/server_user_agent_strip_off.phpt	Thu May 21 18:00:00 2015
 @@ -9,7 +9,7 @@
@@ -2655,7 +2589,6 @@ diff -uNra suhosin-0.9.36/tests/filter/server_user_agent_strip_off.phpt suhosin-
  --ENV--
  return <<<END
  HTTP_USER_AGENT=Mozilla/5.0 (Windows NT 6.0; rv:29.0) <script>alert('123');</script>Gecko/20100101 Firefox/29.0
-diff -uNra suhosin-0.9.36/tests/filter/server_user_agent_strip_on.phpt suhosin-0.9.36/tests/filter/server_user_agent_strip_on.phpt
 --- suhosin-0.9.36/tests/filter/server_user_agent_strip_on.phpt	Tue Jun 10 09:58:36 2014
 +++ suhosin-0.9.36/tests/filter/server_user_agent_strip_on.phpt	Thu May 21 18:00:00 2015
 @@ -9,7 +9,7 @@
@@ -2667,7 +2600,6 @@ diff -uNra suhosin-0.9.36/tests/filter/server_user_agent_strip_on.phpt suhosin-0
  --ENV--
  return <<<END
  HTTP_USER_AGENT=Mozilla/5.0 (Windows NT 6.0; rv:29.0) <script>alert('123');</script>Gecko/20100101 Firefox/29.0
-diff -uNra suhosin-0.9.36/tests/filter/suhosin_upload_disallow_binary_off.phpt suhosin-0.9.36/tests/filter/suhosin_upload_disallow_binary_off.phpt
 --- suhosin-0.9.36/tests/filter/suhosin_upload_disallow_binary_off.phpt	Tue Jun 10 09:58:36 2014
 +++ suhosin-0.9.36/tests/filter/suhosin_upload_disallow_binary_off.phpt	Thu May 21 18:00:00 2015
 @@ -10,7 +10,7 @@
@@ -2679,7 +2611,6 @@ diff -uNra suhosin-0.9.36/tests/filter/suhosin_upload_disallow_binary_off.phpt s
  --COOKIE--
  --GET--
  --POST_RAW--
-diff -uNra suhosin-0.9.36/tests/filter/suhosin_upload_disallow_binary_on.phpt suhosin-0.9.36/tests/filter/suhosin_upload_disallow_binary_on.phpt
 --- suhosin-0.9.36/tests/filter/suhosin_upload_disallow_binary_on.phpt	Tue Jun 10 09:58:36 2014
 +++ suhosin-0.9.36/tests/filter/suhosin_upload_disallow_binary_on.phpt	Thu May 21 18:00:00 2015
 @@ -10,7 +10,7 @@
@@ -2691,7 +2622,6 @@ diff -uNra suhosin-0.9.36/tests/filter/suhosin_upload_disallow_binary_on.phpt su
  --COOKIE--
  --GET--
  --POST_RAW--
-diff -uNra suhosin-0.9.36/tests/filter/suhosin_upload_disallow_elf.phpt suhosin-0.9.36/tests/filter/suhosin_upload_disallow_elf.phpt
 --- suhosin-0.9.36/tests/filter/suhosin_upload_disallow_elf.phpt	Tue Jun 10 09:58:36 2014
 +++ suhosin-0.9.36/tests/filter/suhosin_upload_disallow_elf.phpt	Thu May 21 18:00:00 2015
 @@ -8,7 +8,7 @@
@@ -2703,7 +2633,6 @@ diff -uNra suhosin-0.9.36/tests/filter/suhosin_upload_disallow_elf.phpt suhosin-
  --COOKIE--
  --GET--
  --POST_RAW--
-diff -uNra suhosin-0.9.36/tests/filter/suhosin_upload_disallow_elf_off.phpt suhosin-0.9.36/tests/filter/suhosin_upload_disallow_elf_off.phpt
 --- suhosin-0.9.36/tests/filter/suhosin_upload_disallow_elf_off.phpt	Tue Jun 10 09:58:36 2014
 +++ suhosin-0.9.36/tests/filter/suhosin_upload_disallow_elf_off.phpt	Thu May 21 18:00:00 2015
 @@ -8,7 +8,7 @@
@@ -2715,7 +2644,6 @@ diff -uNra suhosin-0.9.36/tests/filter/suhosin_upload_disallow_elf_off.phpt suho
  --COOKIE--
  --GET--
  --POST_RAW--
-diff -uNra suhosin-0.9.36/tests/filter/suhosin_upload_max_uploads.phpt suhosin-0.9.36/tests/filter/suhosin_upload_max_uploads.phpt
 --- suhosin-0.9.36/tests/filter/suhosin_upload_max_uploads.phpt	Tue Jun 10 09:58:36 2014
 +++ suhosin-0.9.36/tests/filter/suhosin_upload_max_uploads.phpt	Thu May 21 18:00:00 2015
 @@ -9,7 +9,7 @@
@@ -2727,7 +2655,6 @@ diff -uNra suhosin-0.9.36/tests/filter/suhosin_upload_max_uploads.phpt suhosin-0
  --COOKIE--
  --GET--
  --POST_RAW--
-diff -uNra suhosin-0.9.36/tests/include/include_constant.phpt suhosin-0.9.36/tests/include/include_constant.phpt
 --- suhosin-0.9.36/tests/include/include_constant.phpt	Tue Jun 10 09:58:36 2014
 +++ suhosin-0.9.36/tests/include/include_constant.phpt	Thu May 21 18:00:00 2015
 @@ -14,4 +14,4 @@
@@ -2736,7 +2663,6 @@ diff -uNra suhosin-0.9.36/tests/include/include_constant.phpt suhosin-0.9.36/tes
  --EXPECTF--
 -ALERT - Include filename ('http://127.0.0.1/') is an URL that is not allowed (attacker 'REMOTE_ADDR not set', file '%s', line 2)
 +ALERT - Include filename ('http://127.0.0.1/') is a URL that is not allowed (attacker 'REMOTE_ADDR not set', file '%s', line 2)
-diff -uNra suhosin-0.9.36/tests/include/include_once_constant.phpt suhosin-0.9.36/tests/include/include_once_constant.phpt
 --- suhosin-0.9.36/tests/include/include_once_constant.phpt	Tue Jun 10 09:58:36 2014
 +++ suhosin-0.9.36/tests/include/include_once_constant.phpt	Thu May 21 18:00:00 2015
 @@ -14,4 +14,4 @@
@@ -2745,7 +2671,6 @@ diff -uNra suhosin-0.9.36/tests/include/include_once_constant.phpt suhosin-0.9.3
  --EXPECTF--
 -ALERT - Include filename ('http://127.0.0.1/') is an URL that is not allowed (attacker 'REMOTE_ADDR not set', file '%s', line 2)
 +ALERT - Include filename ('http://127.0.0.1/') is a URL that is not allowed (attacker 'REMOTE_ADDR not set', file '%s', line 2)
-diff -uNra suhosin-0.9.36/tests/include/include_once_tmpvar.phpt suhosin-0.9.36/tests/include/include_once_tmpvar.phpt
 --- suhosin-0.9.36/tests/include/include_once_tmpvar.phpt	Tue Jun 10 09:58:36 2014
 +++ suhosin-0.9.36/tests/include/include_once_tmpvar.phpt	Thu May 21 18:00:00 2015
 @@ -16,4 +16,4 @@
@@ -2754,7 +2679,6 @@ diff -uNra suhosin-0.9.36/tests/include/include_once_tmpvar.phpt suhosin-0.9.36/
  --EXPECTF--
 -ALERT - Include filename ('http://127.0.0.1/?') is an URL that is not allowed (attacker 'REMOTE_ADDR not set', file '%s', line 4)
 +ALERT - Include filename ('http://127.0.0.1/?') is a URL that is not allowed (attacker 'REMOTE_ADDR not set', file '%s', line 4)
-diff -uNra suhosin-0.9.36/tests/include/include_once_var.phpt suhosin-0.9.36/tests/include/include_once_var.phpt
 --- suhosin-0.9.36/tests/include/include_once_var.phpt	Tue Jun 10 09:58:36 2014
 +++ suhosin-0.9.36/tests/include/include_once_var.phpt	Thu May 21 18:00:00 2015
 @@ -15,4 +15,4 @@
@@ -2763,7 +2687,6 @@ diff -uNra suhosin-0.9.36/tests/include/include_once_var.phpt suhosin-0.9.36/tes
  --EXPECTF--
 -ALERT - Include filename ('http://127.0.0.1/') is an URL that is not allowed (attacker 'REMOTE_ADDR not set', file '%s', line 3)
 +ALERT - Include filename ('http://127.0.0.1/') is a URL that is not allowed (attacker 'REMOTE_ADDR not set', file '%s', line 3)
-diff -uNra suhosin-0.9.36/tests/include/include_tmpvar.phpt suhosin-0.9.36/tests/include/include_tmpvar.phpt
 --- suhosin-0.9.36/tests/include/include_tmpvar.phpt	Tue Jun 10 09:58:36 2014
 +++ suhosin-0.9.36/tests/include/include_tmpvar.phpt	Thu May 21 18:00:00 2015
 @@ -16,4 +16,4 @@
@@ -2772,7 +2695,6 @@ diff -uNra suhosin-0.9.36/tests/include/include_tmpvar.phpt suhosin-0.9.36/tests
  --EXPECTF--
 -ALERT - Include filename ('http://127.0.0.1/?') is an URL that is not allowed (attacker 'REMOTE_ADDR not set', file '%s', line 4)
 +ALERT - Include filename ('http://127.0.0.1/?') is a URL that is not allowed (attacker 'REMOTE_ADDR not set', file '%s', line 4)
-diff -uNra suhosin-0.9.36/tests/include/include_var.phpt suhosin-0.9.36/tests/include/include_var.phpt
 --- suhosin-0.9.36/tests/include/include_var.phpt	Tue Jun 10 09:58:36 2014
 +++ suhosin-0.9.36/tests/include/include_var.phpt	Thu May 21 18:00:00 2015
 @@ -15,4 +15,4 @@
@@ -2781,7 +2703,6 @@ diff -uNra suhosin-0.9.36/tests/include/include_var.phpt suhosin-0.9.36/tests/in
  --EXPECTF--
 -ALERT - Include filename ('http://127.0.0.1/') is an URL that is not allowed (attacker 'REMOTE_ADDR not set', file '%s', line 3)
 +ALERT - Include filename ('http://127.0.0.1/') is a URL that is not allowed (attacker 'REMOTE_ADDR not set', file '%s', line 3)
-diff -uNra suhosin-0.9.36/tests/include/require_constant.phpt suhosin-0.9.36/tests/include/require_constant.phpt
 --- suhosin-0.9.36/tests/include/require_constant.phpt	Tue Jun 10 09:58:36 2014
 +++ suhosin-0.9.36/tests/include/require_constant.phpt	Thu May 21 18:00:00 2015
 @@ -14,4 +14,4 @@
@@ -2790,7 +2711,6 @@ diff -uNra suhosin-0.9.36/tests/include/require_constant.phpt suhosin-0.9.36/tes
  --EXPECTF--
 -ALERT - Include filename ('http://127.0.0.1/') is an URL that is not allowed (attacker 'REMOTE_ADDR not set', file '%s', line 2)
 +ALERT - Include filename ('http://127.0.0.1/') is a URL that is not allowed (attacker 'REMOTE_ADDR not set', file '%s', line 2)
-diff -uNra suhosin-0.9.36/tests/include/require_once_constant.phpt suhosin-0.9.36/tests/include/require_once_constant.phpt
 --- suhosin-0.9.36/tests/include/require_once_constant.phpt	Tue Jun 10 09:58:36 2014
 +++ suhosin-0.9.36/tests/include/require_once_constant.phpt	Thu May 21 18:00:00 2015
 @@ -14,4 +14,4 @@
@@ -2799,7 +2719,6 @@ diff -uNra suhosin-0.9.36/tests/include/require_once_constant.phpt suhosin-0.9.3
  --EXPECTF--
 -ALERT - Include filename ('http://127.0.0.1/') is an URL that is not allowed (attacker 'REMOTE_ADDR not set', file '%s', line 2)
 +ALERT - Include filename ('http://127.0.0.1/') is a URL that is not allowed (attacker 'REMOTE_ADDR not set', file '%s', line 2)
-diff -uNra suhosin-0.9.36/tests/include/require_once_tmpvar.phpt suhosin-0.9.36/tests/include/require_once_tmpvar.phpt
 --- suhosin-0.9.36/tests/include/require_once_tmpvar.phpt	Tue Jun 10 09:58:36 2014
 +++ suhosin-0.9.36/tests/include/require_once_tmpvar.phpt	Thu May 21 18:00:00 2015
 @@ -16,4 +16,4 @@
@@ -2808,7 +2727,6 @@ diff -uNra suhosin-0.9.36/tests/include/require_once_tmpvar.phpt suhosin-0.9.36/
  --EXPECTF--
 -ALERT - Include filename ('http://127.0.0.1/?') is an URL that is not allowed (attacker 'REMOTE_ADDR not set', file '%s', line 4)
 +ALERT - Include filename ('http://127.0.0.1/?') is a URL that is not allowed (attacker 'REMOTE_ADDR not set', file '%s', line 4)
-diff -uNra suhosin-0.9.36/tests/include/require_once_var.phpt suhosin-0.9.36/tests/include/require_once_var.phpt
 --- suhosin-0.9.36/tests/include/require_once_var.phpt	Tue Jun 10 09:58:36 2014
 +++ suhosin-0.9.36/tests/include/require_once_var.phpt	Thu May 21 18:00:00 2015
 @@ -15,4 +15,4 @@
@@ -2817,7 +2735,6 @@ diff -uNra suhosin-0.9.36/tests/include/require_once_var.phpt suhosin-0.9.36/tes
  --EXPECTF--
 -ALERT - Include filename ('http://127.0.0.1/') is an URL that is not allowed (attacker 'REMOTE_ADDR not set', file '%s', line 3)
 +ALERT - Include filename ('http://127.0.0.1/') is a URL that is not allowed (attacker 'REMOTE_ADDR not set', file '%s', line 3)
-diff -uNra suhosin-0.9.36/tests/include/require_tmpvar.phpt suhosin-0.9.36/tests/include/require_tmpvar.phpt
 --- suhosin-0.9.36/tests/include/require_tmpvar.phpt	Tue Jun 10 09:58:36 2014
 +++ suhosin-0.9.36/tests/include/require_tmpvar.phpt	Thu May 21 18:00:00 2015
 @@ -16,4 +16,4 @@
@@ -2826,7 +2743,6 @@ diff -uNra suhosin-0.9.36/tests/include/require_tmpvar.phpt suhosin-0.9.36/tests
  --EXPECTF--
 -ALERT - Include filename ('http://127.0.0.1/?') is an URL that is not allowed (attacker 'REMOTE_ADDR not set', file '%s', line 4)
 +ALERT - Include filename ('http://127.0.0.1/?') is a URL that is not allowed (attacker 'REMOTE_ADDR not set', file '%s', line 4)
-diff -uNra suhosin-0.9.36/tests/include/require_var.phpt suhosin-0.9.36/tests/include/require_var.phpt
 --- suhosin-0.9.36/tests/include/require_var.phpt	Tue Jun 10 09:58:36 2014
 +++ suhosin-0.9.36/tests/include/require_var.phpt	Thu May 21 18:00:00 2015
 @@ -15,4 +15,4 @@
@@ -2835,7 +2751,6 @@ diff -uNra suhosin-0.9.36/tests/include/require_var.phpt suhosin-0.9.36/tests/in
  --EXPECTF--
 -ALERT - Include filename ('http://127.0.0.1/') is an URL that is not allowed (attacker 'REMOTE_ADDR not set', file '%s', line 3)
 +ALERT - Include filename ('http://127.0.0.1/') is a URL that is not allowed (attacker 'REMOTE_ADDR not set', file '%s', line 3)
-diff -uNra suhosin-0.9.36/treat_data.c suhosin-0.9.36/treat_data.c
 --- suhosin-0.9.36/treat_data.c	Tue Jun 10 09:58:36 2014
 +++ suhosin-0.9.36/treat_data.c	Thu May 21 18:00:00 2015
 @@ -3,7 +3,7 @@
@@ -2847,7 +2762,6 @@ diff -uNra suhosin-0.9.36/treat_data.c suhosin-0.9.36/treat_data.c
    +----------------------------------------------------------------------+
    | This source file is subject to version 3.01 of the PHP license,      |
    | that is bundled with this package in the file LICENSE, and is        |
-diff -uNra suhosin-0.9.36/ufilter.c suhosin-0.9.36/ufilter.c
 --- suhosin-0.9.36/ufilter.c	Tue Jun 10 09:58:36 2014
 +++ suhosin-0.9.36/ufilter.c	Thu May 21 18:00:00 2015
 @@ -3,7 +3,7 @@
