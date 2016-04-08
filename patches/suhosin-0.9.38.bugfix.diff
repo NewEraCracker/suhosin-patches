@@ -1,0 +1,820 @@
+--- suhosin-0.9.38/execute.c	Thu May 21 10:56:51 2015
++++ suhosin-0.9.38/execute.c	Fri Apr  8 13:46:57 2016
+@@ -375,9 +375,9 @@
+ 	return SUHOSIN_CODE_TYPE_UNKNOWN;
+ }
+ 
+-/* {{{ void suhosin_execute_ex(zend_op_array *op_array TSRMLS_DC)
++/* {{{ void suhosin_execute_ex
+  *    This function provides a hook for execution */
+-#if PHP_VERSION_ID > 50500
++#if PHP_VERSION_ID >= 50500
+ static void suhosin_execute_ex(zend_execute_data *execute_data TSRMLS_DC)
+ {
+ 	zend_op_array *op_array = execute_data->op_array;
+@@ -674,7 +674,7 @@
+ 	     **limit, **zcount;
+ 
+ 	 if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "ZZZ|ZZ", &regex, &replace, &subject, &limit, &zcount) == FAILURE) {
+-	 	return(0);
++		return (1);
+ 	 }
+ 		
+ 	if (Z_TYPE_PP(regex) == IS_ARRAY) {
+@@ -1085,21 +1085,26 @@
+ 
+ static int ih_function_exists(IH_HANDLER_PARAMS)
+ {
+-	zval **function_name;
++	char *name;
++	int name_len;
+ 	zend_function *func;
+ 	char *lcname;
+ 	zend_bool retval;
+-	int func_name_len;
+ 	
+-	if (ZEND_NUM_ARGS()!=1 || zend_get_parameters_ex(1, &function_name)==FAILURE) {
+-		ZEND_WRONG_PARAM_COUNT_WITH_RETVAL(1);
++	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "s", &name, &name_len) == FAILURE) {
++		return (1);
+ 	}
+-	convert_to_string_ex(function_name);
+-	func_name_len = Z_STRLEN_PP(function_name);
+-	lcname = estrndup(Z_STRVAL_PP(function_name), func_name_len);	
+-	zend_str_tolower(lcname, func_name_len);
+ 
+-	retval = (zend_hash_find(EG(function_table), lcname, func_name_len+1, (void **)&func) == SUCCESS);
++	lcname = zend_str_tolower_dup(name, name_len);
++
++	/* Ignore leading "\" */
++	name = lcname;
++	if (name_len > 0 && lcname[0] == '\\') {
++		name = &lcname[1];
++		name_len--;
++	}
++
++	retval = (zend_hash_find(EG(function_table), name, name_len+1, (void **)&func) == SUCCESS);
+ 	
+ 	/*
+ 	 * A bit of a hack, but not a bad one: we see if the handler of the function
+@@ -1113,22 +1118,22 @@
+ 	/* Now check if function is forbidden by Suhosin */
+ 	if (SUHOSIN_G(in_code_type) == SUHOSIN_EVAL) {
+ 		if (SUHOSIN_G(eval_whitelist) != NULL) {
+-			if (!zend_hash_exists(SUHOSIN_G(eval_whitelist), lcname, func_name_len+1)) {
++			if (!zend_hash_exists(SUHOSIN_G(eval_whitelist), name, name_len+1)) {
+ 			    retval = 0;
+ 			}
+ 		} else if (SUHOSIN_G(eval_blacklist) != NULL) {
+-			if (zend_hash_exists(SUHOSIN_G(eval_blacklist), lcname, func_name_len+1)) {
++			if (zend_hash_exists(SUHOSIN_G(eval_blacklist), name, name_len+1)) {
+ 			    retval = 0;
+ 			}
+ 		}
+ 	}
+ 	
+ 	if (SUHOSIN_G(func_whitelist) != NULL) {
+-		if (!zend_hash_exists(SUHOSIN_G(func_whitelist), lcname, func_name_len+1)) {
++		if (!zend_hash_exists(SUHOSIN_G(func_whitelist), name, name_len+1)) {
+ 		    retval = 0;
+ 		}
+ 	} else if (SUHOSIN_G(func_blacklist) != NULL) {
+-		if (zend_hash_exists(SUHOSIN_G(func_blacklist), lcname, func_name_len+1)) {
++		if (zend_hash_exists(SUHOSIN_G(func_blacklist), name, name_len+1)) {
+ 		    retval = 0;
+ 		}
+ 	}
+@@ -1209,7 +1214,7 @@
+ #define loBits(u)     ((u) & 0x7FFFFFFFU)  /* mask     the highest   bit of u */
+ #define mixBits(u, v) (hiBit(u)|loBits(v)) /* move hi bit of u to hi bit of v */
+ 
+-#define twist(m,u,v)  (m ^ (mixBits(u,v)>>1) ^ ((php_uint32)(-(php_int32)(loBit(u))) & 0x9908b0dfU))
++#define twist(m,u,v)  (m ^ (mixBits(u,v)>>1) ^ ((php_uint32)(-(php_int32)(loBit(v))) & 0x9908b0dfU))
+ 
+ /* {{{ php_mt_initialize
+  */
+@@ -1320,10 +1325,11 @@
+     suhosin_SHA256_CTX   context;
+     int fd;
+     
++#if SIZEOF_LONG==8
+     code_value ^= code_value >> 32;
+     stack_value ^= stack_value >> 32;
+     heap_value ^= heap_value >> 32;
+-    
++#endif
+     seedbuf[0] = code_value;
+     seedbuf[1] = stack_value;
+     seedbuf[2] = heap_value;
+@@ -1519,8 +1525,9 @@
+ static int ih_getrandmax(IH_HANDLER_PARAMS)
+ {
+ 	if (zend_parse_parameters_none() == FAILURE) {
+-		return(0);
++		return (1);
+ 	}
++
+ 	RETVAL_LONG(PHP_MT_RAND_MAX);
+ 	return (1);
+ }
+@@ -1638,30 +1645,14 @@
+ 
+ static void suhosin_execute_internal(zend_execute_data *execute_data_ptr, zend_fcall_info *fci, int return_value_used TSRMLS_DC)
+ {
+-	zval *return_value;
+ 	zval **return_value_ptr;
+ 	zval *this_ptr;
+-	int ht;
+-	
+-	if (fci) {
+-		return_value = *fci->retval_ptr_ptr;
+-		return_value_ptr = fci->retval_ptr_ptr;
+-		this_ptr = fci->object_ptr;
+-		ht = fci->param_count;
+-	} else {
+-		temp_variable *ret = &EX_T(execute_data_ptr->opline->result.var);
+-		zend_function *fbc = execute_data_ptr->function_state.function;
+-		return_value = ret->var.ptr;
+-		return_value_ptr = (fbc->common.fn_flags & ZEND_ACC_RETURN_REFERENCE) ? &ret->var.ptr : NULL;
+-		this_ptr = execute_data_ptr->object;
+-		ht = execute_data_ptr->opline->extended_value;
+-	}	
+ #else
+ static void suhosin_execute_internal(zend_execute_data *execute_data_ptr, int return_value_used TSRMLS_DC)
+ {
+-	zval *return_value;
+-	int ht = execute_data_ptr->opline->extended_value;
+ #endif
++	zval *return_value;
++	int ht;
+ 	char *lcname;
+ 	int function_name_strlen, free_lcname = 0;
+ 	zend_class_entry *ce = NULL;
+@@ -1684,10 +1675,6 @@
+ 		zend_str_tolower(lcname, function_name_strlen);
+ 	}
+ 
+-#if PHP_VERSION_ID < 50500	
+-	return_value = (*(temp_variable *)((char *) execute_data_ptr->Ts + execute_data_ptr->opline->result.var)).var.ptr;
+-#endif
+-
+ 	SDEBUG("function: %s", lcname);
+ 
+ 	if (SUHOSIN_G(in_code_type) == SUHOSIN_EVAL) {
+@@ -1738,6 +1725,25 @@
+ 		int retval = 0;
+ 		void *handler = ((zend_internal_function *) execute_data_ptr->function_state.function)->handler;
+ 		
++#if PHP_VERSION_ID < 50500
++		return_value = (*(temp_variable *)((char *) execute_data_ptr->Ts + execute_data_ptr->opline->result.var)).var.ptr;
++		ht = execute_data_ptr->opline->extended_value;
++#else
++		if (fci) {
++			return_value = *fci->retval_ptr_ptr;
++			return_value_ptr = fci->retval_ptr_ptr;
++			this_ptr = fci->object_ptr;
++			ht = fci->param_count;
++		} else {
++			temp_variable *ret = &EX_T(execute_data_ptr->opline->result.var);
++			zend_function *fbc = execute_data_ptr->function_state.function;
++			return_value = ret->var.ptr;
++			return_value_ptr = (fbc->common.fn_flags & ZEND_ACC_RETURN_REFERENCE) ? &ret->var.ptr : NULL;
++			this_ptr = execute_data_ptr->object;
++			ht = execute_data_ptr->opline->extended_value;
++		}
++#endif
++
+ 		if (handler != ZEND_FN(display_disabled_function)) {
+ 		    retval = ih->handler(IH_HANDLER_PARAM_PASSTHRU);
+ 		}
+@@ -1770,6 +1776,7 @@
+ /* }}} */
+ 
+ 
++#if PHP_VERSION_ID < 50500
+ /* {{{ int function_lookup(zend_extension *extension)
+  */
+ static int function_lookup(zend_extension *extension)
+@@ -1787,6 +1794,7 @@
+ 	return 0;
+ }
+ /* }}} */
++#endif
+ 
+ 
+ /* {{{ void suhosin_hook_execute()
+@@ -1801,12 +1809,10 @@
+ #else	
+ 	old_execute = zend_execute;
+ 	zend_execute = suhosin_execute;
+-#endif
+ 	
+ /*	old_compile_file = zend_compile_file;
+ 	zend_compile_file = suhosin_compile_file; */
+ 
+-#if ZO_COMPATIBILITY_HACK_TEMPORARY_DISABLED
+ 	if (zo_set_oe_ex == NULL) {	
+ 		zo_set_oe_ex = (void *)DL_FETCH_SYMBOL(NULL, "zend_optimizer_set_oe_ex");
+ 	}
+@@ -1847,15 +1853,13 @@
+  */
+ void suhosin_unhook_execute()
+ {
+-#if ZO_COMPATIBILITY_HACK_TEMPORARY_DISABLED
++#if PHP_VERSION_ID >= 50500
++	zend_execute_ex = old_execute_ex;
++#else
+ 	if (zo_set_oe_ex) {
+ 		zo_set_oe_ex(old_execute_ZO);
+ 	}
+-#endif
+ 
+-#if PHP_VERSION_ID >= 50500	
+-	zend_execute_ex = old_execute_ex;
+-#else
+ 	zend_execute = old_execute;
+ #endif
+ 		
+--- suhosin-0.9.38/post_handler.c	Thu May 21 10:56:51 2015
++++ suhosin-0.9.38/post_handler.c	Fri Apr  8 13:46:57 2016
+@@ -180,8 +180,8 @@
+ 		memset(&post_data, 0, sizeof(post_data));
+ 
+ 		while (!php_stream_eof(s)) {
+-			char buf[BUFSIZ] = {0};
+-			size_t len = php_stream_read(s, buf, BUFSIZ);
++			char buf[SAPI_POST_BLOCK_SIZE] = {0};
++			size_t len = php_stream_read(s, buf, SAPI_POST_BLOCK_SIZE);
+ 
+ 			if (len && len != (size_t) -1) {
+ 				smart_str_appendl(&post_data.str, buf, len);
+@@ -194,7 +194,7 @@
+ 				}
+ 			}
+ 
+-			if (len != BUFSIZ){
++			if (len != SAPI_POST_BLOCK_SIZE){
+ 				break;
+ 			}
+ 		}
+--- suhosin-0.9.38/rfc1867_new.c	Thu May 21 10:56:51 2015
++++ suhosin-0.9.38/rfc1867_new.c	Fri Apr  8 13:51:06 2016
+@@ -2,7 +2,7 @@
+    +----------------------------------------------------------------------+
+    | PHP Version 5                                                        |
+    +----------------------------------------------------------------------+
+-   | Copyright (c) 1997-2013 The PHP Group                                |
++   | Copyright (c) 1997-2016 The PHP Group                                |
+    +----------------------------------------------------------------------+
+    | This source file is subject to version 3.01 of the PHP license,      |
+    | that is bundled with this package in the file LICENSE, and is        |
+@@ -34,7 +34,12 @@
+ #include "php_suhosin.h"
+ #include "suhosin_rfc1867.h"
+ #include "ext/standard/php_string.h"
++#include "ext/standard/php_smart_str.h"
+ 
++#if defined(PHP_WIN32) && !defined(HAVE_ATOLL)
++# define atoll(s) _atoi64(s)
++# define HAVE_ATOLL 1
++#endif
+ 
+ #define DEBUG_FILE_UPLOAD ZEND_DEBUG
+ 
+@@ -385,8 +390,9 @@
+ static int multipart_buffer_headers(multipart_buffer *self, zend_llist *header TSRMLS_DC)
+ {
+ 	char *line;
+-	mime_header_entry prev_entry = {0}, entry;
+-	int prev_len, cur_len;
++	mime_header_entry entry = {0};
++	smart_str buf_value = {0};
++	char *key = NULL;
+ 	int newlines = 0;
+ 
+ 	/* didn't find boundary, abort */
+@@ -399,11 +405,10 @@
+ 	while( (line = get_line(self TSRMLS_CC)) && line[0] != '\0' )
+ 	{
+ 		/* add header to table */
+-		char *key = line;
+ 		char *value = NULL;
+ 
+ 		if (php_rfc1867_encoding_translation(TSRMLS_C)) {
+-			self->input_encoding = zend_multibyte_encoding_detector((const unsigned char *)line, strlen(line), self->detect_order, self->detect_order_size TSRMLS_CC);
++			self->input_encoding = zend_multibyte_encoding_detector((unsigned char *)line, strlen(line), self->detect_order, self->detect_order_size TSRMLS_CC);
+ 		}
+ 
+ 		/* space in the beginning means same header */
+@@ -412,38 +417,40 @@
+ 		}
+ 
+ 		if (value) {
+-			*value = 0;
+-			do { value++; } while(isspace(*value));
+-
+-			entry.value = estrdup(value);
+-			entry.key = estrdup(key);
++			if(buf_value.c && key) {
++				/* new entry, add the old one to the list */
+ 			newlines = 0;
++				smart_str_0(&buf_value);
++				entry.key = key;
++				entry.value = buf_value.c;
++				zend_llist_add_element(header, &entry);
++				buf_value.c = NULL;
++				key = NULL;
++			}
+ 
+-		} else if (zend_llist_count(header)) { /* If no ':' on the line, add to previous line */
+-
+-			prev_len = strlen(prev_entry.value);
+-			cur_len = strlen(line);
++			*value = '\0';
++			do { value++; } while(isspace(*value));
+ 
+-			entry.value = emalloc(prev_len + cur_len + 1);
+-			memcpy(entry.value, prev_entry.value, prev_len);
+-			memcpy(entry.value + prev_len, line, cur_len);
+-			entry.value[cur_len + prev_len] = '\0';
+-
+-			entry.key = estrdup(prev_entry.key);
+-			newlines++;
+-			if (newlines > SUHOSIN_G(upload_max_newlines)) {
++			key = estrdup(line);
++			smart_str_appends(&buf_value, value);
++		} else if (buf_value.c) { /* If no ':' on the line, add to previous line */
++			if (++newlines > SUHOSIN_G(upload_max_newlines)) {
+ 				SUHOSIN_G(abort_request) = 1;
+ 				suhosin_log(S_FILES, "configured maximum number of newlines in RFC1867 MIME headers limit exceeded - dropping rest of upload");
++				smart_str_free(&buf_value);
+ 				return 0;
+ 			}
+-
+-			zend_llist_remove_tail(header);
++			smart_str_appends(&buf_value, line);
+ 		} else {
+ 			continue;
+ 		}
+-
++	}
++	if(buf_value.c && key) {
++		/* add the last one to the list */
++		smart_str_0(&buf_value);
++		entry.key = key;
++		entry.value = buf_value.c;
+ 		zend_llist_add_element(header, &entry);
+-		prev_entry = entry;
+ 	}
+ 
+ 	return 1;
+@@ -671,8 +678,9 @@
+ {
+ 	char *boundary, *s = NULL, *boundary_end = NULL, *start_arr = NULL, *array_index = NULL;
+ 	char *temp_filename = NULL, *lbuf = NULL, *abuf = NULL;
+-	int boundary_len = 0, total_bytes = 0, cancel_upload = 0, is_arr_upload = 0, array_len = 0;
+-	int max_file_size = 0, skip_upload = 0, anonindex = 0, is_anonymous;
++	int boundary_len = 0, cancel_upload = 0, is_arr_upload = 0, array_len = 0;
++	int64_t total_bytes = 0, max_file_size = 0;
++	int skip_upload = 0, anonindex = 0, is_anonymous;
+ 	zval *http_post_files = NULL;
+ 	HashTable *uploaded_files = NULL;
+ 	multipart_buffer *mbuff;
+@@ -761,7 +769,7 @@
+ 
+ 	zend_llist_init(&header, sizeof(mime_header_entry), (llist_dtor_func_t) php_free_hdr_entry, 0);
+ 
+-	if (suhosin_rfc1867_filter != NULL) {
++	if (&suhosin_rfc1867_filter != NULL) {
+ 		multipart_event_start event_start;
+ 
+ 		event_start.content_length = SG(request_info).content_length;
+@@ -865,7 +873,7 @@
+ 				}
+ 				
+ 				if (++count <= PG(max_input_vars) && sapi_module.input_filter(PARSE_POST, param, &value, new_val_len, &new_val_len TSRMLS_CC)) {
+-					if (suhosin_rfc1867_filter != NULL) {
++					if (&suhosin_rfc1867_filter != NULL) {
+ 						multipart_event_formdata event_formdata;
+ 						size_t newlength = new_val_len;
+ 
+@@ -887,7 +895,7 @@
+ 						php_error_docref(NULL TSRMLS_CC, E_WARNING, "Input variables exceeded %ld. To increase the limit change max_input_vars in php.ini.", PG(max_input_vars));
+ 					}
+ 				
+-					if (suhosin_rfc1867_filter != NULL) {
++					if (&suhosin_rfc1867_filter != NULL) {
+ 						multipart_event_formdata event_formdata;
+ 
+ 						event_formdata.post_bytes_processed = SG(read_post_bytes);
+@@ -900,7 +908,11 @@
+ 				}
+ 
+ 				if (!strcasecmp(param, "MAX_FILE_SIZE")) {
+-					max_file_size = atol(value);
++#ifdef HAVE_ATOLL
++					max_file_size = atoll(value);
++#else
++					max_file_size = strtoll(value, NULL, 10);
++#endif
+ 				}
+ 
+ 				efree(param);
+@@ -961,7 +973,7 @@
+ 			temp_filename = NULL;
+ 			fd = -1;
+ 
+-			if (!skip_upload && suhosin_rfc1867_filter != NULL) {
++			if (!skip_upload && (&suhosin_rfc1867_filter != NULL)) {
+ 				multipart_event_file_start event_file_start;
+ 
+ 				event_file_start.post_bytes_processed = SG(read_post_bytes);
+@@ -1011,7 +1023,7 @@
+ 
+ 			while (!cancel_upload && (blen > 0))
+ 			{
+-				if (suhosin_rfc1867_filter != NULL) {
++				if (&suhosin_rfc1867_filter != NULL) {
+ 					multipart_event_file_data event_file_data;
+ 
+ 					event_file_data.post_bytes_processed = SG(read_post_bytes);
+@@ -1075,7 +1087,7 @@
+ 				cancel_upload = 5;
+ 			}
+ #endif
+-			if (suhosin_rfc1867_filter != NULL) {
++			if (&suhosin_rfc1867_filter != NULL) {
+ 				multipart_event_file_end event_file_end;
+ 
+ 				event_file_end.post_bytes_processed = SG(read_post_bytes);
+@@ -1212,17 +1224,32 @@
+ 
+ 			{
+ 				zval file_size, error_type;
++				int size_overflow = 0;
++				char file_size_buf[65];
+ 
+-				error_type.value.lval = cancel_upload;
+-				error_type.type = IS_LONG;
++				ZVAL_LONG(&error_type, cancel_upload);
+ 
+ 				/* Add $foo[error] */
+ 				if (cancel_upload) {
+-					file_size.value.lval = 0;
+-					file_size.type = IS_LONG;
++					ZVAL_LONG(&file_size, 0);
+ 				} else {
+-					file_size.value.lval = total_bytes;
+-					file_size.type = IS_LONG;
++					if (total_bytes > LONG_MAX) {
++#ifdef PHP_WIN32
++						if (_i64toa_s(total_bytes, file_size_buf, 65, 10)) {
++							file_size_buf[0] = '0';
++							file_size_buf[1] = '\0';
++						}
++#else
++						{
++							int __len = snprintf(file_size_buf, 65, "%lld", total_bytes);
++							file_size_buf[__len] = '\0';
++						}
++#endif
++						size_overflow = 1;
++
++					} else {
++						ZVAL_LONG(&file_size, total_bytes);
++					}
+ 				}
+ 
+ 				if (is_arr_upload) {
+@@ -1239,7 +1266,10 @@
+ 					snprintf(lbuf, llen, "%s_size", param);
+ 				}
+ 				if (!is_anonymous) {
+-					safe_php_register_variable_ex(lbuf, &file_size, NULL, 0 TSRMLS_CC);
++					if (size_overflow) {
++						ZVAL_STRING(&file_size, file_size_buf, 1);
++					}
++					safe_php_register_variable_ex(lbuf, &file_size, NULL, size_overflow TSRMLS_CC);
+ 				}
+ 
+ 				/* Add $foo[size] */
+@@ -1248,14 +1278,17 @@
+ 				} else {
+ 					snprintf(lbuf, llen, "%s[size]", param);
+ 				}
+-				register_http_post_files_variable_ex(lbuf, &file_size, http_post_files, 0 TSRMLS_CC);
++				if (size_overflow) {
++					ZVAL_STRING(&file_size, file_size_buf, 1);
++				}
++				register_http_post_files_variable_ex(lbuf, &file_size, http_post_files, size_overflow TSRMLS_CC);
+ 			}
+ 			efree(param);
+ 		}
+ 	}
+ 
+ fileupload_done:
+-	if (suhosin_rfc1867_filter != NULL) {
++	if (&suhosin_rfc1867_filter != NULL) {
+ 		multipart_event_end event_end;
+ 
+ 		event_end.post_bytes_processed = SG(read_post_bytes);
+--- suhosin-0.9.38/session.c	Thu May 21 10:56:51 2015
++++ suhosin-0.9.38/session.c	Fri Apr  8 13:46:57 2016
+@@ -52,16 +52,6 @@
+ 
+ ps_serializer *(*suhosin_find_ps_serializer)(char *name TSRMLS_DC) = NULL;
+ 
+-static int suhosin_get_session_var(char *name, size_t namelen, zval ***state_var TSRMLS_DC) /* {{{ */
+-{
+-    int ret = FAILURE;
+-
+-    if (SESSION_G(http_session_vars) && SESSION_G(http_session_vars)->type == IS_ARRAY) {
+-        ret = zend_hash_find(Z_ARRVAL_P(SESSION_G(http_session_vars)), name, namelen + 1, (void **) state_var);
+-    }
+-    return ret;
+-}
+-
+ #define PS_DELIMITER '|'
+ #define PS_UNDEF_MARKER '!'
+ 
+@@ -270,13 +260,14 @@
+ static PHP_INI_MH(suhosin_OnUpdateSaveHandler)
+ {
+     int r;
++    ps_module *original_mod = SUHOSIN_G(s_original_mod);
+ 
+-    if (stage == PHP_INI_STAGE_RUNTIME && SESSION_G(session_status) == php_session_none && SUHOSIN_G(s_original_mod)
+-        && strcmp(new_value, "user") == 0 && strcmp(((ps_module*)SUHOSIN_G(s_original_mod))->s_name, "user") == 0) {
++    /* During runtime stage, to prevent infinite loops, only update when new value is different than original */
++    if (stage == PHP_INI_STAGE_RUNTIME && original_mod && strcasecmp(original_mod->s_name, new_value) == 0) {
+         return SUCCESS;
+     }
+ 
+-    SESSION_G(mod) = SUHOSIN_G(s_original_mod);
++    SESSION_G(mod) = original_mod;
+ 
+     r = old_OnUpdateSaveHandler(entry, new_value, new_value_length, mh_arg1, mh_arg2, mh_arg3, stage TSRMLS_CC);
+     
+@@ -349,7 +340,7 @@
+ 
+     /* increase session identifier entropy */
+     if (SESSION_G(entropy_length) == 0 || SESSION_G(entropy_file) == NULL) {
+-        
++#ifndef PHP_WIN32
+         /* ensure that /dev/urandom exists */
+         int fd = VCWD_OPEN("/dev/urandom", O_RDONLY);
+         if (fd >= 0) {
+@@ -357,6 +348,7 @@
+             SESSION_G(entropy_length) = 16;
+             SESSION_G(entropy_file) = pestrdup("/dev/urandom", 1);
+         }
++#endif
+     }
+ }
+ 
+--- suhosin-0.9.38/suhosin.c	Thu May 21 10:56:51 2015
++++ suhosin-0.9.38/suhosin.c	Fri Apr  8 13:46:57 2016
+@@ -47,18 +47,19 @@
+ static int (*old_startup)(zend_extension *extension) = NULL;
+ static zend_extension *ze = NULL;
+ 
+-static int suhosin_module_startup(zend_extension *extension);
+-static void suhosin_shutdown(zend_extension *extension);
+-
+-
++static void (*orig_module_activate)(void) = NULL;
++static void (*orig_module_deactivate)(void) = NULL;
+ static void (*orig_op_array_ctor)(zend_op_array *op_array) = NULL;
+ static void (*orig_op_array_dtor)(zend_op_array *op_array) = NULL;
+ static void (*orig_module_shutdown)(zend_extension *extension) = NULL;
+ static int (*orig_module_startup)(zend_extension *extension) = NULL;
+ 
+-
++static void suhosin_module_activate(void);
++static void suhosin_module_deactivate(void);
+ static void suhosin_op_array_ctor(zend_op_array *op_array);
+ static void suhosin_op_array_dtor(zend_op_array *op_array);
++static void suhosin_shutdown(zend_extension *extension);
++static int  suhosin_module_startup(zend_extension *extension);
+ 
+ STATIC zend_extension suhosin_zend_extension_entry = {
+ 	"Suhosin",
+@@ -68,8 +69,8 @@
+ 	"Copyright (c) 2007-2015",
+ 	suhosin_module_startup,
+ 	suhosin_shutdown,
+-	NULL,
+-	NULL,
++	suhosin_module_activate,
++	suhosin_module_deactivate,
+ 	NULL,
+ 	NULL,
+ 	NULL,
+@@ -81,6 +82,20 @@
+ 	STANDARD_ZEND_EXTENSION_PROPERTIES
+ };
+ 
++static void suhosin_module_activate(void)
++{
++	TSRMLS_FETCH();
++
++	suhosin_hook_post_handlers(TSRMLS_C);
++}
++
++static void suhosin_module_deactivate(void)
++{
++	TSRMLS_FETCH();
++
++	suhosin_unhook_post_handlers(TSRMLS_C);
++}
++
+ static void suhosin_op_array_ctor(zend_op_array *op_array)
+ {
+ 	TSRMLS_FETCH();
+@@ -109,6 +124,22 @@
+ 
+ /* Stealth Mode functions */
+ 
++static void stealth_module_activate(void)
++{
++	if (orig_module_activate != NULL) {
++		orig_module_activate();
++	}
++	suhosin_module_activate();
++}
++
++static void stealth_module_deactivate(void)
++{
++	if (orig_module_deactivate != NULL) {
++		orig_module_deactivate();
++	}
++	suhosin_module_deactivate();
++}
++
+ static void stealth_op_array_ctor(zend_op_array *op_array)
+ {
+ 	if (orig_op_array_ctor != NULL) {
+@@ -147,8 +178,6 @@
+ 	int resid;
+ 	TSRMLS_FETCH();
+ 	
+-/*	zend_register_module(&suhosin_module_entry TSRMLS_CC); */
+-	
+ 	if (zend_hash_find(&module_registry, "suhosin", sizeof("suhosin"), (void **)&module_entry_ptr)==SUCCESS) {
+ 		
+ 		if (extension) {
+@@ -157,10 +186,7 @@
+ 		    zend_extension ext;
+ 		    ext = suhosin_zend_extension_entry;
+ 		    ext.handle = module_entry_ptr->handle;
+-		    /*
+-		    zend_llist_add_element(&zend_extensions, &ext);
+-		    extension = zend_llist_get_last(&zend_extensions);
+-		    */
++
+ 		    extension = &suhosin_zend_extension_entry;
+ 		}
+ 		module_entry_ptr->handle = NULL;
+@@ -178,7 +204,6 @@
+ 	suhosin_zend_extension_entry.resource_number = resid;
+ 
+ 	suhosin_hook_treat_data();
+-	suhosin_hook_post_handlers(TSRMLS_C);
+ 	suhosin_aes_gentables();
+ 	suhosin_hook_register_server_variables();
+ 	suhosin_hook_header_handler();
+@@ -192,20 +217,18 @@
+ 
+ static void suhosin_shutdown(zend_extension *extension)
+ {
+-	TSRMLS_FETCH();
+-
+ 	suhosin_unhook_execute();
+ 	suhosin_unhook_header_handler();
+-	suhosin_unhook_post_handlers(TSRMLS_C);
+ 	/* suhosin_unhook_session(); - enabling this causes compability problems */
+     
+     if (ze != NULL) {
+ 	    ze->startup = orig_module_startup;
+ 	    ze->shutdown = orig_module_shutdown;
++	    ze->activate = orig_module_activate;
++	    ze->deactivate = orig_module_deactivate;
+ 	    ze->op_array_ctor = orig_op_array_ctor;
+ 	    ze->op_array_dtor = orig_op_array_dtor;
+     }
+-    
+ }
+ 
+ 
+@@ -215,7 +238,6 @@
+ 	zend_extension *ex = &suhosin_zend_extension_entry;
+ 	char *new_info;
+ 	int new_info_length;
+-	TSRMLS_FETCH();
+ 	
+ 	/* Ugly but working hack */
+ 	new_info_length = sizeof("%s\n    with %s v%s, %s, by %s\n")
+@@ -234,30 +256,24 @@
+ 	/* Stealth Mode */
+ 	orig_module_startup = ze->startup;
+ 	orig_module_shutdown = ze->shutdown;
++	orig_module_activate = ze->activate;
++	orig_module_deactivate = ze->deactivate;
+ 	orig_op_array_ctor = ze->op_array_ctor;
+ 	orig_op_array_dtor = ze->op_array_dtor;
+ 
+-    /*if (SUHOSIN_G(stealth) != 0) {*/
+ 	    ze->startup = stealth_module_startup;
+ 	    ze->shutdown = stealth_module_shutdown;
++	ze->activate = stealth_module_activate;
++	ze->deactivate = stealth_module_deactivate;
+ 	    ze->op_array_ctor = stealth_op_array_ctor;
+ 	    ze->op_array_dtor = stealth_op_array_dtor;
+-    /*}*/
+ 	
+ 	if (old_startup != NULL) {
+ 		res = old_startup(ext);
+ 	}
+ 
+-/*    ex->name = NULL; 
+-    ex->author = NULL;
+-    ex->copyright = NULL;
+-    ex->version = NULL;*/
+-
+-    /*zend_extensions.head=NULL;*/
+-
+ 	suhosin_module_startup(NULL);
+     
+-	
+ 	return res;
+ }
+ 
+@@ -604,12 +620,14 @@
+ 
+ static ZEND_INI_MH(OnUpdate_cookie_cryptlist)
+ {
++	COOKIE_PERDIR_CHECK()
+ 	parse_list(&SUHOSIN_G(cookie_cryptlist), new_value, 0);
+ 	return SUCCESS;
+ }
+ 
+ static ZEND_INI_MH(OnUpdate_cookie_plainlist)
+ {
++	COOKIE_PERDIR_CHECK()
+ 	parse_list(&SUHOSIN_G(cookie_plainlist), new_value, 0);
+ 	return SUCCESS;
+ }
+--- suhosin-0.9.38/suhosin_rfc1867.h	Thu May 21 10:56:51 2015
++++ suhosin-0.9.38/suhosin_rfc1867.h	Fri Apr  8 13:46:57 2016
+@@ -78,7 +78,6 @@
+ 
+ SAPI_POST_HANDLER_FUNC(suhosin_rfc1867_post_handler);
+ 
+-// void destroy_uploaded_files_hash(TSRMLS_D);
+ #if !HAVE_RFC1867_CALLBACK
+ extern PHP_SUHOSIN_API int (*php_rfc1867_callback)(unsigned int event, void *event_data, void **extra TSRMLS_DC);
+ #else
+--- suhosin-0.9.38/tests/filter/input_filter_request_array_index_blacklist.phpt	Thu May 21 10:56:51 2015
++++ suhosin-0.9.38/tests/filter/input_filter_request_array_index_blacklist.phpt	Fri Apr  8 12:44:31 2016
+@@ -10,7 +10,7 @@
+ auto_append_file={PWD}/suhosintest.$$.log.tmp
+ suhosin.request.array_index_blacklist="=ABC%{}\\$;"
+ --SKIPIF--
+-<?php include('skipif.inc'); ?>
++<?php include('../skipif.inc'); ?>
+ --COOKIE--
+ var1[aaa]=1;var2[bbB]=1;var3[ccc][ccC]=1
+ --GET--
+--- suhosin-0.9.38/tests/filter/input_filter_request_array_index_whitelist.phpt	Thu May 21 10:56:51 2015
++++ suhosin-0.9.38/tests/filter/input_filter_request_array_index_whitelist.phpt	Fri Apr  8 12:44:31 2016
+@@ -10,7 +10,7 @@
+ auto_append_file={PWD}/suhosintest.$$.log.tmp
+ suhosin.request.array_index_whitelist=abcdefghijklmnopqrstuvwxyz
+ --SKIPIF--
+-<?php include('skipif.inc'); ?>
++<?php include('../skipif.inc'); ?>
+ --COOKIE--
+ var1[aaa]=1;var2[bbB]=1;var3[ccc][ccC]=1
+ --GET--
+--- suhosin-0.9.38/tests/filter/post_fileupload_array_index_blacklist.phpt	Thu May 21 10:56:51 2015
++++ suhosin-0.9.38/tests/filter/post_fileupload_array_index_blacklist.phpt	Fri Apr  8 12:44:31 2016
+@@ -11,7 +11,7 @@
+ file_uploads=1
+ suhosin.request.array_index_blacklist=ABC
+ --SKIPIF--
+-<?php include('skipif.inc'); ?>
++<?php include('../skipif.inc'); ?>
+ --COOKIE--
+ --GET--
+ --POST_RAW--
+--- suhosin-0.9.38/tests/filter/post_fileupload_array_index_whitelist.phpt	Thu May 21 10:56:51 2015
++++ suhosin-0.9.38/tests/filter/post_fileupload_array_index_whitelist.phpt	Fri Apr  8 12:44:31 2016
+@@ -11,7 +11,7 @@
+ file_uploads=1
+ suhosin.request.array_index_whitelist=abcdefghijklmnopqrstuvwxyz
+ --SKIPIF--
+-<?php include('skipif.inc'); ?>
++<?php include('../skipif.inc'); ?>
+ --COOKIE--
+ --GET--
+ --POST_RAW--
