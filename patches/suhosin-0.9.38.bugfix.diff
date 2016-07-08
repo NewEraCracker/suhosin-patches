@@ -258,7 +258,7 @@
  			}
  		}
 --- suhosin-0.9.38/rfc1867_new.c	Thu May 21 10:56:51 2015
-+++ suhosin-0.9.38/rfc1867_new.c	Fri Apr  8 13:51:06 2016
++++ suhosin-0.9.38/rfc1867_new.c	Fri Jul  8 10:07:38 2016
 @@ -2,7 +2,7 @@
     +----------------------------------------------------------------------+
     | PHP Version 5                                                        |
@@ -268,12 +268,16 @@
     +----------------------------------------------------------------------+
     | This source file is subject to version 3.01 of the PHP license,      |
     | that is bundled with this package in the file LICENSE, and is        |
-@@ -34,7 +34,12 @@
+@@ -34,7 +34,16 @@
  #include "php_suhosin.h"
  #include "suhosin_rfc1867.h"
  #include "ext/standard/php_string.h"
 +#include "ext/standard/php_smart_str.h"
  
++#ifdef PHP_WIN32
++#include <win32/php_stdint.h>
++#endif
++
 +#if defined(PHP_WIN32) && !defined(HAVE_ATOLL)
 +# define atoll(s) _atoi64(s)
 +# define HAVE_ATOLL 1
@@ -281,7 +285,7 @@
  
  #define DEBUG_FILE_UPLOAD ZEND_DEBUG
  
-@@ -385,8 +390,9 @@
+@@ -385,8 +394,9 @@
  static int multipart_buffer_headers(multipart_buffer *self, zend_llist *header TSRMLS_DC)
  {
  	char *line;
@@ -293,7 +297,7 @@
  	int newlines = 0;
  
  	/* didn't find boundary, abort */
-@@ -399,11 +405,10 @@
+@@ -399,11 +409,10 @@
  	while( (line = get_line(self TSRMLS_CC)) && line[0] != '\0' )
  	{
  		/* add header to table */
@@ -306,7 +310,7 @@
  		}
  
  		/* space in the beginning means same header */
-@@ -412,38 +417,40 @@
+@@ -412,38 +421,40 @@
  		}
  
  		if (value) {
@@ -368,7 +372,7 @@
  	}
  
  	return 1;
-@@ -671,8 +678,9 @@
+@@ -671,8 +682,9 @@
  {
  	char *boundary, *s = NULL, *boundary_end = NULL, *start_arr = NULL, *array_index = NULL;
  	char *temp_filename = NULL, *lbuf = NULL, *abuf = NULL;
@@ -380,7 +384,7 @@
  	zval *http_post_files = NULL;
  	HashTable *uploaded_files = NULL;
  	multipart_buffer *mbuff;
-@@ -761,7 +769,7 @@
+@@ -761,7 +773,7 @@
  
  	zend_llist_init(&header, sizeof(mime_header_entry), (llist_dtor_func_t) php_free_hdr_entry, 0);
  
@@ -389,7 +393,7 @@
  		multipart_event_start event_start;
  
  		event_start.content_length = SG(request_info).content_length;
-@@ -865,7 +873,7 @@
+@@ -865,7 +877,7 @@
  				}
  				
  				if (++count <= PG(max_input_vars) && sapi_module.input_filter(PARSE_POST, param, &value, new_val_len, &new_val_len TSRMLS_CC)) {
@@ -398,7 +402,7 @@
  						multipart_event_formdata event_formdata;
  						size_t newlength = new_val_len;
  
-@@ -887,7 +895,7 @@
+@@ -887,7 +899,7 @@
  						php_error_docref(NULL TSRMLS_CC, E_WARNING, "Input variables exceeded %ld. To increase the limit change max_input_vars in php.ini.", PG(max_input_vars));
  					}
  				
@@ -407,7 +411,7 @@
  						multipart_event_formdata event_formdata;
  
  						event_formdata.post_bytes_processed = SG(read_post_bytes);
-@@ -900,7 +908,11 @@
+@@ -900,7 +912,11 @@
  				}
  
  				if (!strcasecmp(param, "MAX_FILE_SIZE")) {
@@ -420,7 +424,7 @@
  				}
  
  				efree(param);
-@@ -961,7 +973,7 @@
+@@ -961,7 +977,7 @@
  			temp_filename = NULL;
  			fd = -1;
  
@@ -429,7 +433,7 @@
  				multipart_event_file_start event_file_start;
  
  				event_file_start.post_bytes_processed = SG(read_post_bytes);
-@@ -1011,7 +1023,7 @@
+@@ -1011,7 +1027,7 @@
  
  			while (!cancel_upload && (blen > 0))
  			{
@@ -438,7 +442,7 @@
  					multipart_event_file_data event_file_data;
  
  					event_file_data.post_bytes_processed = SG(read_post_bytes);
-@@ -1075,7 +1087,7 @@
+@@ -1075,7 +1091,7 @@
  				cancel_upload = 5;
  			}
  #endif
@@ -447,7 +451,7 @@
  				multipart_event_file_end event_file_end;
  
  				event_file_end.post_bytes_processed = SG(read_post_bytes);
-@@ -1212,17 +1224,32 @@
+@@ -1212,17 +1228,32 @@
  
  			{
  				zval file_size, error_type;
@@ -486,7 +490,7 @@
  				}
  
  				if (is_arr_upload) {
-@@ -1239,7 +1266,10 @@
+@@ -1239,7 +1270,10 @@
  					snprintf(lbuf, llen, "%s_size", param);
  				}
  				if (!is_anonymous) {
@@ -498,7 +502,7 @@
  				}
  
  				/* Add $foo[size] */
-@@ -1248,14 +1278,17 @@
+@@ -1248,14 +1282,17 @@
  				} else {
  					snprintf(lbuf, llen, "%s[size]", param);
  				}
