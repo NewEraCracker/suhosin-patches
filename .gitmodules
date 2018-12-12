@@ -1,0 +1,3 @@
+[submodule "suhosin"]
+	path = suhosin
+	url = https://github.com/NewEraCracker/suhosin
