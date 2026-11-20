@@ -1,6 +1,6 @@
 # Security Policy
 
-Security contact: https://github.com/NewEraCracker/suhosin/security/advisories/new
+Sensitive security-related questions, comments, and reports should be reported privately via: [GitHub security advisories](https://github.com/NewEraCracker/suhosin/security/advisories/new)
 
 ## Security Advisory
 
