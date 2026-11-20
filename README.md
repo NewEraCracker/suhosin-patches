@@ -144,4 +144,6 @@ The original README credits:
 - Copyright © 2007-2015 SektionEins GmbH
 - Author: Stefan Esser <sesser@sektioneins.de>
 
+For third-party components incorporated into this fork, please refer to the [THIRD-PARTY-NOTICES](THIRD-PARTY-NOTICES) file.
+
 See [CREDITS](CREDITS) for additional project credits. If the bundled license is missing and the online copy is unavailable, the original license notice directs requests to <license@php.net>.
