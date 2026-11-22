@@ -63,8 +63,16 @@ export PHP_PREFIX="/usr"
 ./configure \
   --enable-suhosin=shared \
   --with-php-config="$PHP_PREFIX/bin/php-config"
+```
+
+To avoid potential runtime defects caused by stale build artifacts (e.g., partial builds mixing old and new header layouts), it is highly recommended to use a fresh source tree and clean the build directory before compiling:
+
+```sh
+make clean
 make
 ```
+
+This addresses potential issues where partial builds may retain old initializer/INI handlers against updated headers. A fresh build ensures all components are rebuilt consistently.
 
 The extension's configure options are defined in [config.m4](config.m4). These instructions describe the existing Unix build procedure. Windows has a separate [build configuration](config.w32); a current Windows toolchain and installation procedure are not documented here because they have not been verified.
 
